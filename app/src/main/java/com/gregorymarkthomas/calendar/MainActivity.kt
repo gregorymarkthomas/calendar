@@ -7,20 +7,21 @@ import android.view.ViewGroup
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import com.gregorymarkthomas.calendar.util.backstack.BackStack2
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
+import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity: AppCompatActivity(), BackStackCallback {
+class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
 
     private val TAG = "MainActivity"
+    private val backstack = BackStack2(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
-        BackStack2.setCallback(this)
-        BackStack2.goTo(MonthView(this))
+        backstack.goTo(MonthView(this, this))
     }
 
     override fun onDestroy() {
@@ -32,7 +33,19 @@ class MainActivity: AppCompatActivity(), BackStackCallback {
     }
 
     override fun onBackPressed() {
-        BackStack2.goBack()
+        backstack.goBack()
+    }
+
+    override fun goTo(view: LifeCycleView) {
+        backstack.goTo(view)
+    }
+
+    override fun goBack(): Boolean {
+        return backstack.goBack()
+    }
+
+    override fun getView(): LifeCycleView {
+        return backstack.getView()
     }
 
     override fun onViewChanged(view: LifeCycleView) {
