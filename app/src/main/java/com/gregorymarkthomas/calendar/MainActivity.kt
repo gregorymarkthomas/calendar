@@ -1,24 +1,25 @@
 package com.gregorymarkthomas.calendar
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import com.gregorymarkthomas.calendar.util.backstack.BackStack
+import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
+import com.gregorymarkthomas.calendar.util.LifeCycleView
+import com.gregorymarkthomas.calendar.util.backstack.BackStack2
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.MonthView
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: AppCompatActivity(), BackStackCallback {
-    private var backstack: BackStackInterface = BackStack.getInstance(this)
+
+    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        backstack.goTo(MonthView.newInstance(this, main_content))
+        BackStack2.setCallback(this)
+        BackStack2.goTo(MonthView(this))
     }
 
     override fun onDestroy() {
@@ -30,23 +31,11 @@ class MainActivity: AppCompatActivity(), BackStackCallback {
     }
 
     override fun onBackPressed() {
-        backstack.goBack()
+        BackStack2.goBack()
     }
 
-    override fun onViewChanged(view: View) {
-//        main_content.removeViewAt(0)
-
-        main_content.setOnHierarchyChangeListener(object: ViewGroup.OnHierarchyChangeListener {
-            override fun onChildViewRemoved(parent: View?, child: View?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildViewAdded(parent: View?, child: View?) {
-                child.onInflated
-            }
-
-        })
+    override fun onViewChanged(view: LifeCycleView) {
+        main_content.removeAllViews()
         main_content.addView(view)
     }
-
 }

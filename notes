@@ -1,0 +1,14 @@
+How do we get a notice when the specified CHILD view is added?
+	We need a version of OnHierachyViewChanged that only returns when the SPECIFIED CHILD VIEW is added
+
+
+We want a callback in each of my custom views to give me the chance to do something custom when the view is loaded.
+	Perhaps each custom view implements a custom abstract parent view called LifeCycleView ?
+	LifeCycleView should have a LISTENER that listens to the ACTIVITY'S OnHierachyViewChange callback
+
+
+
+
+
+	Does the ACTIVITY need to hold the current child's OnHierachy callback?
+	The activity must also LISTEN for the OnHierachy change itself so it can notify the current CHILD
