@@ -3,8 +3,7 @@ package com.gregorymarkthomas.calendar.util
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
-import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
-import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
+import android.view.ViewGroup
 
 
 abstract class LifeCycleView: ConstraintLayout {
@@ -24,6 +23,10 @@ abstract class LifeCycleView: ConstraintLayout {
      */
     private fun inflate() {
         inflate(context, getLayout(), this)
+
+        /** Expand 'this' ConstraintLayout to use all of the usable space. **/
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
         onViewReady()
     }
 
