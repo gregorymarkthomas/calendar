@@ -1,19 +1,18 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.util.LifeCycleView
-
 class BackStack2(private var callback: BackStackCallback): BackStackInterface {
 
-    private var stack: ArrayList<LifeCycleView> = ArrayList()
+    private var stack: ArrayList<BackStackItem> = ArrayList()
 
-    override fun goTo(view: LifeCycleView) {
-        if(stack.contains(view)) {
-            stack.subList(stack.indexOf(view), stack.size - 1).clear()
+    /** TODO() - .contains() needs to compare the klass with the other klasses in the stack **/
+    override fun goTo(item: BackStackItem) {
+        if(stack.contains(item)) {
+            stack.subList(stack.indexOf(item), stack.size - 1).clear()
         } else {
-            stack.add(view)
+            stack.add(item)
         }
 
-        callback.onViewChanged(view)
+        callback.onViewChanged(item)
     }
 
     override fun goBack(): Boolean {
@@ -30,7 +29,7 @@ class BackStack2(private var callback: BackStackCallback): BackStackInterface {
         return success
     }
 
-    override fun getView(): LifeCycleView {
+    override fun getView(): BackStackItem {
         return stack.get(stack.size - 1)
     }
 

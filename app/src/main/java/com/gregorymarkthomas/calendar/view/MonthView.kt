@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.view
 
+import android.os.Bundle
 import android.view.View
 import com.gregorymarkthomas.calendar.MainActivity
 import com.gregorymarkthomas.calendar.R
@@ -12,14 +13,14 @@ import java.util.*
 class MonthView: LifeCycleView, CalendarViewInterface, View.OnClickListener {
 
     private val TAG = "MonthView"
-    private var presenter: CalendarPresenterInterface
-    private var date: Date
+    private var presenter: CalendarPresenterInterface = CalendarPresenter(this, backstack)
 
-    constructor(activity: MainActivity, date: Date = Date()): super(activity) {
-        this.presenter = CalendarPresenter(this, backstack)
-        this.date = date
+    companion object {
+        const val DATE_ARG = "date"
+    }
 
-        presenter.onViewCreated(date)
+    constructor(activity: MainActivity, args: Bundle): super(activity) {
+        presenter.onViewCreated(args)
         viewTodayButton.setOnClickListener(this)
     }
 

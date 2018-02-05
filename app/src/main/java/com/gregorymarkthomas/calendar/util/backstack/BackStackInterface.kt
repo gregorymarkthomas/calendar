@@ -5,7 +5,7 @@ import android.view.View
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 
 interface BackStackInterface {
-    fun goTo(view: LifeCycleView)
+    fun goTo(item: BackStackItem)
     fun goBack(): Boolean
-    fun getView(): LifeCycleView
+    fun getView(): BackStackItem
 }

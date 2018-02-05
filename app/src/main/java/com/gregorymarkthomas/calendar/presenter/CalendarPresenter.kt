@@ -1,16 +1,28 @@
 package com.gregorymarkthomas.calendar.presenter
 
+import android.os.Bundle
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
+import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
+import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
+
+
+/**
+ * NOTE: if we want to change the screen from a presenter, but we want to supply arguments, you do it like this:
+ *    var args = Bundle()
+ *    args.putSerializable(MonthView.DATE_ARG, Date())
+ *    backstack.goTo(BackStackItem(MonthView::class.java, args))
+ */
 
 class CalendarPresenter(private var view: CalendarViewInterface, private var backstack: BackStackInterface): CalendarPresenterInterface {
 
     private var model: ModelInterface = Model()
 
-    override fun onViewCreated(date: Date) {
+    override fun onViewCreated(args: Bundle) {
+        val date = args.get(MonthView.DATE_ARG) as Date? ?: Date()
         view.setDateView(date.toString())
     }
 
@@ -19,7 +31,7 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
     }
 
     override fun onTodayButtonPress() {
-        TODO()
+        backstack.goTo(BackStackItem(MonthView::class.java))
     }
 
     override fun onEventPress(hours: Int, minutes: Int) {
