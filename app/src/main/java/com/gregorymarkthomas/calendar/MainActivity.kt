@@ -10,6 +10,7 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
 
@@ -21,7 +22,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
 
         setContentView(R.layout.activity_main)
 
-        backstack.goTo(MonthView(this, this))
+        backstack.goTo(MonthView(this, Date()))
     }
 
     override fun onDestroy() {
