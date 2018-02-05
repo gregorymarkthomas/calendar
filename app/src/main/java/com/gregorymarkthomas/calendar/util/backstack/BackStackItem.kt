@@ -15,7 +15,7 @@ import com.gregorymarkthomas.calendar.util.LifeCycleView
  *
  * Each individual LifeCycleView child has to unpack the Bundle.
  */
-class BackStackItem(private var klass: Class<out LifeCycleView>, private var args: Bundle = Bundle()) {
+class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var args: Bundle = Bundle()) {
 
     /**
      * When creating the BackStackItem, the developer supplies the class of the LifeCycleView.

@@ -4,12 +4,19 @@ class BackStack2(private var callback: BackStackCallback): BackStackInterface {
 
     private var stack: ArrayList<BackStackItem> = ArrayList()
 
-    /** TODO() - .contains() needs to compare the klass with the other klasses in the stack **/
+    fun indexOf(item: BackStackItem): Int {
+        return stack.indexOfLast { it.klass == item.klass }
+    }
+
     override fun goTo(item: BackStackItem) {
-        if(stack.contains(item)) {
-            stack.subList(stack.indexOf(item), stack.size - 1).clear()
-        } else {
+        val index = indexOf(item)
+        if(index == -1) {
             stack.add(item)
+        } else {
+            stack.subList(index, stack.size - 1).clear()
+
+            /** Refresh the input parameters of the view we are 're-using' **/
+            getView().args = item.args
         }
 
         callback.onViewChanged(item)
