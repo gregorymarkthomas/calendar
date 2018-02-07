@@ -7,6 +7,7 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
+import java.text.DateFormatSymbols;
 import java.util.*
 
 
@@ -23,7 +24,10 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
 
     override fun onViewCreated(args: Bundle) {
         val date = args.get(MonthView.DATE_ARG) as Date? ?: Date()
-        view.setDateView(date.toString())
+
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        view.setDateView(calendar.get(Calendar.DAY_OF_MONTH), getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
     override fun onDayPress(dayOfMonth: Int, monthOfYear: Int, year: Int) {
@@ -38,4 +42,5 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    fun getMonthString(month: Int) = DateFormatSymbols().months[month-1]
 }

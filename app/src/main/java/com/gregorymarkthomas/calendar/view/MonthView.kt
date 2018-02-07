@@ -32,7 +32,7 @@ class MonthView: LifeCycleView, CalendarViewInterface, View.OnClickListener {
         }
     }
 
-    override fun setDateView(date: String) {
-        dateTextView.text = date
+    override fun setDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
+        dateTextView.text = "$dayOfMonth $monthOfYear $year"
     }
 }
