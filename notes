@@ -1,3 +1,18 @@
 How do I want to request the Month View with TODAYS DATE from a PRESENTER?
     Well the presenter now has a backstack interface.
     Ideally I want to say backstack.goTo(MONTH_VIEW.key, Date()) (or something)
+
+
+
+
+
+
+How do I want to tag each view in the CalendarAdapter?
+    By date so that when the user presses on a day, the date can be sent along to the presenter for adding an event to that day.
+
+    Ideally I want a list of DAY objects for the Adapter to take and just show.
+    Day has:
+        dayOfMonth
+        month
+        year
+        googleCalendars

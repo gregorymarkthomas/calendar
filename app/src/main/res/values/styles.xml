@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Hour"></style>
+
+    <style name="Hour.Time">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="Hour.Button">
+    </style>
 </resources>

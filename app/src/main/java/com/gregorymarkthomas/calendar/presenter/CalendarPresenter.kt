@@ -3,11 +3,11 @@ package com.gregorymarkthomas.calendar.presenter
 import android.os.Bundle
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
+import com.gregorymarkthomas.calendar.util.Day
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
-import java.text.DateFormatSymbols;
 import java.util.*
 
 
@@ -19,7 +19,6 @@ import java.util.*
  */
 
 class CalendarPresenter(private var view: CalendarViewInterface, private var backstack: BackStackInterface): CalendarPresenterInterface {
-
     private var model: ModelInterface = Model()
 
     override fun onViewCreated(args: Bundle) {
@@ -27,10 +26,18 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
 
         val calendar = Calendar.getInstance()
         calendar.time = date
-        view.setDateView(calendar.get(Calendar.DAY_OF_MONTH), getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+
+        view.setDateView(dayOfMonth, model.getMonthString(month), year)
+
+        /** MonthView is always the default, so get CURRENT MONTH'S events **/
+        /** TODO - We want to be able to ask the model to get EVENTS (and associated Calendars) from given DATE for x number of days **/
+        model.getEvents(1, month, year, null)
     }
 
-    override fun onDayPress(dayOfMonth: Int, monthOfYear: Int, year: Int) {
+    override fun onDayPress(day: Day, hour: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -42,5 +49,5 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun getMonthString(month: Int) = DateFormatSymbols().months[month-1]
+
 }
