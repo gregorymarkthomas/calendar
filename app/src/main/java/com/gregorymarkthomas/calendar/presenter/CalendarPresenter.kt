@@ -1,6 +1,7 @@
 package com.gregorymarkthomas.calendar.presenter
 
 import android.os.Bundle
+import com.gregorymarkthomas.calendar.model.GetEventsCallback
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.Day
@@ -33,8 +34,11 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
         view.setDateView(dayOfMonth, model.getMonthString(month), year)
 
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
-        /** TODO - We want to be able to ask the model to get EVENTS (and associated Calendars) from given DATE for x number of days **/
-        model.getEvents(1, month, year, null)
+        model.getEvents(1, month, year, model.getDaysInMonth(month, year), object: GetEventsCallback {
+            override fun onGetEvents(days: MutableList<Day>) {
+                view.showDates(days)
+            }
+        })
     }
 
     override fun onDayPress(day: Day, hour: Int) {

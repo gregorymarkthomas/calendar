@@ -16,7 +16,10 @@ abstract class LifeCycleView: ConstraintLayout {
     }
 
     /**
-     * TODO - is there TWO constraint layouts?? LifeCycleView implements ConstraintLayout, AND month_view.xml has ConstraintLayout as root...
+     * The <merge> tag has been used in each view that uses the LifeCycleView.
+     * This is because LifeCycleView already subclasses ConstraintLayout.
+     *      If month_view.xml also has a ConstraintLayout as the root, then there will be too many ViewGroups.
+     *      We now use <merge> to use the higher level ViewGroup.
      */
     private fun inflate() {
         inflate(context, getLayout(), this)

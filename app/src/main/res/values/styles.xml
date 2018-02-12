@@ -8,12 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Hour"></style>
-
-    <style name="Hour.Time">
+    <style name="Hour">
         <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:paddingBottom">@dimen/hour_padding</item>
     </style>
 
-    <style name="Hour.Button">
+    <style name="HourDivider">
+        <item name="android:height">@dimen/calendar_day_hour_divider_height</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+
 </resources>

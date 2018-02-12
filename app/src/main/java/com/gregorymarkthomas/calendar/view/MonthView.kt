@@ -51,7 +51,7 @@ class MonthView: LifeCycleView, CalendarViewInterface, CalendarAdapter.CalendarA
 
     private fun setupAdapter() {
         calendarRecyclerView.layoutManager = GridLayoutManager(context, 1)
-        adapter = CalendarAdapter(context, this)
+        adapter = CalendarAdapter(context, this, calendarRecyclerView.height)
         calendarRecyclerView.adapter = adapter
     }
 }

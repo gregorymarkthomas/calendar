@@ -1,18 +1,27 @@
-How do I want to request the Month View with TODAYS DATE from a PRESENTER?
-    Well the presenter now has a backstack interface.
-    Ideally I want to say backstack.goTo(MONTH_VIEW.key, Date()) (or something)
+How should I display an event in the view?
+    The event should be its own view.
+    It needs to be clickable
 
+    TODO
+    - Remove these hour views and create one long container in row_day.xml
+    - The height will eventually be absolute, but we need to CALCULATE IT using the number of days we need to show and the amount of dp the RecyclerView is using.
+        - availableSpaceDP is now an input arg for the adapter.
+        - Once the height of the day view
+        This absolute height represents 24 hours in a day
+            Divide height by 1440 to get how may pixels there are in a minute.
 
+        Create the timeAmount view - this shows the time on the right hand side
+            Divide this view into minutes - use the 'minutePixels' value found above
 
+        Create another view that sits next to the timeAmount view
+            This will be the container for events
+            This container should be clickable
+                When clicked, a new event should be created.
+                The time the event starts should be calculated by where the time intersects
+                    If clicked on 13:43, then round to 13:45
 
+        For each event, create a new view that sits in the eventContainer
+            The view should be clickable
+                The single event page should load
 
-
-How do I want to tag each view in the CalendarAdapter?
-    By date so that when the user presses on a day, the date can be sent along to the presenter for adding an event to that day.
-
-    Ideally I want a list of DAY objects for the Adapter to take and just show.
-    Day has:
-        dayOfMonth
-        month
-        year
-        googleCalendars
+        If there is a second event that runs at the same time as another, then the views have to share the space in the container
