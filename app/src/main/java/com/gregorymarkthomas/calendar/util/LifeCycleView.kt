@@ -12,6 +12,7 @@ abstract class LifeCycleView: ConstraintLayout {
 
     constructor(activity: MainActivity): super(activity) {
         backstack = activity
+        tag = javaClass.simpleName
         inflate()
     }
 

@@ -16,18 +16,19 @@ class MonthView: LifeCycleView, CalendarViewInterface, CalendarAdapter.CalendarA
     private val TAG = "MonthView"
 
     private var presenter: CalendarPresenterInterface = CalendarPresenter(this, backstack)
-
     private lateinit var adapter: CalendarAdapter
+
     companion object {
         const val DATE_ARG = "date"
-
     }
     constructor(activity: MainActivity, args: Bundle): super(activity) {
-        presenter.onViewCreated(args)
-        viewTodayButton.setOnClickListener(this)
-
+        setupTodayButton()
         setupAdapter()
+
+        /** This must be called last. **/
+        presenter.onViewCreated(args)
     }
+
     override fun getLayout(): Int = R.layout.month_view
 
     override fun showDates(days: MutableList<Day>) {
@@ -47,6 +48,10 @@ class MonthView: LifeCycleView, CalendarViewInterface, CalendarAdapter.CalendarA
 
     override fun onTimeClick(day: Day, hour: Int) {
         presenter.onDayPress(day, hour)
+    }
+
+    private fun setupTodayButton() {
+        viewTodayButton.setOnClickListener(this)
     }
 
     private fun setupAdapter() {

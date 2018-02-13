@@ -23,8 +23,9 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
     private var model: ModelInterface = Model()
 
     override fun onViewCreated(args: Bundle) {
+        /** Get the day of month, month and year that has been specified.
+         * Show Today's date if no date was supplied. **/
         val date = args.get(MonthView.DATE_ARG) as Date? ?: Date()
-
         val calendar = Calendar.getInstance()
         calendar.time = date
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)

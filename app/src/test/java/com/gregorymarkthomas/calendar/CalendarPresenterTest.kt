@@ -3,6 +3,7 @@ package com.gregorymarkthomas.calendar
 import android.os.Bundle
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
+import com.gregorymarkthomas.calendar.util.Day
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -31,9 +32,8 @@ class CalendarPresenterTest {
     private lateinit var view: CalendarViewInterface
     @Mock
     private var args: Bundle = Bundle()
-    // TODO()
-//    @Mock
-//    private lateinit var model: Model
+    @Mock
+    private lateinit var model: Model
 
     @Before
     fun setUp() {
@@ -49,7 +49,7 @@ class CalendarPresenterTest {
         calendar.time = Date()
 
         // then
-        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), presenter.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
+        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), model.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
     @Test
@@ -64,7 +64,7 @@ class CalendarPresenterTest {
         calendar.time = now
 
         // then
-        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), presenter.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
+        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), model.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
     /**
@@ -82,11 +82,12 @@ class CalendarPresenterTest {
 
     /**
      * TODO(): need to change MonthView to DayView
+     * This will fail
      */
     @Test
     fun when_future_day_pressed_then_show_future_day_view() {
         // when
-        presenter.onDayPress(18, 3, 1989)
+        presenter.onDayPress(Day(19, 7, 2050), 12)
 
         // then
         then(backstack).should().goTo(BackStackItem(MonthView::class.java))
