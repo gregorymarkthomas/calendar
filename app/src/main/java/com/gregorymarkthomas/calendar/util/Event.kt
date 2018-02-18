@@ -1,3 +1,5 @@
 package com.gregorymarkthomas.calendar.util
 
-class Event(calendar: Calendar)
+import java.util.*
+
+class Event(var calendar: Calendar, var startDate: Date, var endDate: Date)

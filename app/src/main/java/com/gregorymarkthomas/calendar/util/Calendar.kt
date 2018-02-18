@@ -1,5 +1,5 @@
 package com.gregorymarkthomas.calendar.util
 
-class Calendar {
+class Calendar(var colourResource: Int) {
 
 }
