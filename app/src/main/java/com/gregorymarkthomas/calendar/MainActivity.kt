@@ -2,8 +2,6 @@ package com.gregorymarkthomas.calendar
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import com.gregorymarkthomas.calendar.util.backstack.BackStack2
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
@@ -11,7 +9,6 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
 
@@ -46,8 +43,8 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
         return backstack.goBack()
     }
 
-    override fun getView(): BackStackItem {
-        return backstack.getView()
+    override fun getCurrentView(): LifeCycleView {
+        return backstack.getCurrentView()
     }
 
     override fun onViewChanged(item: BackStackItem) {

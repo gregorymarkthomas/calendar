@@ -1,5 +1,7 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
+import com.gregorymarkthomas.calendar.util.LifeCycleView
+
 class BackStack2(private var callback: BackStackCallback): BackStackInterface {
 
     private var stack: ArrayList<BackStackItem> = ArrayList()
@@ -16,7 +18,7 @@ class BackStack2(private var callback: BackStackCallback): BackStackInterface {
             stack.subList(index, stack.size - 1).clear()
 
             /** Refresh the input parameters of the view we are 're-using' **/
-            getView().args = item.args
+            getCurrentBackStackItem().args = item.args
         }
 
         callback.onViewChanged(item)
@@ -31,13 +33,16 @@ class BackStack2(private var callback: BackStackCallback): BackStackInterface {
             success = false
         }
 
-        callback.onViewChanged(getView())
+        callback.onViewChanged(getCurrentBackStackItem())
 
         return success
     }
 
-    override fun getView(): BackStackItem {
-        return stack.get(stack.size - 1)
+    override fun getCurrentView(): LifeCycleView {
+        return getCurrentBackStackItem().view
     }
 
+    private fun getCurrentBackStackItem(): BackStackItem {
+        return stack.get(stack.size - 1)
+    }
 }

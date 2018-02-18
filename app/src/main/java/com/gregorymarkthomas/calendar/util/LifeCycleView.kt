@@ -26,7 +26,7 @@ abstract class LifeCycleView: ConstraintLayout {
         inflate(context, getLayout(), this)
 
         /** Expand 'this' ConstraintLayout to use all of the usable space. **/
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        layoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
     abstract fun getLayout(): Int

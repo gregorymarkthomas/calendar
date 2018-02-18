@@ -17,6 +17,8 @@ import com.gregorymarkthomas.calendar.util.LifeCycleView
  */
 class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var args: Bundle = Bundle()) {
 
+    internal lateinit var view: LifeCycleView
+
     /**
      * When creating the BackStackItem, the developer supplies the class of the LifeCycleView.
      * This function instantiates that view, and should be called from the activity.
@@ -25,6 +27,7 @@ class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var a
      * Each LifeCycleView has an optional Bundle for any input arguments.
      */
     fun instantiateView(activity: MainActivity): LifeCycleView {
-        return klass.getConstructor(MainActivity::class.java, Bundle::class.java).newInstance(activity, args)
+        view = klass.getConstructor(MainActivity::class.java, Bundle::class.java).newInstance(activity, args)
+        return view
     }
 }
