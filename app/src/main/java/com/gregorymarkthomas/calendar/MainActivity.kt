@@ -13,14 +13,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
 
     private val TAG = "MainActivity"
+
+    companion object {
+        val INITIAL_VIEW_EXTRA = "initial_view_extra"
+    }
+
     private val backstack = BackStack2(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
-        backstack.goTo(BackStackItem(MonthView::class.java))
+        goTo(BackStackItem(getInitialView()))
     }
 
     override fun onDestroy() {
@@ -50,5 +54,12 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
     override fun onViewChanged(item: BackStackItem) {
         main_content.removeAllViews()
         main_content.addView(item.instantiateView(this))
+    }
+
+    fun getInitialView(): Class<out LifeCycleView> {
+        var initialViewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
+        if(initialViewClass == null)
+            initialViewClass = MonthView::class.java
+        return initialViewClass
     }
 }

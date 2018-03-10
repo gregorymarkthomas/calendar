@@ -6,14 +6,16 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.util.Log
 import com.gregorymarkthomas.calendar.MainActivity
+import com.gregorymarkthomas.calendar.util.LifeCycleView
 
-class MainActivityTestRule: ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
+class MainActivityTestRule(var viewClass: Class<out LifeCycleView>?): ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
     val TAG = "MainActivityTestRule"
 
     var context: Context = InstrumentationRegistry.getInstrumentation().targetContext
+    internal lateinit var view: LifeCycleView
 
     override fun beforeActivityLaunched() {
-        super.beforeActivityLaunched();
+        super.beforeActivityLaunched()
 
         // Maybe prepare some mock service calls
         // Maybe override some dependency injection modules with mocks
@@ -22,6 +24,7 @@ class MainActivityTestRule: ActivityTestRule<MainActivity>(MainActivity::class.j
 
     override fun getActivityIntent(): Intent? {
         var customIntent = Intent(context, MainActivity::class.java)
+        customIntent.putExtra(MainActivity.INITIAL_VIEW_EXTRA, viewClass)
         return customIntent
     }
 
@@ -30,11 +33,11 @@ class MainActivityTestRule: ActivityTestRule<MainActivity>(MainActivity::class.j
 
         // maybe you want to do something here
         Log.i(TAG, "afterActivityLaunched()")
+        view = activity.getCurrentView()
     }
 
     override fun afterActivityFinished() {
         super.afterActivityFinished()
         Log.i(TAG, "afterActivityFinished()")
     }
-
 }
