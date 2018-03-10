@@ -1,12 +1,25 @@
 package com.gregorymarkthomas.calendar.tests
 
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
+import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.rules.MainActivityTestRule
 import com.gregorymarkthomas.calendar.view.MonthView
+import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.text.DateFormatSymbols
+import java.util.*
 
+/**
+ * We want to shy away from Instrumented tests, if possible.
+ * This is because we can effectively test each View/Presenter anyway.
+ * But the test below is an example that it works.
+ */
 @RunWith(AndroidJUnit4::class)
 class MonthViewTest {
     val TAG = "MonthViewTest"
@@ -14,10 +27,15 @@ class MonthViewTest {
     @get:Rule
     val rule = MainActivityTestRule(MonthView::class.java)
 
-    // TODO()
     @Test
     fun calendar_shows_day() {
-        /** **/
-        rule.view.getLayout()
+        /** Get today's date **/
+        val calendar = Calendar.getInstance()
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val monthStr = DateFormatSymbols().months[month-1]
+        val year = calendar.get(Calendar.YEAR)
+
+        onView(withId(R.id.dateTextView)).check(matches(withText("$dayOfMonth $monthStr $year")))
     }
 }

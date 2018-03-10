@@ -56,7 +56,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback {
         main_content.addView(item.instantiateView(this))
     }
 
-    fun getInitialView(): Class<out LifeCycleView> {
+    private fun getInitialView(): Class<out LifeCycleView> {
         var initialViewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
         if(initialViewClass == null)
             initialViewClass = MonthView::class.java
