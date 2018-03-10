@@ -1,7 +1,7 @@
 package com.gregorymarkthomas.calendar.presenter
 
 import android.os.Bundle
-import com.gregorymarkthomas.calendar.model.GetEventsCallback
+import com.gregorymarkthomas.calendar.model.Callback
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.Day
@@ -35,7 +35,7 @@ class CalendarPresenter(private var view: CalendarViewInterface, private var bac
         view.setDateView(dayOfMonth, model.getMonthString(month), year)
 
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
-        model.getEvents(1, month, year, model.getDaysInMonth(month, year), object: GetEventsCallback {
+        model.getEvents(1, month, year, model.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
             override fun onGetEvents(days: MutableList<Day>) {
                 view.showDates(days)
             }

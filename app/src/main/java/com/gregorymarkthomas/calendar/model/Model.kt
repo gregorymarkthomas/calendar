@@ -9,7 +9,7 @@ class Model: ModelInterface {
         return Date()
     }
 
-    override fun getEvents(dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: GetEventsCallback) {
+    override fun getEvents(dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback) {
         // TODO()
         callback.onGetEvents(mutableListOf())
     }
