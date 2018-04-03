@@ -1,6 +1,5 @@
 package com.gregorymarkthomas.calendar.view
 
-import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.gregorymarkthomas.calendar.MainActivity
@@ -11,22 +10,24 @@ import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.util.Day
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import kotlinx.android.synthetic.main.month_view.view.*
+import java.util.*
 
-class MonthView: LifeCycleView, CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+class MonthView(activity: MainActivity, date: Date?): LifeCycleView(activity), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private val TAG = "MonthView"
 
-    private var presenter: CalendarPresenterInterface = CalendarPresenter(this, backstack)
+    private var presenter: CalendarPresenterInterface
     private lateinit var adapter: CalendarAdapter
 
     companion object {
         const val DATE_ARG = "date"
     }
-    constructor(activity: MainActivity, args: Bundle): super(activity) {
+
+    init {
         setupTodayButton()
         setupAdapter()
 
         /** This must be called last. **/
-        presenter.onViewCreated(args)
+        this.presenter = CalendarPresenter(this, backstack, date)
     }
 
     override fun getLayout(): Int = R.layout.month_view

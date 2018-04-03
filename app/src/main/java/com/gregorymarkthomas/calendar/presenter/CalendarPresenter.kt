@@ -1,6 +1,5 @@
 package com.gregorymarkthomas.calendar.presenter
 
-import android.os.Bundle
 import com.gregorymarkthomas.calendar.model.Callback
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
@@ -19,15 +18,15 @@ import java.util.*
  *    backstack.goTo(BackStackItem(MonthView::class.java, args))
  */
 
-class CalendarPresenter(private var view: CalendarViewInterface, private var backstack: BackStackInterface): CalendarPresenterInterface {
+class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInterface, date: Date? = null): CalendarPresenterInterface {
     private var model: ModelInterface = Model()
 
-    override fun onViewCreated(args: Bundle) {
-        /** Get the day of month, month and year that has been specified.
-         * Show Today's date if no date was supplied. **/
-        val date = args.get(MonthView.DATE_ARG) as Date? ?: Date()
+    /** Get the day of month, month and year that has been specified.
+     * Show Today's date if no date was supplied. **/
+    init {
         val calendar = Calendar.getInstance()
-        calendar.time = date
+        if(date != null)
+            calendar.time = date
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)

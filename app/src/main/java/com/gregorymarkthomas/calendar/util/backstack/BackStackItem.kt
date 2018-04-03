@@ -1,8 +1,8 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import android.os.Bundle
 import com.gregorymarkthomas.calendar.MainActivity
 import com.gregorymarkthomas.calendar.util.LifeCycleView
+import java.util.*
 
 /**
  * This class holds the class of the view we want to add to the BackStack. It also holds any input arguments.
@@ -15,7 +15,7 @@ import com.gregorymarkthomas.calendar.util.LifeCycleView
  *
  * Each individual LifeCycleView child has to unpack the Bundle.
  */
-class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var args: Bundle = Bundle()) {
+class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var date: Date? = null) {
 
     internal lateinit var view: LifeCycleView
 
@@ -27,7 +27,7 @@ class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var a
      * Each LifeCycleView has an optional Bundle for any input arguments.
      */
     fun instantiateView(activity: MainActivity): LifeCycleView {
-        view = klass.getConstructor(MainActivity::class.java, Bundle::class.java).newInstance(activity, args)
+        view = klass.getConstructor(MainActivity::class.java, Date::class.java).newInstance(activity, date)
         return view
     }
 }

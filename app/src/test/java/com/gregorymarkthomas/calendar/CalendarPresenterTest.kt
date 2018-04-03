@@ -19,8 +19,6 @@ import java.util.*
 
 class CalendarPresenterTest {
 
-    private lateinit var presenter: CalendarPresenter
-
     /** Ensure all mocks will be properly initialized before each test */
     @JvmField @Rule
     var mockitoRule = MockitoJUnit.rule()
@@ -37,13 +35,16 @@ class CalendarPresenterTest {
 
     @Before
     fun setUp() {
-        presenter = CalendarPresenter(view, backstack)
+        // Do nothing
     }
 
+    /**
+     * CalendarPresenter has a null date by default
+     */
     @Test
     fun when_view_loaded_without_input_date_then_show_today_date() {
         // when
-        presenter.onViewCreated(args)
+        var presenter = CalendarPresenter(view, backstack)
 
         val calendar = Calendar.getInstance()
         calendar.time = Date()
@@ -52,13 +53,15 @@ class CalendarPresenterTest {
         then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), model.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
+    /**
+     * Set date to 'now'
+     */
     @Test
     fun when_view_loaded_with_input_date_then_show_input_date() {
         val now = Date()
-        args.putSerializable(MonthView.Companion.DATE_ARG, now)
 
         // when
-        presenter.onViewCreated(args)
+        var presenter = CalendarPresenter(view, backstack, now)
 
         val calendar = Calendar.getInstance()
         calendar.time = now
@@ -73,6 +76,9 @@ class CalendarPresenterTest {
      */
     @Test
     fun when_today_button_pressed_then_show_today_date_view() {
+
+        var presenter = CalendarPresenter(view, backstack)
+
         // when
         presenter.onTodayButtonPress()
 
@@ -86,6 +92,8 @@ class CalendarPresenterTest {
      */
     @Test
     fun when_future_day_pressed_then_show_future_day_view() {
+        var presenter = CalendarPresenter(view, backstack)
+
         // when
         presenter.onDayPress(Day(19, 7, 2050), 12)
 

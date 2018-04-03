@@ -18,7 +18,7 @@ class BackStack2(private var callback: BackStackCallback): BackStackInterface {
             stack.subList(index, stack.size - 1).clear()
 
             /** Refresh the input parameters of the view we are 're-using' **/
-            getCurrentBackStackItem().args = item.args
+            getCurrentBackStackItem().date = item.date
         }
 
         callback.onViewChanged(item)
