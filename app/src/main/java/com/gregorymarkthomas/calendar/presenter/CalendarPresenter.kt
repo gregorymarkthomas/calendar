@@ -12,12 +12,8 @@ import java.util.*
 
 
 /**
- * NOTE: if we want to change the screen from a presenter, but we want to supply arguments, you do it like this:
- *    var args = Bundle()
- *    args.putSerializable(MonthView.DATE_ARG, Date())
- *    backstack.goTo(BackStackItem(MonthView::class.java, args))
+ * There should be NO Android stuff in the Presenter.
  */
-
 class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInterface, date: Date? = null): CalendarPresenterInterface {
     private var model: ModelInterface = Model()
 

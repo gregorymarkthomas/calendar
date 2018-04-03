@@ -16,7 +16,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
-
+/**
+ * TODO - Try to avoid Roboelectric. Seems a bit finicky.
+ */
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
 class MonthViewTest {
