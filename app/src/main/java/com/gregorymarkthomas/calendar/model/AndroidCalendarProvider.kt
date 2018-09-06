@@ -36,7 +36,7 @@ class AndroidCalendarProvider: CalendarRepository {
         val cursor = query(selection, selectionArgs)
 
         // TODO - extract data into 'days'
-
+        Mut
         cursor.close()
 
         callback.onGetEvents(days)
