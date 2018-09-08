@@ -3,7 +3,7 @@ package com.gregorymarkthomas.calendar
 import android.os.Bundle
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
-import com.gregorymarkthomas.calendar.util.Day
+import com.gregorymarkthomas.calendar.util.AppDay
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -95,7 +95,7 @@ class CalendarPresenterTest {
         var presenter = CalendarPresenter(view, backstack)
 
         // when
-        presenter.onDayPress(Day(19, 7, 2050), 12)
+        presenter.onDayPress(AppDay(19, 7, 2050), 12)
 
         // then
         then(backstack).should().goTo(BackStackItem(MonthView::class.java))

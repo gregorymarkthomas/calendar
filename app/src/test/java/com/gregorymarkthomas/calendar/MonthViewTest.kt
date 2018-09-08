@@ -1,7 +1,7 @@
 package com.gregorymarkthomas.calendar
 
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
-import com.gregorymarkthomas.calendar.util.Day
+import com.gregorymarkthomas.calendar.util.AppDay
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Before
@@ -48,9 +48,9 @@ class MonthViewTest {
 
     @Test
     fun thirty_day_views_show_for_september() {
-        /** Create 30 Day objects, without Events **/
+        /** Create 30 AppDay objects, without Events **/
         var days = MutableList(30, {
-            Day(it+1, 9, 2018)
+            AppDay(it+1, 9, 2018)
         })
 
         assertEquals(30, days.size)

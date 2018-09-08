@@ -7,7 +7,7 @@ import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.util.CalendarAdapter
-import com.gregorymarkthomas.calendar.util.Day
+import com.gregorymarkthomas.calendar.util.AppDay
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
@@ -32,7 +32,7 @@ class MonthView(activity: MainActivity, date: Date?): LifeCycleView(activity), C
 
     override fun getLayout(): Int = R.layout.month_view
 
-    override fun showDates(days: MutableList<Day>) {
+    override fun showDates(days: MutableList<AppDay>) {
         adapter.addAll(days)
         adapter.notifyDataSetChanged()
     }
@@ -47,7 +47,7 @@ class MonthView(activity: MainActivity, date: Date?): LifeCycleView(activity), C
         }
     }
 
-    override fun onTimeClick(day: Day, hour: Int) {
+    override fun onTimeClick(day: AppDay, hour: Int) {
         presenter.onDayPress(day, hour)
     }
 

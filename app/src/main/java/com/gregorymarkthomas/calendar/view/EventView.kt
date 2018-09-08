@@ -5,12 +5,12 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
-import com.gregorymarkthomas.calendar.util.Event
+import com.gregorymarkthomas.calendar.util.AppEvent
 import java.util.*
 
 /**
- * View to represent a single Event.
- * Its colourResource depends on the Calendar the Event is under.
+ * View to represent a single AppEvent.
+ * Its colourResource depends on the AppCalendar the AppEvent is under.
  */
 class EventView: LinearLayout {
     constructor(context: Context): super(context) {
@@ -39,7 +39,7 @@ class EventView: LinearLayout {
     /**
      * Set colourResource, height, event name, etc
      */
-    fun set(event: Event, dpPerMinute: Int) {
+    fun set(event: AppEvent, dpPerMinute: Int) {
         setBackgroundResource(event.calendar.colourResource)
         minimumHeight = calculateHeight(event.startDate, event.endDate, dpPerMinute)
     }

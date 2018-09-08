@@ -10,7 +10,7 @@ import com.gregorymarkthomas.calendar.view.EventView
 /**
  * This is the space where Events are shown. It represents 00:00 to 23:59.
  * Using the height of this inflated view, we need to calculate how many density pixels represent 1 minute of time.
- * This is so we can draw the Event view and ensure it expands in height to the correct number of minutes.
+ * This is so we can draw the AppEvent view and ensure it expands in height to the correct number of minutes.
  */
 class TimelineView: LinearLayout {
     constructor(context: Context): super(context) {
@@ -43,7 +43,7 @@ class TimelineView: LinearLayout {
      */
     private fun calculateDensityPixelsPerMinute() = height / 1439
 
-    fun setEvents(day: Day) {
+    fun setEvents(day: AppDay) {
         val dpPerMinute = calculateDensityPixelsPerMinute()
 
         for(event in day.events) {

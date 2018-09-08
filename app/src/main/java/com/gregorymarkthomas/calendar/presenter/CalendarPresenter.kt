@@ -3,7 +3,9 @@ package com.gregorymarkthomas.calendar.presenter
 import com.gregorymarkthomas.calendar.model.Callback
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.util.Day
+import com.gregorymarkthomas.calendar.util.AppCalendar
+import com.gregorymarkthomas.calendar.util.AppDay
+import com.gregorymarkthomas.calendar.util.VisibleCalendarsPreference
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -30,14 +32,18 @@ class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInt
         view.setDateView(dayOfMonth, model.getMonthString(month), year)
 
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
-        model.getEvents(1, month, year, model.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
-            override fun onGetEvents(days: MutableList<Day>) {
-                view.showDates(days)
+        model.getCalendars(object: Callback.GetCalendarsCallback {
+            override fun onGetCalendars(calendars: MutableList<AppCalendar>) {
+                model.getEvents(1, month, year, model.getDaysInMonth(month, year), VisibleCalendarsPreference.get(calendars), object: Callback.GetEventsCallback {
+                    override fun onGetEvents(days: MutableList<AppDay>) {
+                        view.showDates(days)
+                    }
+                })
             }
         })
     }
 
-    override fun onDayPress(day: Day, hour: Int) {
+    override fun onDayPress(day: AppDay, hour: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

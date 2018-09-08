@@ -6,18 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gregorymarkthomas.calendar.R
-import com.gregorymarkthomas.calendar.R.id.dayNumberView
 import kotlinx.android.synthetic.main.row_day.view.*
 
 /** 'days' is empty by default **/
 class CalendarAdapter(private val context: Context,
                       var callback: CalendarAdapterInterface,
                       private var availableSpaceDP: Int,
-                      private var days: MutableList<Day> = mutableListOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
+                      private var days: MutableList<AppDay> = mutableListOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     private val TAG = "CalendarAdapter"
     
-    var addAll: (MutableList<Day>) -> Unit = {
+    var addAll: (MutableList<AppDay>) -> Unit = {
         days = it
     }
 
@@ -36,7 +35,7 @@ class CalendarAdapter(private val context: Context,
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         /** 'with' keeps 'itemView' as the context, meaning we do not have to keep calling itemView **/
-        fun bind(day: Day) = with(itemView) {
+        fun bind(day: AppDay) = with(itemView) {
             tag = day.dayOfMonth
 
             dayNumberView.text = "$(day.dayOfMonth)"
@@ -44,13 +43,13 @@ class CalendarAdapter(private val context: Context,
             setEventsViews(day)
         }
 
-        private fun setEventsViews(day: Day) {
+        private fun setEventsViews(day: AppDay) {
             var timelineView: TimelineView = itemView.findViewById(R.id.timelineView)
             timelineView.setEvents(day)
         }
     }
     
     interface CalendarAdapterInterface {
-        fun onTimeClick(day: Day, hour: Int)
+        fun onTimeClick(day: AppDay, hour: Int)
     }
 }

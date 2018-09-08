@@ -1,8 +1,8 @@
 package com.gregorymarkthomas.calendar.view
 
-import com.gregorymarkthomas.calendar.util.Day
+import com.gregorymarkthomas.calendar.util.AppDay
 
 interface CalendarViewInterface {
     fun setDateView(dayOfMonth: Int, monthOfYear: String, year: Int)
-    fun showDates(days: MutableList<Day>)
+    fun showDates(days: MutableList<AppDay>)
 }
