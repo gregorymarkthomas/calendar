@@ -28,19 +28,18 @@ abstract class ContentResolverManager {
     /**
      * This must be called by child classes
      */
-    protected fun get(whereClauses: String?, whereArgs: Array<String>?): MutableList<Any> {
-        var (finalWhereClause, finalWhereArgs) = getDefaultWhereClause()
+    protected fun get(whereClauses: String?): MutableList<Any> {
+        var finalWhereClause = getDefaultWhereClause()
 
-        if(whereClauses != null && whereArgs != null) {
+        if(whereClauses != null) {
             finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
-            finalWhereArgs = mergeWhereArgs(finalWhereArgs, whereArgs)
         }
 
         val cursor = this.resolver.query(
                 getUri(),
                 getFields(),
                 finalWhereClause,
-                finalWhereArgs,
+                null,
                 null
         )
         val objectsList = convertContentIntoObjects(cursor)
@@ -53,18 +52,13 @@ abstract class ContentResolverManager {
     /**
      * TODO - remove hardcoded account
      */
-    private fun getDefaultWhereClause(): Pair<String, Array<String>> {
-        val where = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND (" + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND (" + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))"
-        val args = arrayOf("hello@hello.com", "com.google", "hello@hello.com")
-        return Pair(where, args)
+    private fun getDefaultWhereClause(): String {
+        val where = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = 'hello@hello.com') AND (" + CalendarContract.Calendars.ACCOUNT_TYPE + " = 'com.google') AND (" + CalendarContract.Calendars.OWNER_ACCOUNT + " = 'hello@hello.com'))"
+        return where
     }
 
     private fun mergeWhereClause(where1: String, where2: String): String {
         return where1 + where2
-    }
-
-    private fun mergeWhereArgs(args1: Array<String>, args2: Array<String>): Array<String> {
-        return args1.plus(args2)
     }
 
     private fun convertContentIntoObjects(cursor: Cursor): MutableList<Any> {

@@ -8,8 +8,8 @@ class EventContentResolver: ContentResolverManager() {
 
     /************* public *****/
     fun get(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray?): MutableList<AppDay> {
-        val (clause, args) = getWhereClause(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow)
-        return get(clause, args)
+        val clause = getWhereClause(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow)
+        return get(clause)
     }
 
     /************* protected *****/
@@ -39,14 +39,14 @@ class EventContentResolver: ContentResolverManager() {
      * For particular queries we want to add on to the WHERE clause.
      * TODO - add fromDayInMonth, month, year and specifiedNoOfDays to the 'selection' query
      **/
-    private fun getWhereClause(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray?): Pair<String, Array<String>> {
+    private fun getWhereClause(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray?): String {
 
-        var (where, args) = Pair<String, Array<String>>("", arrayOf())
-        addCalendarsToQuery(calendarsToShow, (where, args))
-        addDaySpanToQuery(fromDayInMonth, specifiedNoOfDays, (where, args))
-        addMonthToQuery(month, (where, args))
-        addYearToQuery(year, (where, args))
+        var where = ""
+        where = addCalendarsToQuery(calendarsToShow, where)
+        where = addDaySpanToQuery(fromDayInMonth, specifiedNoOfDays, where)
+        where = addMonthToQuery(month, where)
+        where = addYearToQuery(year, where)
 
-        return Pair(where, args)
+        return where
     }
 }
