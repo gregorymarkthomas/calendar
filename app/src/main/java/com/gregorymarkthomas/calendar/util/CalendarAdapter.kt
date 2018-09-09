@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gregorymarkthomas.calendar.R
+import com.gregorymarkthomas.calendar.model.AppDay
 import kotlinx.android.synthetic.main.row_day.view.*
 
 /** 'days' is empty by default **/

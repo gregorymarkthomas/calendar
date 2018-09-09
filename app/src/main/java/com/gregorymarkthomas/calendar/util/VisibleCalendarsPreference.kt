@@ -2,6 +2,7 @@ package com.gregorymarkthomas.calendar.util
 
 import android.preference.PreferenceManager
 import com.gregorymarkthomas.calendar.CalendarApplication
+import com.gregorymarkthomas.calendar.model.AppCalendar
 
 object VisibleCalendarsPreference {
 

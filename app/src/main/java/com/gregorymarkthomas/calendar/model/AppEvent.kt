@@ -1,4 +1,4 @@
-package com.gregorymarkthomas.calendar.util
+package com.gregorymarkthomas.calendar.model
 
 import java.util.*
 

@@ -3,8 +3,8 @@ package com.gregorymarkthomas.calendar.presenter
 import com.gregorymarkthomas.calendar.model.Callback
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.util.AppCalendar
-import com.gregorymarkthomas.calendar.util.AppDay
+import com.gregorymarkthomas.calendar.model.AppCalendar
+import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.util.VisibleCalendarsPreference
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem

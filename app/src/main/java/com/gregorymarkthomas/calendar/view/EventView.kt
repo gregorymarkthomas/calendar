@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
-import com.gregorymarkthomas.calendar.util.AppEvent
+import com.gregorymarkthomas.calendar.model.AppEvent
 import java.util.*
 
 /**

@@ -7,7 +7,7 @@ import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.util.CalendarAdapter
-import com.gregorymarkthomas.calendar.util.AppDay
+import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
