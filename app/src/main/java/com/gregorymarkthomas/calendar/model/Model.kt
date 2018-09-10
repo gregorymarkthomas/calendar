@@ -12,7 +12,7 @@ class Model: ModelInterface {
         return Date()
     }
 
-    override fun getEvents(dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, calendarsToShow: IntArray?, callback: Callback.GetEventsCallback) {
+    override fun getEvents(dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, calendarsToShow: IntArray, callback: Callback.GetEventsCallback) {
         repository.getEvents(dayInMonth, month, year, numberOfDays, calendarsToShow, callback)
     }
 
