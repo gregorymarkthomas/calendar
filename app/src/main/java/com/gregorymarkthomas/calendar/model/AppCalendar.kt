@@ -1,5 +1,3 @@
 package com.gregorymarkthomas.calendar.model
 
-class AppCalendar(var colourResource: Int) {
-
-}
+class AppCalendar(var colourResource: Int)

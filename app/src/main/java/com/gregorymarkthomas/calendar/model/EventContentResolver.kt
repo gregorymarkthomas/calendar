@@ -9,7 +9,7 @@ class EventContentResolver: ContentResolverManager() {
     /************* public *****/
     fun get(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): MutableList<AppDay> {
         val clause = getWhereClause(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow)
-        return get(clause)
+        return get(clause) as MutableList<AppDay>
     }
 
     /************* protected *****/

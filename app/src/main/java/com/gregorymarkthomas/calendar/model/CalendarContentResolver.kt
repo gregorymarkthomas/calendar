@@ -8,7 +8,7 @@ class CalendarContentResolver: ContentResolverManager() {
 
     /************* public *****/
     fun get(): MutableList<AppCalendar> {
-        return get(null)
+        return get(null) as MutableList<AppCalendar>
     }
 
     /************* protected *****/
