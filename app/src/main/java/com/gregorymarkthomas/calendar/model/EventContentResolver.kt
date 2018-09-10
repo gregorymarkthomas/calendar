@@ -21,16 +21,12 @@ class EventContentResolver: ContentResolverManager() {
         return arrayOf(Events._ID, Events.OWNER_ACCOUNT)
     }
 
-    /**
-     * TODO - get Events in order DTSTART ascending
-     */
     override fun getSortOrder(): String? {
         return Events.DTSTART + ASCENDING
     }
 
     /**
      * Converts CalendarProvider data into a list of Days
-     * TODO - use leniency in Calendar class to get the 32nd day of the year (Feb 1st) instead of receiving an error that there are no more days in the month
      */
     override fun getObjectFromRow(cursor: Cursor): AppDay {
         return AppDay(getDayOfMonth(cursor), getMonth(cursor), getYear(cursor), getEvents(cursor))
@@ -41,7 +37,6 @@ class EventContentResolver: ContentResolverManager() {
     /**
      * The default WHERE clause is required so that the calendars for the currently selected user is retrieved.
      * For particular queries we want to add on to the WHERE clause.
-     * TODO - add fromDayInMonth, month, year and specifiedNoOfDays to the 'selection' query
      **/
     private fun getWhereClause(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): String {
         var where = ""
