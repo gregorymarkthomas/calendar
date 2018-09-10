@@ -10,6 +10,16 @@ import com.gregorymarkthomas.calendar.CalendarApplication
  */
 abstract class ContentResolverManager {
 
+    protected val ASCENDING = " ASC"
+    protected val DESCENDING = " DESC"
+    protected val AND = " AND "
+    protected val OR = " OR "
+    protected val GREATER_THAN = " > "
+    protected val GREATER_THAN_OR_EQUAL = " >= "
+    protected val LESS_THAN = " < "
+    protected val LESS_THAN_OR_EQUAL = " <= "
+    protected val EQUALS = " = "
+
     private val resolver = CalendarApplication.applicationContext.contentResolver
 
     /************* public *****/
@@ -40,7 +50,7 @@ abstract class ContentResolverManager {
                 getFields(),
                 finalWhereClause,
                 null,
-                null
+                getSortOrder()
         )
         val objectsList = convertContentIntoObjects(cursor)
         cursor.close()
