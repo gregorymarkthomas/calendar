@@ -17,8 +17,11 @@ class EventContentResolver: ContentResolverManager() {
         return Events.CONTENT_URI
     }
 
+    /**
+     * TODO - add more necessary fields
+     */
     override fun getFields(): Array<String> {
-        return arrayOf(Events._ID, Events.OWNER_ACCOUNT)
+        return arrayOf(Events._ID, Events.OWNER_ACCOUNT, Events.DTSTART, Events.DTEND, Events.DURATION, Events.ALL_DAY)
     }
 
     override fun getSortOrder(): String? {
