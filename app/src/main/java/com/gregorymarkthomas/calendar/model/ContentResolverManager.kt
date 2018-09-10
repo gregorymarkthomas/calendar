@@ -4,6 +4,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
 import com.gregorymarkthomas.calendar.CalendarApplication
+import java.util.*
 
 /**
  * Generic abstract class that handles the operations with the ContentResolver
@@ -55,6 +56,17 @@ abstract class ContentResolverManager {
         val objectsList = convertContentIntoObjects(cursor)
         cursor.close()
         return objectsList
+    }
+
+    /**
+     * We set 'leniency' to true so that if day=32 and month=0, then February the 1st will be output, instead of an exception being thrown.
+     */
+    protected fun getEpoch(day: Int, month: Int, year: Int): Long {
+        val timeZone = TimeZone.getTimeZone("UTC")
+        val calendar = Calendar.getInstance(timeZone)
+        calendar.isLenient = true
+        calendar.set(year, month, day)
+        return calendar.timeInMillis
     }
 
 

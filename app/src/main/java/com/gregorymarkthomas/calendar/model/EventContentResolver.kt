@@ -30,6 +30,7 @@ class EventContentResolver: ContentResolverManager() {
 
     /**
      * Converts CalendarProvider data into a list of Days
+     * TODO - use leniency in Calendar class to get the 32nd day of the year (Feb 1st) instead of receiving an error that there are no more days in the month
      */
     override fun getObjectFromRow(cursor: Cursor): AppDay {
         return AppDay(getDayOfMonth(cursor), getMonth(cursor), getYear(cursor), getEvents(cursor))
@@ -76,33 +77,36 @@ class EventContentResolver: ContentResolverManager() {
         val startEpoch = getEpoch(fromDayInMonth, month, year)
         val endEpoch = getEpoch(fromDayInMonth + specifiedNoOfDays, month, year)
 
-        val str = StringBuilder()
-        str.append(AND)
-        str.append("(")
+        val str = StringBuilder("")
+        if(startEpoch <= endEpoch) {
+            str.append(AND)
+            str.append("(")
 
-        str.append("(")
-        str.append(Events.DTSTART + GREATER_THAN_OR_EQUAL + startEpoch)
-        str.append(AND)
-        str.append(Events.DTSTART + LESS_THAN_OR_EQUAL + endEpoch)
-        str.append(")")
+            str.append("(")
+            str.append(Events.DTSTART + GREATER_THAN_OR_EQUAL + startEpoch)
+            str.append(AND)
+            str.append(Events.DTSTART + LESS_THAN_OR_EQUAL + endEpoch)
+            str.append(")")
 
-        str.append(OR)
+            str.append(OR)
 
-        str.append("(")
-        str.append(Events.DTEND + GREATER_THAN + startEpoch)
-        str.append(AND)
-        str.append(Events.DTEND + LESS_THAN_OR_EQUAL + endEpoch)
-        str.append(")")
+            str.append("(")
+            str.append(Events.DTEND + GREATER_THAN + startEpoch)
+            str.append(AND)
+            str.append(Events.DTEND + LESS_THAN_OR_EQUAL + endEpoch)
+            str.append(")")
 
-        str.append(OR)
+            str.append(OR)
 
-        str.append("(")
-        str.append(Events.DTSTART + LESS_THAN + startEpoch)
-        str.append(AND)
-        str.append(Events.DTEND + GREATER_THAN + endEpoch)
-        str.append(")")
+            str.append("(")
+            str.append(Events.DTSTART + LESS_THAN + startEpoch)
+            str.append(AND)
+            str.append(Events.DTEND + GREATER_THAN + endEpoch)
+            str.append(")")
 
-        str.append(")")
+            str.append(")")
+        } else
+            throw ArithmeticException("startEpoch ('" + startEpoch + "') is greater than endEpoch ('" + endEpoch + "')")
 
         return str.toString()
     }
