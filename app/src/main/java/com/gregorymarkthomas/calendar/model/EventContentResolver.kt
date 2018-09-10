@@ -29,10 +29,16 @@ class EventContentResolver: ContentResolverManager() {
     }
 
     /**
-     * Converts CalendarProvider data into a list of Days
+     * Converts CalendarProvider EVENT data into a list of Days.
+     * TODO() - this needs to return a List of DAYS - each day in the list will have some or no Events.
+     * TODO() - we need to put Events with Days
      */
-    override fun getObjectFromRow(cursor: Cursor): AppDay {
-        return AppDay(getDayOfMonth(cursor), getMonth(cursor), getYear(cursor), getEvents(cursor))
+    override fun convertContentIntoObjects(cursor: Cursor): MutableList<Any> {
+        val events = mutableListOf<Any>()
+        while(cursor.moveToNext()) {
+            events.add(AppEvent(getCalendar(cursor), getStartDate(cursor), getEndDate(cursor)))
+        }
+        return compileDays(events)
     }
 
 
@@ -109,9 +115,18 @@ class EventContentResolver: ContentResolverManager() {
         return str.toString()
     }
 
+    /**
+     * TODO - create list of Days - there should be the INPUT amount of days
+     * TODO - we need to find a way to use the original INPUT noOfDays etc
+     * TODO - should I rethink this?
+     */
+    private fun compileDays(events: MutableList<AppEvent>): MutableList<AppDay> {
+        AppDay(getDayOfMonth(cursor), getMonth(cursor), getYear(cursor), getEvents(cursor))
+    }
 
     /**
      * TODO - should we calculate from the input value or can we get it from the cursor?
+     * It may well be a pain to calculate the date from
      */
     private fun getDayOfMonth(cursor: Cursor): Int {
         TODO("not implemented")

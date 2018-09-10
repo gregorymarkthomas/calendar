@@ -34,8 +34,12 @@ class CalendarContentResolver: ContentResolverManager() {
      * Converts CalendarProvider data into a list of Calendars.
      * TODO - need to define AppCalendar
      */
-    override fun getObjectFromRow(cursor: Cursor): AppCalendar {
-        return AppCalendar()
+    override fun convertContentIntoObjects(cursor: Cursor): MutableList<Any> {
+        val calendars = mutableListOf<Any>()
+        while(cursor.moveToNext()) {
+            calendars.add(AppCalendar())
+        }
+        return calendars
     }
 
 

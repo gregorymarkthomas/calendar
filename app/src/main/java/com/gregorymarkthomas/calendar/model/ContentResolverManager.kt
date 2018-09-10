@@ -34,7 +34,7 @@ abstract class ContentResolverManager {
     /**
      * Converts single data row into object
      */
-    protected abstract fun getObjectFromRow(cursor: Cursor): Any
+    protected abstract fun convertContentIntoObjects(cursor: Cursor): MutableList<Any>
 
     /**
      * This must be called by child classes
@@ -83,11 +83,4 @@ abstract class ContentResolverManager {
         return where1 + where2
     }
 
-    private fun convertContentIntoObjects(cursor: Cursor): MutableList<Any> {
-        val objs = mutableListOf<Any>()
-        while(cursor.moveToNext()) {
-            objs.add(getObjectFromRow(cursor))
-        }
-        return objs
-    }
 }
