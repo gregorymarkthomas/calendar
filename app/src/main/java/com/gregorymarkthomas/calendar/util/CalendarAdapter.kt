@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.row_day.view.*
 class CalendarAdapter(private val context: Context,
                       var callback: CalendarAdapterInterface,
                       private var availableSpaceDP: Int,
-                      private var days: MutableList<AppDay> = mutableListOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
+                      private var days: List<AppDay> = listOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     private val TAG = "CalendarAdapter"
     
-    var addAll: (MutableList<AppDay>) -> Unit = {
+    var addAll: (List<AppDay>) -> Unit = {
         days = it
     }
 

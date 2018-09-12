@@ -2,13 +2,19 @@ package com.gregorymarkthomas.calendar.model
 
 import android.database.Cursor
 import android.net.Uri
+import android.provider.CalendarContract
 import android.provider.CalendarContract.Calendars
+import com.gregorymarkthomas.calendar.util.CursorExtractor
+import java.util.*
 
 class CalendarContentResolver: ContentResolverManager() {
 
     /************* public *****/
-    fun get(): MutableList<AppCalendar> {
-        return get(null) as MutableList<AppCalendar>
+    fun get(): List<AppCalendar> {
+        val cursor: Cursor = get(null)
+        val calendars = createCalendars(cursor)
+        cursor.close()
+        return calendars
     }
 
     /************* protected *****/
@@ -17,10 +23,14 @@ class CalendarContentResolver: ContentResolverManager() {
     }
 
     /**
-     * TODO - Add more fields
+     * TODO - Add more fields!!!
      */
     override fun getFields(): Array<String> {
-        return arrayOf(Calendars._ID, Calendars.ACCOUNT_NAME, Calendars.CALENDAR_DISPLAY_NAME, Calendars.OWNER_ACCOUNT)
+        return arrayOf(Calendars._ID,
+                Calendars.CALENDAR_,
+                Calendars.CALENDAR_DISPLAY_NAME,
+                Calendars.ACCOUNT_NAME,
+                Calendars.OWNER_ACCOUNT)
     }
 
     /**
@@ -30,18 +40,24 @@ class CalendarContentResolver: ContentResolverManager() {
         return null
     }
 
+
+    /************* private *****/
     /**
      * Converts CalendarProvider data into a list of Calendars.
-     * TODO - need to define AppCalendar
      */
-    override fun convertContentIntoObjects(cursor: Cursor): MutableList<Any> {
-        val calendars = mutableListOf<Any>()
+    private fun createCalendars(cursor: Cursor): List<AppCalendar> {
+        val calendars = mutableListOf<AppCalendar>()
         while(cursor.moveToNext()) {
-            calendars.add(AppCalendar())
+            calendars.add(AppCalendar(
+                    CursorExtractor.Calendar.getId(cursor),
+                    CursorExtractor.Calendar.getDisplayName(cursor),
+                    CursorExtractor.Calendar.getColour(cursor),
+                    CursorExtractor.Calendar.getAccessLevel(cursor),
+                    CursorExtractor.Calendar.getTimezone(cursor),
+                    CursorExtractor.Calendar.getAccountName(cursor),
+                    CursorExtractor.Calendar.getOwnerAccount(cursor)
+            ))
         }
         return calendars
     }
-
-
-    /************* private *****/
 }

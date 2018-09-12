@@ -32,30 +32,22 @@ abstract class ContentResolverManager {
     protected abstract fun getSortOrder(): String?
 
     /**
-     * Converts single data row into object
-     */
-    protected abstract fun convertContentIntoObjects(cursor: Cursor): MutableList<Any>
-
-    /**
      * This must be called by child classes
      */
-    protected fun get(whereClauses: String?): MutableList<Any> {
+    protected fun get(whereClauses: String?): Cursor {
         var finalWhereClause = getDefaultWhereClause()
 
         if(whereClauses != null) {
             finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
         }
 
-        val cursor = this.resolver.query(
+        return this.resolver.query(
                 getUri(),
                 getFields(),
                 finalWhereClause,
                 null,
                 getSortOrder()
         )
-        val objectsList = convertContentIntoObjects(cursor)
-        cursor.close()
-        return objectsList
     }
 
     /**

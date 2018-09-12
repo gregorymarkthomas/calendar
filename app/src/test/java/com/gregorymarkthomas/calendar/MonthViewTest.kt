@@ -49,9 +49,9 @@ class MonthViewTest {
     @Test
     fun thirty_day_views_show_for_september() {
         /** Create 30 AppDay objects, without Events **/
-        var days = MutableList(30, {
+        val days = List(30) {
             AppDay(it + 1, 9, 2018)
-        })
+        }
 
         assertEquals(30, days.size)
         assertEquals(1, days[0].dayOfMonth)

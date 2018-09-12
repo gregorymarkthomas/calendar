@@ -32,7 +32,7 @@ class MonthView(activity: MainActivity, date: Date?): LifeCycleView(activity), C
 
     override fun getLayout(): Int = R.layout.month_view
 
-    override fun showDates(days: MutableList<AppDay>) {
+    override fun showDates(days: List<AppDay>) {
         adapter.addAll(days)
         adapter.notifyDataSetChanged()
     }

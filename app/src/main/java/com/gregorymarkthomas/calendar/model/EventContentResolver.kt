@@ -3,13 +3,18 @@ package com.gregorymarkthomas.calendar.model
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Events
+import com.gregorymarkthomas.calendar.util.CursorExtractor
+import java.util.*
 
 class EventContentResolver: ContentResolverManager() {
 
     /************* public *****/
-    fun get(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): MutableList<AppDay> {
+    fun get(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): List<AppDay> {
         val clause = getWhereClause(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow)
-        return get(clause) as MutableList<AppDay>
+        val cursor: Cursor = get(clause)
+        val events = getEvents(cursor)
+        cursor.close()
+        return getDays(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow, events)
     }
 
     /************* protected *****/
@@ -18,27 +23,19 @@ class EventContentResolver: ContentResolverManager() {
     }
 
     /**
-     * TODO - add more necessary fields
+     * TODO - add more necessary fields (like CALENDAR ones)
      */
     override fun getFields(): Array<String> {
-        return arrayOf(Events._ID, Events.OWNER_ACCOUNT, Events.DTSTART, Events.DTEND, Events.DURATION, Events.ALL_DAY)
+        return arrayOf(Events._ID,
+                Events.OWNER_ACCOUNT,
+                Events.DTSTART,
+                Events.DTEND,
+                Events.DURATION,
+                Events.ALL_DAY)
     }
 
     override fun getSortOrder(): String? {
         return Events.DTSTART + ASCENDING
-    }
-
-    /**
-     * Converts CalendarProvider EVENT data into a list of Days.
-     * TODO() - this needs to return a List of DAYS - each day in the list will have some or no Events.
-     * TODO() - we need to put Events with Days
-     */
-    override fun convertContentIntoObjects(cursor: Cursor): MutableList<Any> {
-        val events = mutableListOf<Any>()
-        while(cursor.moveToNext()) {
-            events.add(AppEvent(getCalendar(cursor), getStartDate(cursor), getEndDate(cursor)))
-        }
-        return compileDays(events)
     }
 
 
@@ -66,6 +63,33 @@ class EventContentResolver: ContentResolverManager() {
         }
         return queryPart
     }
+
+    private fun getEvents(cursor: Cursor): List<AppEvent> {
+        val events = mutableListOf<AppEvent>()
+        while(cursor.moveToNext()) {
+            events.add(AppEvent(CursorExtractor.Event.getCalendar(cursor),
+                    CursorExtractor.Event.getStartDate(cursor),
+                    CursorExtractor.Event.getEndDate(cursor),
+                    CursorExtractor.Event.getIsAllDay(cursor)
+            ))
+        }
+        return events
+    }
+
+    /**
+     * Converts CalendarProvider EVENT data into a list of Days.
+     */
+    private fun getDays(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray, events: List<AppEvent>): List<AppDay> {
+        val days = AppDay.createEmptyDays(fromDayInMonth, month, year, specifiedNoOfDays)
+        for(event in events) {
+
+            /** TODO - need to find the 'day' for this event and add it to the day in question **/
+
+        }
+        return days
+    }
+
+
 
     /**
      *  So long as an event has ANYTHING to do with this range of time, then grab it from the Provider.
@@ -113,40 +137,5 @@ class EventContentResolver: ContentResolverManager() {
             throw ArithmeticException("startEpoch ('" + startEpoch + "') is greater than endEpoch ('" + endEpoch + "')")
 
         return str.toString()
-    }
-
-    /**
-     * TODO - create list of Days - there should be the INPUT amount of days
-     * TODO - we need to find a way to use the original INPUT noOfDays etc
-     * TODO - should I rethink this?
-     */
-    private fun compileDays(events: MutableList<AppEvent>): MutableList<AppDay> {
-        AppDay(getDayOfMonth(cursor), getMonth(cursor), getYear(cursor), getEvents(cursor))
-    }
-
-    /**
-     * TODO - should we calculate from the input value or can we get it from the cursor?
-     * It may well be a pain to calculate the date from
-     */
-    private fun getDayOfMonth(cursor: Cursor): Int {
-        TODO("not implemented")
-    }
-
-    /**
-     * TODO - should we calculate from the input value or can we get it from the cursor?
-     */
-    private fun getMonth(cursor: Cursor): Int {
-        TODO("not implemented")
-    }
-
-    /**
-     * TODO - should we calculate from the input value or can we get it from the cursor?
-     */
-    private fun getYear(cursor: Cursor): Int {
-        TODO("not implemented")
-    }
-
-    private fun getEvents(cursor: Cursor): MutableList<AppEvent> {
-        TODO("not implemented")
     }
 }

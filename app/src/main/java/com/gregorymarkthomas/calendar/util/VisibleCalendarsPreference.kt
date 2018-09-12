@@ -14,7 +14,7 @@ object VisibleCalendarsPreference {
      * If not yet set, set as ALL available calendars.
      * This is converted into an IntArray.
      */
-    fun get(availableCalendars: MutableList<AppCalendar>): IntArray {
+    fun get(availableCalendars: List<AppCalendar>): IntArray {
         val calendarsStr = preferences.getString(VISIBLE_CALENDARS_KEY, extractCalendarIds(availableCalendars))
         return parseCommaSeparatedStringToIntArray(calendarsStr)
     }
@@ -23,7 +23,7 @@ object VisibleCalendarsPreference {
         preferences.edit().putString(VISIBLE_CALENDARS_KEY, parseIntArrayToCommaSeparatedString(visibleCalendars)).apply()
     }
 
-    private fun extractCalendarIds(availableCalendars: MutableList<AppCalendar>): String {
+    private fun extractCalendarIds(availableCalendars: List<AppCalendar>): String {
         val calendarIds = IntArray(availableCalendars.size)
         availableCalendars.forEachIndexed { index, calendar ->
             calendarIds[index] = calendar.id

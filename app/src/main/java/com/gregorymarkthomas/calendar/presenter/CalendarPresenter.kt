@@ -33,9 +33,9 @@ class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInt
 
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
         model.getCalendars(object: Callback.GetCalendarsCallback {
-            override fun onGetCalendars(calendars: MutableList<AppCalendar>) {
+            override fun onGetCalendars(calendars: List<AppCalendar>) {
                 model.getEvents(1, month, year, model.getDaysInMonth(month, year), VisibleCalendarsPreference.get(calendars), object: Callback.GetEventsCallback {
-                    override fun onGetEvents(days: MutableList<AppDay>) {
+                    override fun onGetEvents(days: List<AppDay>) {
                         view.showDates(days)
                     }
                 })
