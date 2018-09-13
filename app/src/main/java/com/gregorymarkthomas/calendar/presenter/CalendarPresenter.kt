@@ -15,6 +15,7 @@ import java.util.*
 
 /**
  * There should be NO Android stuff in the Presenter.
+ * TODO() - How do we deal with timezones of Events?
  */
 class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInterface, date: Date? = null): CalendarPresenterInterface {
     private var model: ModelInterface = Model()

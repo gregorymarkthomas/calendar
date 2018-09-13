@@ -10,12 +10,22 @@ import java.util.*
 class EventContentResolver: ContentResolverManager() {
 
     /************* public *****/
+    /**
+     * This calls the CalendarProvider 'specifiedNoOfDays' times.
+     * This is because we just get the events for THIS day (only one day).
+     * We used to do it where we would get ALL events and then re-calculate which events go with which AppDay.
+     * But this is much simpler.
+     */
     fun get(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): List<AppDay> {
-        val clause = getWhereClause(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow)
-        val cursor: Cursor = get(clause)
-        val events = getEvents(cursor)
-        cursor.close()
-        return getDays(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow, events)
+        val days = mutableListOf<AppDay>()
+        for(i in fromDayInMonth..fromDayInMonth + specifiedNoOfDays) {
+            val clause = getWhereClause(i, month, year, 1, calendarsToShow)
+            val cursor: Cursor = get(clause)
+            val events = getEvents(cursor)
+            cursor.close()
+            days.add(i, AppDay(i, month, year, events))
+        }
+        return days
     }
 
     /************* protected *****/
@@ -96,30 +106,6 @@ class EventContentResolver: ContentResolverManager() {
         }
         return events
     }
-
-    /**
-     * Converts CalendarProvider EVENT data into a list of Days.
-     */
-    private fun getDays(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray, events: List<AppEvent>): List<AppDay> {
-        val days = AppDay.createEmptyDays(fromDayInMonth, month, year, specifiedNoOfDays)
-        for(event in events) {
-
-            /** Find the DAYS (the time periods, not AppDays) that relate to this event **/
-
-
-            /** For each time period, find the AppDays **/
-
-            /** Loop through each AppDay and (attempt to) add the event **/
-
-
-            /** TODO - need to find the 'day' for this event and add it to the day in question **/
-            if(!isEventAddedToDay(event, day))
-                day.
-        }
-        return days
-    }
-
-
 
     /**
      *  So long as an event has ANYTHING to do with this range of time, then grab it from the Provider.

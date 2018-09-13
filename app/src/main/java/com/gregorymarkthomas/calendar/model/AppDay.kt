@@ -3,7 +3,7 @@ package com.gregorymarkthomas.calendar.model
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import java.util.*
 
-class AppDay(var dayOfMonth: Int, var month: Int, var year: Int, val events: MutableList<AppEvent> = mutableListOf()) {
+class AppDay(var dayOfMonth: Int, var month: Int, var year: Int, val events: List<AppEvent> = listOf()) {
 
     /**
      * The Date representation of this Day. This is in UTC.
@@ -26,7 +26,7 @@ class AppDay(var dayOfMonth: Int, var month: Int, var year: Int, val events: Mut
          */
         fun createEmptyDays(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int): List<AppDay> {
             val days = mutableListOf<AppDay>()
-            for(i in fromDayInMonth..specifiedNoOfDays) {
+            for(i in fromDayInMonth..fromDayInMonth + specifiedNoOfDays) {
                 days.add(AppDay(i, month, year))
             }
             return days
