@@ -22,13 +22,12 @@ class CalendarContentResolver: ContentResolverManager() {
         return Calendars.CONTENT_URI
     }
 
-    /**
-     * TODO - Add more fields!!!
-     */
     override fun getFields(): Array<String> {
         return arrayOf(Calendars._ID,
-                Calendars.CALENDAR_,
                 Calendars.CALENDAR_DISPLAY_NAME,
+                Calendars.CALENDAR_COLOR,
+                Calendars.CALENDAR_ACCESS_LEVEL,
+                Calendars.CALENDAR_TIME_ZONE,
                 Calendars.ACCOUNT_NAME,
                 Calendars.OWNER_ACCOUNT)
     }

@@ -2,6 +2,7 @@ package com.gregorymarkthomas.calendar.model
 
 import android.database.Cursor
 import android.net.Uri
+import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 import java.util.*
@@ -22,16 +23,19 @@ class EventContentResolver: ContentResolverManager() {
         return Events.CONTENT_URI
     }
 
-    /**
-     * TODO - add more necessary fields (like CALENDAR ones)
-     */
     override fun getFields(): Array<String> {
         return arrayOf(Events._ID,
-                Events.OWNER_ACCOUNT,
                 Events.DTSTART,
                 Events.DTEND,
                 Events.DURATION,
-                Events.ALL_DAY)
+                Events.ALL_DAY,
+                Events.CALENDAR_ID,
+                Events.CALENDAR_DISPLAY_NAME,
+                Events.CALENDAR_COLOR,
+                Events.CALENDAR_ACCESS_LEVEL,
+                Events.CALENDAR_TIME_ZONE,
+                Events.OWNER_ACCOUNT,
+                Events.ACCOUNT_NAME)
     }
 
     override fun getSortOrder(): String? {
