@@ -29,6 +29,14 @@ class EventContentResolver: ContentResolverManager() {
                 Events.DTEND,
                 Events.DURATION,
                 Events.ALL_DAY,
+                Events.EVENT_COLOR,
+                Events.EVENT_LOCATION,
+                Events.EVENT_TIMEZONE,
+                Events.EVENT_END_TIMEZONE,
+                Events.HAS_ALARM,
+                Events.DESCRIPTION,
+                Events.TITLE,
+                Events.ORGANIZER,
                 Events.CALENDAR_ID,
                 Events.CALENDAR_DISPLAY_NAME,
                 Events.CALENDAR_COLOR,
@@ -71,10 +79,19 @@ class EventContentResolver: ContentResolverManager() {
     private fun getEvents(cursor: Cursor): List<AppEvent> {
         val events = mutableListOf<AppEvent>()
         while(cursor.moveToNext()) {
-            events.add(AppEvent(CursorExtractor.Event.getCalendar(cursor),
+            events.add(AppEvent(
+                    CursorExtractor.Event.getId(cursor),
+                    CursorExtractor.Event.getCalendar(cursor),
                     CursorExtractor.Event.getStartDate(cursor),
                     CursorExtractor.Event.getEndDate(cursor),
-                    CursorExtractor.Event.getIsAllDay(cursor)
+                    CursorExtractor.Event.getIsAllDay(cursor),
+                    CursorExtractor.Event.getTitle(cursor),
+                    CursorExtractor.Event.getDescription(cursor),
+                    CursorExtractor.Event.getColour(cursor),
+                    CursorExtractor.Event.getLocation(cursor),
+                    CursorExtractor.Event.getTimezone(cursor),
+                    CursorExtractor.Event.getEndTimezone(cursor),
+                    CursorExtractor.Event.getAlarmStatus(cursor)
             ))
         }
         return events
@@ -87,8 +104,17 @@ class EventContentResolver: ContentResolverManager() {
         val days = AppDay.createEmptyDays(fromDayInMonth, month, year, specifiedNoOfDays)
         for(event in events) {
 
-            /** TODO - need to find the 'day' for this event and add it to the day in question **/
+            /** Find the DAYS (the time periods, not AppDays) that relate to this event **/
 
+
+            /** For each time period, find the AppDays **/
+
+            /** Loop through each AppDay and (attempt to) add the event **/
+
+
+            /** TODO - need to find the 'day' for this event and add it to the day in question **/
+            if(!isEventAddedToDay(event, day))
+                day.
         }
         return days
     }

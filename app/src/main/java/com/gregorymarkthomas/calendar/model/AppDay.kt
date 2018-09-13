@@ -1,8 +1,24 @@
 package com.gregorymarkthomas.calendar.model
 
+import com.gregorymarkthomas.calendar.util.CalendarHelper
 import java.util.*
 
 class AppDay(var dayOfMonth: Int, var month: Int, var year: Int, val events: MutableList<AppEvent> = mutableListOf()) {
+
+    /**
+     * The Date representation of this Day. This is in UTC.
+     */
+    var date: Date
+
+    /**
+     * The start (00:00) time in milliseconds for this day. This is in UTC.
+     */
+    var startEpoch: Long
+
+    /**
+     * The end (23:59) time in milliseconds for this day. This is in UTC.
+     */
+    var endEpoch: Long
 
     companion object {
         /**
@@ -23,11 +39,27 @@ class AppDay(var dayOfMonth: Int, var month: Int, var year: Int, val events: Mut
      * This will take '32nd day of December 2018' as '1st January 2019'.
      */
     init {
-        val dateHelper = Calendar.getInstance()
-        dateHelper.isLenient = true
+        val dateHelper = CalendarHelper.getNewCalendar()
         dateHelper.set(year, month, dayOfMonth)
         year = dateHelper.get(Calendar.YEAR)
         month = dateHelper.get(Calendar.MONTH)
         dayOfMonth = dateHelper.get(Calendar.DAY_OF_MONTH)
+        date = dateHelper.time
+
+        startEpoch = setStartEpoch(year, month, dayOfMonth)
+        endEpoch = setEndEpoch(year, month, dayOfMonth)
     }
+
+    private fun setStartEpoch(year: Int, month: Int, dayOfMonth: Int): Long {
+        val dateHelper = CalendarHelper.getNewCalendar()
+        dateHelper.set(year, month, dayOfMonth, 0, 0)
+        return dateHelper.timeInMillis
+    }
+
+    private fun setEndEpoch(year: Int, month: Int, dayOfMonth: Int): Long {
+        val dateHelper = CalendarHelper.getNewCalendar()
+        dateHelper.set(year, month, dayOfMonth, 23, 59)
+        return dateHelper.timeInMillis
+    }
+
 }

@@ -8,6 +8,9 @@ import java.util.*
 
 object CursorExtractor {
     object Event {
+        fun getId(cursor: Cursor): Int {
+            return cursor.getInt(cursor.getColumnIndex(Events._ID))
+        }
         /**
          * Cursor will throw an Exception if any of these are null.
          */
@@ -35,6 +38,34 @@ object CursorExtractor {
         fun getIsAllDay(cursor: Cursor): Boolean {
             val isAllDay = cursor.getInt(cursor.getColumnIndex(Events.ALL_DAY))
             return isAllDay == 1
+        }
+
+        fun getTitle(cursor: Cursor): String {
+            return cursor.getString(cursor.getColumnIndex(Events.TITLE))
+        }
+
+        fun getDescription(cursor: Cursor): String {
+            return cursor.getString(cursor.getColumnIndex(Events.DESCRIPTION))
+        }
+
+        fun getColour(cursor: Cursor): Int {
+            return cursor.getInt(cursor.getColumnIndex(Events.EVENT_COLOR))
+        }
+
+        fun getLocation(cursor: Cursor): String {
+            return cursor.getString(cursor.getColumnIndex(Events.EVENT_LOCATION))
+        }
+
+        fun getTimezone(cursor: Cursor): String {
+            return cursor.getString(cursor.getColumnIndex(Events.EVENT_TIMEZONE))
+        }
+
+        fun getEndTimezone(cursor: Cursor): String {
+            return cursor.getString(cursor.getColumnIndex(Events.EVENT_END_TIMEZONE))
+        }
+
+        fun getAlarmStatus(cursor: Cursor): Boolean {
+            return cursor.getInt(cursor.getColumnIndex(Events.HAS_ALARM)) == 1
         }
     }
 
