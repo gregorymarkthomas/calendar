@@ -2,16 +2,12 @@ package com.gregorymarkthomas.calendar.util
 
 import android.support.constraint.ConstraintLayout
 import android.view.ViewGroup
-import com.gregorymarkthomas.calendar.MainActivity
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
+import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
 
 
-abstract class LifeCycleView: ConstraintLayout {
+abstract class LifeCycleView(context: LayoutContextInterface) : ConstraintLayout(context.getContext()) {
 
-    var backstack: BackStackInterface
-
-    constructor(activity: MainActivity): super(activity) {
-        backstack = activity
+    init {
         tag = javaClass.simpleName
         inflate()
     }

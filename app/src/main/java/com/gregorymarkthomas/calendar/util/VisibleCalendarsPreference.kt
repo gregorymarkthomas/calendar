@@ -1,26 +1,24 @@
 package com.gregorymarkthomas.calendar.util
 
-import android.preference.PreferenceManager
-import com.gregorymarkthomas.calendar.CalendarApplication
 import com.gregorymarkthomas.calendar.model.AppCalendar
+import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
 
 object VisibleCalendarsPreference {
 
     private const val VISIBLE_CALENDARS_KEY = "visible_calendars_key"
-    private val preferences = PreferenceManager.getDefaultSharedPreferences(CalendarApplication.applicationContext)
 
     /**
      * Visible calendars is stored in Preferences as a comma-separated list of calendar ids.
      * If not yet set, set as ALL available calendars.
      * This is converted into an IntArray.
      */
-    fun get(availableCalendars: List<AppCalendar>): IntArray {
-        val calendarsStr = preferences.getString(VISIBLE_CALENDARS_KEY, extractCalendarIds(availableCalendars))
+    fun get(preferences: SharedPreferencesInterface, availableCalendars: List<AppCalendar>): IntArray {
+        val calendarsStr = preferences.getPreferences().getString(VISIBLE_CALENDARS_KEY, extractCalendarIds(availableCalendars))
         return parseCommaSeparatedStringToIntArray(calendarsStr)
     }
 
-    fun set(visibleCalendars: IntArray) {
-        preferences.edit().putString(VISIBLE_CALENDARS_KEY, parseIntArrayToCommaSeparatedString(visibleCalendars)).apply()
+    fun set(preferences: SharedPreferencesInterface, visibleCalendars: IntArray) {
+        preferences.getPreferences().edit().putString(VISIBLE_CALENDARS_KEY, parseIntArrayToCommaSeparatedString(visibleCalendars)).apply()
     }
 
     private fun extractCalendarIds(availableCalendars: List<AppCalendar>): String {

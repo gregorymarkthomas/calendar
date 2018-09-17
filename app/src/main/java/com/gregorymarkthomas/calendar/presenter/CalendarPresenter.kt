@@ -1,10 +1,8 @@
 package com.gregorymarkthomas.calendar.presenter
 
-import com.gregorymarkthomas.calendar.model.Callback
-import com.gregorymarkthomas.calendar.model.Model
-import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.model.AppCalendar
-import com.gregorymarkthomas.calendar.model.AppDay
+import com.gregorymarkthomas.calendar.model.*
+import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
+import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.VisibleCalendarsPreference
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
@@ -17,8 +15,11 @@ import java.util.*
  * There should be NO Android stuff in the Presenter.
  * TODO() - How do we deal with timezones of Events?
  */
-class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInterface, date: Date? = null): CalendarPresenterInterface {
-    private var model: ModelInterface = Model()
+class CalendarPresenter(view: CalendarViewInterface, val backstack: BackStackInterface,
+                        val resolver: ContentResolverInterface,
+                        val preferences: SharedPreferencesInterface,
+                        date: Date? = null): CalendarPresenterInterface {
+    private var model: ModelInterface = Model(resolver)
 
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied. **/
@@ -35,7 +36,7 @@ class CalendarPresenter(view: CalendarViewInterface, var backstack: BackStackInt
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
         model.getCalendars(object: Callback.GetCalendarsCallback {
             override fun onGetCalendars(calendars: List<AppCalendar>) {
-                model.getEvents(1, month, year, model.getDaysInMonth(month, year), VisibleCalendarsPreference.get(calendars), object: Callback.GetEventsCallback {
+                model.getEvents(1, month, year, model.getDaysInMonth(month, year), VisibleCalendarsPreference.get(preferences, calendars), object: Callback.GetEventsCallback {
                     override fun onGetEvents(days: List<AppDay>) {
                         view.showDates(days)
                     }

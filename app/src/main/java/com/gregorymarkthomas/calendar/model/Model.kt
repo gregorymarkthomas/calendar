@@ -1,11 +1,12 @@
 package com.gregorymarkthomas.calendar.model
 
+import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import java.text.DateFormatSymbols
 import java.util.*
 
-class Model: ModelInterface {
+class Model(val resolver: ContentResolverInterface): ModelInterface {
 
-    val repository: CalendarRepository = AndroidCalendarProvider()
+    val repository: CalendarRepository = AndroidCalendarProvider(resolver)
 
     override fun getTodayDate(): Date {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -3,13 +3,13 @@ package com.gregorymarkthomas.calendar.model
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
-import com.gregorymarkthomas.calendar.CalendarApplication
+import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import java.util.*
 
 /**
  * Generic abstract class that handles the operations with the ContentResolver
  */
-abstract class ContentResolverManager {
+abstract class ContentResolverHelper(private val resolver: ContentResolverInterface) {
 
     protected val ASCENDING = " ASC"
     protected val DESCENDING = " DESC"
@@ -21,7 +21,6 @@ abstract class ContentResolverManager {
     protected val LESS_THAN_OR_EQUAL = " <= "
     protected val EQUALS = " = "
 
-    private val resolver = CalendarApplication.applicationContext.contentResolver
 
     /************* public *****/
 
@@ -41,7 +40,7 @@ abstract class ContentResolverManager {
             finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
         }
 
-        return this.resolver.query(
+        return this.resolver.getResolver().query(
                 getUri(),
                 getFields(),
                 finalWhereClause,

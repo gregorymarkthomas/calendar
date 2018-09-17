@@ -2,17 +2,22 @@ package com.gregorymarkthomas.calendar.view
 
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
-import com.gregorymarkthomas.calendar.MainActivity
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.model.AppDay
+import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.LifeCycleView
+import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
+import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
 
-class MonthView(activity: MainActivity, date: Date?): LifeCycleView(activity), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterface,
+                preferences: SharedPreferencesInterface, layoutContext: LayoutContextInterface,
+                date: Date?): LifeCycleView(layoutContext), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private val TAG = "MonthView"
 
     private var presenter: CalendarPresenterInterface
@@ -27,7 +32,7 @@ class MonthView(activity: MainActivity, date: Date?): LifeCycleView(activity), C
         setupAdapter()
 
         /** This must be called last. **/
-        this.presenter = CalendarPresenter(this, backstack, date)
+        this.presenter = CalendarPresenter(this, backstack, resolver, preferences, date)
     }
 
     override fun getLayout(): Int = R.layout.month_view

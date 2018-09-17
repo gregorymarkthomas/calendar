@@ -2,12 +2,11 @@ package com.gregorymarkthomas.calendar.model
 
 import android.database.Cursor
 import android.net.Uri
-import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
+import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.CursorExtractor
-import java.util.*
 
-class EventContentResolver: ContentResolverManager() {
+class EventResolver(resolver: ContentResolverInterface): ContentResolverHelper(resolver) {
 
     /************* public *****/
     /**
