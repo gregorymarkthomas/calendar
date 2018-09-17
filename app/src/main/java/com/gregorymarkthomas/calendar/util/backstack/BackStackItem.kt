@@ -29,8 +29,11 @@ class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var d
      *
      * Each LifeCycleView has an optional Bundle for any input arguments.
      */
-    fun instantiateView(resolver: ContentResolverInterface, preferences: SharedPreferencesInterface, layoutContext: LayoutContextInterface): LifeCycleView {
-        view = klass.getConstructor(MainActivity::class.java, Date::class.java).newInstance(resolver, preferences, layoutContext, date)
+    fun instantiateView(backstack: BackStackInterface, resolver: ContentResolverInterface, preferences: SharedPreferencesInterface, layoutContext: LayoutContextInterface): LifeCycleView {
+        view = klass.getConstructor(BackStackInterface::class.java,
+                ContentResolverInterface::class.java,
+                SharedPreferencesInterface::class.java,
+                LayoutContextInterface::class.java, Date::class.java).newInstance(backstack, resolver, preferences, layoutContext, date)
         return view
     }
 }

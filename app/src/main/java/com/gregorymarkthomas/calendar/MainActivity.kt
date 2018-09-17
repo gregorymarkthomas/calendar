@@ -63,7 +63,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
 
     override fun onViewChanged(item: BackStackItem) {
         main_content.removeAllViews()
-        main_content.addView(item.instantiateView(this, this, this))
+        main_content.addView(item.instantiateView(this, this, this, this))
     }
 
     override fun getResolver(): ContentResolver {
