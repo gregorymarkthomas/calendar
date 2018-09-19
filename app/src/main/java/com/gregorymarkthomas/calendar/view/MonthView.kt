@@ -7,6 +7,7 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.model.AppDay
+import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
@@ -32,7 +33,7 @@ class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterfac
         setupAdapter()
 
         /** This must be called last. **/
-        this.presenter = CalendarPresenter(this, backstack, resolver, preferences, date)
+        this.presenter = CalendarPresenter(this, Model(resolver, preferences), backstack, date)
     }
 
     override fun getLayout(): Int = R.layout.month_view

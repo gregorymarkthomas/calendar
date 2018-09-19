@@ -29,10 +29,6 @@ class CalendarPresenterTest {
     @Mock
     private lateinit var backstack: BackStackInterface
     @Mock
-    private lateinit var resolver: ContentResolverInterface
-    @Mock
-    private lateinit var preferences: GetSharedPreferencesInterface
-    @Mock
     private lateinit var view: CalendarViewInterface
     @Mock
     private var args: Bundle = Bundle()
@@ -49,7 +45,7 @@ class CalendarPresenterTest {
         val now = Date()
 
         // when
-        var presenter = CalendarPresenter(view, backstack, resolver, preferences, now)
+        var presenter = CalendarPresenter(view, model, backstack, now)
 
         val calendar = Calendar.getInstance()
         calendar.time = now
@@ -66,7 +62,7 @@ class CalendarPresenterTest {
         val future = Date(253402300799000)
 
         // when
-        var presenter = CalendarPresenter(view, backstack, resolver, preferences, future)
+        var presenter = CalendarPresenter(view, model, backstack, future)
 
         val calendar = Calendar.getInstance()
         calendar.time = future
@@ -83,7 +79,7 @@ class CalendarPresenterTest {
         val past = Date(0)
 
         // when
-        var presenter = CalendarPresenter(view, backstack, resolver, preferences, past)
+        var presenter = CalendarPresenter(view, model, backstack, past)
 
         val calendar = Calendar.getInstance()
         calendar.time = past
@@ -100,7 +96,7 @@ class CalendarPresenterTest {
     fun when_today_button_pressed_then_show_today_date_view() {
         val past = Date(0)
 
-        var presenter = CalendarPresenter(view, backstack, resolver, preferences, past)
+        var presenter = CalendarPresenter(view, model, backstack, past)
 
         // when
         presenter.onTodayButtonPress()
@@ -116,7 +112,7 @@ class CalendarPresenterTest {
     @Test
     fun when_future_day_pressed_then_show_future_day_view() {
         val now = Date()
-        var presenter = CalendarPresenter(view, backstack, resolver, preferences, now)
+        var presenter = CalendarPresenter(view, model, backstack, now)
 
         // when
         presenter.onDayPress(AppDay(31, 12, 9999), 23)

@@ -14,13 +14,11 @@ import java.util.*
 /**
  * There should be NO Android stuff in the Presenter.
  * TODO() - How do we deal with timezones of Events?
- * TODO() - make date = Date() if not set, instead of null
  */
-class CalendarPresenter(view: CalendarViewInterface, private val backstack: BackStackInterface,
-                        resolver: ContentResolverInterface,
-                        preferences: GetSharedPreferencesInterface,
+class CalendarPresenter(view: CalendarViewInterface,
+                        private val model: ModelInterface,
+                        private val backstack: BackStackInterface,
                         date: Date): CalendarPresenterInterface {
-    private var model: ModelInterface = Model(resolver, preferences)
 
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied. **/
