@@ -22,7 +22,7 @@ class EventResolver(resolver: ContentResolverInterface): ContentResolverHelper(r
             val cursor: Cursor = get(clause)
             val events = getEvents(cursor)
             cursor.close()
-            days.add(i, AppDay(i, month, year, events))
+            days.add(AppDay(i, month, year, events))
         }
         return days
     }

@@ -3,7 +3,6 @@ package com.gregorymarkthomas.calendar.presenter
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
-import com.gregorymarkthomas.calendar.util.VisibleCalendarsPreference
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -24,6 +23,7 @@ class CalendarPresenter(view: CalendarViewInterface, val backstack: BackStackInt
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied. **/
     init {
+        /** TODO - use CalendarHelper. Add a test to check 32nd December 2018 actually shows 1st January 2019 **/
         val calendar = Calendar.getInstance()
         if(date != null)
             calendar.time = date
@@ -34,13 +34,9 @@ class CalendarPresenter(view: CalendarViewInterface, val backstack: BackStackInt
         view.setDateView(dayOfMonth, model.getMonthString(month), year)
 
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
-        model.getCalendars(object: Callback.GetCalendarsCallback {
-            override fun onGetCalendars(calendars: List<AppCalendar>) {
-                model.getEvents(1, month, year, model.getDaysInMonth(month, year), VisibleCalendarsPreference.get(preferences, calendars), object: Callback.GetEventsCallback {
-                    override fun onGetEvents(days: List<AppDay>) {
-                        view.showDates(days)
-                    }
-                })
+        model.getEvents(1, month, year, model.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
+            override fun onGetEvents(days: List<AppDay>) {
+                view.showDates(days)
             }
         })
     }

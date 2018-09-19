@@ -1,23 +1,27 @@
-package com.gregorymarkthomas.calendar.util
+package com.gregorymarkthomas.calendar.model
 
-import com.gregorymarkthomas.calendar.model.AppCalendar
 import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
 
-object VisibleCalendarsPreference {
+class VisibleCalendarsPreference(val preferences: SharedPreferencesInterface) {
 
-    private const val VISIBLE_CALENDARS_KEY = "visible_calendars_key"
-
-    /**
-     * Visible calendars is stored in Preferences as a comma-separated list of calendar ids.
-     * If not yet set, set as ALL available calendars.
-     * This is converted into an IntArray.
-     */
-    fun get(preferences: SharedPreferencesInterface, availableCalendars: List<AppCalendar>): IntArray {
-        val calendarsStr = preferences.getPreferences().getString(VISIBLE_CALENDARS_KEY, extractCalendarIds(availableCalendars))
-        return parseCommaSeparatedStringToIntArray(calendarsStr)
+    companion object {
+        private const val VISIBLE_CALENDARS_KEY = "visible_calendars_key"
     }
 
-    fun set(preferences: SharedPreferencesInterface, visibleCalendars: IntArray) {
+    /**
+     * Visible calendars are stored in Preferences as a comma-separated list of calendar ids.
+     * If not yet set, return an empty IntArray. The model will recognise this and ignore Calendar Ids as a query parameter (i.e. will return events for ALL available calendars)
+     * This is converted into an IntArray.
+     */
+    fun get(): IntArray {
+        val calendarsStr = preferences.getPreferences().getString(VISIBLE_CALENDARS_KEY, null)
+        return if(calendarsStr != null)
+            parseCommaSeparatedStringToIntArray(calendarsStr)
+        else
+            IntArray(0)
+    }
+
+    fun set(visibleCalendars: IntArray) {
         preferences.getPreferences().edit().putString(VISIBLE_CALENDARS_KEY, parseIntArrayToCommaSeparatedString(visibleCalendars)).apply()
     }
 
