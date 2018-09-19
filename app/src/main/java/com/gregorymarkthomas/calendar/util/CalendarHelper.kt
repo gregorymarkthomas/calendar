@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.util
 
+import java.text.DateFormatSymbols
 import java.util.*
 
 object CalendarHelper {
@@ -9,4 +10,13 @@ object CalendarHelper {
         dateHelper.isLenient = true
         return dateHelper
     }
+
+    /**
+     * Month number starts at ZERO:
+     * - January = 0
+     * - February = 1
+     * - March = 2
+     * ...
+     */
+    fun getMonthString(month: Int) = DateFormatSymbols().months[month]
 }

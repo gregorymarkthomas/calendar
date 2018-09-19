@@ -23,8 +23,6 @@ class Model(resolver: ContentResolverInterface, preferences: GetSharedPreference
         repository.getCalendars(callback)
     }
 
-    override fun getMonthString(month: Int) = DateFormatSymbols().months[month-1]
-
     override fun getDaysInMonth(month: Int, year: Int): Int {
         // TODO - Perhaps create individual Month objects that have noOfDays field.
         return 30

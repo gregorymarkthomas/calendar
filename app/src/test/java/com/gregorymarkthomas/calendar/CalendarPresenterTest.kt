@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.model.AppDay
+import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
@@ -51,7 +52,7 @@ class CalendarPresenterTest {
         calendar.time = now
 
         // then
-        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), model.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
+        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
     /**
@@ -68,7 +69,7 @@ class CalendarPresenterTest {
         calendar.time = future
 
         // then
-        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), model.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
+        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
     /**
@@ -85,7 +86,7 @@ class CalendarPresenterTest {
         calendar.time = past
 
         // then
-        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), model.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
+        then(view).should().setDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR))
     }
 
     /**
