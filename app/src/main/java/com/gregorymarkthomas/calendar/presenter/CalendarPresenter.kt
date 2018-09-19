@@ -1,6 +1,7 @@
 package com.gregorymarkthomas.calendar.presenter
 
 import com.gregorymarkthomas.calendar.model.*
+import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
@@ -15,19 +16,18 @@ import java.util.*
  * TODO() - How do we deal with timezones of Events?
  * TODO() - make date = Date() if not set, instead of null
  */
-class CalendarPresenter(view: CalendarViewInterface, val backstack: BackStackInterface,
-                        val resolver: ContentResolverInterface,
-                        val preferences: GetSharedPreferencesInterface,
-                        date: Date? = null): CalendarPresenterInterface {
+class CalendarPresenter(view: CalendarViewInterface, private val backstack: BackStackInterface,
+                        resolver: ContentResolverInterface,
+                        preferences: GetSharedPreferencesInterface,
+                        date: Date): CalendarPresenterInterface {
     private var model: ModelInterface = Model(resolver, preferences)
 
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied. **/
     init {
         /** TODO - use CalendarHelper. Add a test to check 32nd December 2018 actually shows 1st January 2019 **/
-        val calendar = Calendar.getInstance()
-        if(date != null)
-            calendar.time = date
+        val calendar = CalendarHelper.getNewCalendar()
+        calendar.time = date
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
@@ -47,7 +47,7 @@ class CalendarPresenter(view: CalendarViewInterface, val backstack: BackStackInt
     }
 
     override fun onTodayButtonPress() {
-        backstack.goTo(BackStackItem(MonthView::class.java))
+        backstack.goTo(BackStackItem(MonthView::class.java, Date()))
     }
 
     override fun onEventPress(hours: Int, minutes: Int) {

@@ -17,7 +17,7 @@ import java.util.*
 
 class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterface,
                 preferences: GetSharedPreferencesInterface, layoutContext: LayoutContextInterface,
-                date: Date?): LifeCycleView(layoutContext), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+                date: Date): LifeCycleView(layoutContext), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private val TAG = "MonthView"
 
     private var presenter: CalendarPresenterInterface

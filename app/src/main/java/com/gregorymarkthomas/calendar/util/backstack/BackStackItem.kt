@@ -17,7 +17,7 @@ import java.util.*
  *
  * Each individual LifeCycleView child has to unpack the Bundle.
  */
-class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var date: Date? = null) {
+class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var date: Date) {
 
     internal lateinit var view: LifeCycleView
 
