@@ -8,7 +8,7 @@ import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.LifeCycleView
-import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStack2
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
@@ -18,7 +18,7 @@ import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
-        ContentResolverInterface, SharedPreferencesInterface, LayoutContextInterface {
+        ContentResolverInterface, GetSharedPreferencesInterface, LayoutContextInterface {
     override fun getPreferences(): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(this)
     }

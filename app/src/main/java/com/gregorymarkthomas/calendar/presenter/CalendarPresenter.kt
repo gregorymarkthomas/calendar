@@ -2,7 +2,7 @@ package com.gregorymarkthomas.calendar.presenter
 
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -13,12 +13,13 @@ import java.util.*
 /**
  * There should be NO Android stuff in the Presenter.
  * TODO() - How do we deal with timezones of Events?
+ * TODO() - make date = Date() if not set, instead of null
  */
 class CalendarPresenter(view: CalendarViewInterface, val backstack: BackStackInterface,
                         val resolver: ContentResolverInterface,
-                        val preferences: SharedPreferencesInterface,
+                        val preferences: GetSharedPreferencesInterface,
                         date: Date? = null): CalendarPresenterInterface {
-    private var model: ModelInterface = Model(resolver)
+    private var model: ModelInterface = Model(resolver, preferences)
 
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied. **/

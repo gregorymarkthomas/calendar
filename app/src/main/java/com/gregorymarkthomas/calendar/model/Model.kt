@@ -1,13 +1,14 @@
 package com.gregorymarkthomas.calendar.model
 
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import java.text.DateFormatSymbols
 import java.util.*
 
-class Model(val resolver: ContentResolverInterface): ModelInterface {
+class Model(resolver: ContentResolverInterface, preferences: GetSharedPreferencesInterface): ModelInterface {
 
-    val repository: CalendarRepository = AndroidCalendarProvider(resolver)
+    private val repository: CalendarRepository = AndroidCalendarProvider(resolver)
+    private val calendarVisibiltyOption = VisibleCalendarsOption(preferences)
 
     override fun getTodayDate(): Date {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -29,13 +30,11 @@ class Model(val resolver: ContentResolverInterface): ModelInterface {
         return 30
     }
 
-    override fun getVisibleCalendars(preferences: SharedPreferencesInterface): IntArray {
-        val preference = VisibleCalendarsPreference(preferences)
-        return preference.get()
+    override fun getVisibleCalendars(): IntArray {
+        return calendarVisibiltyOption.get()
     }
 
-    override fun setVisibleCalendars(preferences: SharedPreferencesInterface, calendarsToShow: IntArray) {
-        val preference = VisibleCalendarsPreference(preferences)
-        preference.set(calendarsToShow)
+    override fun setVisibleCalendars(calendarsToShow: IntArray) {
+        calendarVisibiltyOption.set(calendarsToShow)
     }
 }

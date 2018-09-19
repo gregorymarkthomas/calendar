@@ -1,10 +1,9 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.MainActivity
 import com.gregorymarkthomas.calendar.util.LifeCycleView
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
-import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import java.util.*
 
 /**
@@ -29,10 +28,10 @@ class BackStackItem(internal var klass: Class<out LifeCycleView>, internal var d
      *
      * Each LifeCycleView has an optional Bundle for any input arguments.
      */
-    fun instantiateView(backstack: BackStackInterface, resolver: ContentResolverInterface, preferences: SharedPreferencesInterface, layoutContext: LayoutContextInterface): LifeCycleView {
+    fun instantiateView(backstack: BackStackInterface, resolver: ContentResolverInterface, preferences: GetSharedPreferencesInterface, layoutContext: LayoutContextInterface): LifeCycleView {
         view = klass.getConstructor(BackStackInterface::class.java,
                 ContentResolverInterface::class.java,
-                SharedPreferencesInterface::class.java,
+                GetSharedPreferencesInterface::class.java,
                 LayoutContextInterface::class.java, Date::class.java).newInstance(backstack, resolver, preferences, layoutContext, date)
         return view
     }

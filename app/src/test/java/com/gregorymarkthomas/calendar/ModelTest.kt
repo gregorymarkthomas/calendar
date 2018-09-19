@@ -1,17 +1,8 @@
 package com.gregorymarkthomas.calendar
 
-import com.gregorymarkthomas.calendar.model.AppDay
-import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
-import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
-import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
-import com.gregorymarkthomas.calendar.view.MonthView
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
-import org.mockito.BDDMockito.then
-import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
-import java.util.*
 
 /**
  * TODO

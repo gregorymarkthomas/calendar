@@ -9,14 +9,14 @@ import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.LifeCycleView
-import com.gregorymarkthomas.calendar.util.interfaces.SharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
 
 class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterface,
-                preferences: SharedPreferencesInterface, layoutContext: LayoutContextInterface,
+                preferences: GetSharedPreferencesInterface, layoutContext: LayoutContextInterface,
                 date: Date?): LifeCycleView(layoutContext), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private val TAG = "MonthView"
 
