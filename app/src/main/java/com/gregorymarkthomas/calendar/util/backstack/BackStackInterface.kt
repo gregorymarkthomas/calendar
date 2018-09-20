@@ -1,9 +1,11 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.util.LifeCycleView
+import com.gregorymarkthomas.calendar.view.LifeCycleView
+import java.util.*
 
 interface BackStackInterface {
-    fun goTo(item: BackStackItem)
+    /** TODO() - change 'selectedDate' for generic Bundle **/
+    fun goTo(viewClass: Class<out LifeCycleView>, selectedDate: Date)
     fun goBack(): Boolean
     fun getCurrentView(): LifeCycleView
 }

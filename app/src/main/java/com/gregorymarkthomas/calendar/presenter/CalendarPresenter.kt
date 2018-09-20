@@ -2,10 +2,7 @@ package com.gregorymarkthomas.calendar.presenter
 
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.util.CalendarHelper
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
@@ -23,7 +20,6 @@ class CalendarPresenter(view: CalendarViewInterface,
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied. **/
     init {
-        /** TODO - use CalendarHelper. Add a test to check 32nd December 2018 actually shows 1st January 2019 **/
         val calendar = CalendarHelper.getNewCalendar()
         calendar.time = date
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
@@ -45,7 +41,7 @@ class CalendarPresenter(view: CalendarViewInterface,
     }
 
     override fun onTodayButtonPress() {
-        backstack.goTo(BackStackItem(MonthView::class.java, Date()))
+        backstack.goTo(MonthView::class.java, Date())
     }
 
     override fun onEventPress(hours: Int, minutes: Int) {

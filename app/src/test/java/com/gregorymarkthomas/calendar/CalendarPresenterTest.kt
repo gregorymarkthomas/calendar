@@ -1,14 +1,11 @@
 package com.gregorymarkthomas.calendar
 
 import android.os.Bundle
+import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
-import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.backstack.BackStackItem
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import org.junit.Before
@@ -103,7 +100,7 @@ class CalendarPresenterTest {
         presenter.onTodayButtonPress()
 
         // then
-        then(backstack).should().goTo(BackStackItem(MonthView::class.java, Date()))
+        then(backstack).should().goTo(MonthView::class.java, Date())
     }
 
     /**
@@ -120,6 +117,6 @@ class CalendarPresenterTest {
 
         // then
         val future = Date(253402300799000)
-        then(backstack).should().goTo(BackStackItem(MonthView::class.java, future))
+        then(backstack).should().goTo(MonthView::class.java, future)
     }
 }

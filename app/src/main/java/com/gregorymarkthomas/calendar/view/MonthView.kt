@@ -9,7 +9,6 @@ import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.LifeCycleView
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
@@ -43,6 +42,7 @@ class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterfac
         adapter.notifyDataSetChanged()
     }
 
+    /** TODO() - rename to setSelectedDateView() **/
     override fun setDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
         dateTextView.text = "$dayOfMonth $monthOfYear $year"
     }

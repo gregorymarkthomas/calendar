@@ -6,7 +6,7 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.util.Log
 import com.gregorymarkthomas.calendar.MainActivity
-import com.gregorymarkthomas.calendar.util.LifeCycleView
+import com.gregorymarkthomas.calendar.view.LifeCycleView
 
 class MainActivityTestRule(var viewClass: Class<out LifeCycleView>?): ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
     val TAG = "MainActivityTestRule"

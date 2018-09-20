@@ -1,11 +1,11 @@
-package com.gregorymarkthomas.calendar.util
+package com.gregorymarkthomas.calendar.view
 
 import android.support.constraint.ConstraintLayout
 import android.view.ViewGroup
 import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
 
 
-abstract class LifeCycleView(context: LayoutContextInterface) : ConstraintLayout(context.getContext()) {
+abstract class LifeCycleView(context: LayoutContextInterface): ConstraintLayout(context.getContext()) {
 
     init {
         tag = javaClass.simpleName
