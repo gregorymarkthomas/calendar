@@ -33,7 +33,7 @@ class MainActivityTestRule(var viewClass: Class<out LifeCycleView>?): ActivityTe
 
         // maybe you want to do something here
         Log.i(TAG, "afterActivityLaunched()")
-        view = activity.getCurrentView()
+        view = activity.getRecentViewClass()
     }
 
     override fun afterActivityFinished() {

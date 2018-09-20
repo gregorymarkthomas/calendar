@@ -7,5 +7,5 @@ interface BackStackInterface {
     /** TODO() - change 'selectedDate' for generic Bundle **/
     fun goTo(viewClass: Class<out LifeCycleView>, selectedDate: Date)
     fun goBack(): Boolean
-    fun getCurrentView(): LifeCycleView
+    fun getRecentViewClass(): Class<out LifeCycleView>
 }

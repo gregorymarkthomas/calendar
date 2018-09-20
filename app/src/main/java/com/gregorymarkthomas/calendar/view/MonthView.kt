@@ -7,17 +7,13 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.model.AppDay
-import com.gregorymarkthomas.calendar.model.Model
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
+import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
 
-class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterface,
-                preferences: GetSharedPreferencesInterface, layoutContext: LayoutContextInterface,
-                date: Date): LifeCycleView(layoutContext), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+class MonthView(backstack: BackStackInterface, model: ModelInterface, layout: LayoutContextInterface, date: Date): LifeCycleView(layout), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private val TAG = "MonthView"
 
     private var presenter: CalendarPresenterInterface
@@ -32,7 +28,7 @@ class MonthView(backstack: BackStackInterface, resolver: ContentResolverInterfac
         setupAdapter()
 
         /** This must be called last. **/
-        this.presenter = CalendarPresenter(this, Model(resolver, preferences), backstack, date)
+        this.presenter = CalendarPresenter(this, model, backstack, date)
     }
 
     override fun getLayout(): Int = R.layout.month_view

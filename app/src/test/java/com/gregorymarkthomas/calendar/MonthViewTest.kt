@@ -36,7 +36,7 @@ class MonthViewTest {
     @Before
     fun setUp() {
         var activity = Robolectric.setupActivity(MainActivity::class.java)
-        view = activity.getCurrentView() as MonthView
+        view = activity.getRecentViewClass() as MonthView
     }
 
     @Test

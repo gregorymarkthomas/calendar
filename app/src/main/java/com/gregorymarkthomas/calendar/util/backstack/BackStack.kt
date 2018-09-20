@@ -1,7 +1,6 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
-import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
+import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
 import com.gregorymarkthomas.calendar.view.LifeCycleView
 import java.util.*
@@ -14,9 +13,8 @@ class BackStack(private var callback: BackStackCallback,
                 initialView: Class<out LifeCycleView>,
                 selectedDate: Date,
                 private val backstack: BackStackInterface,
-                private val resolver: ContentResolverInterface,
-                private val preferences: GetSharedPreferencesInterface,
-                private val layoutContext: LayoutContextInterface): BackStackInterface {
+                private val model: ModelInterface,
+                private val layout: LayoutContextInterface): BackStackInterface {
 
     private var stack: ArrayList<BackStackItem> = ArrayList()
 
@@ -24,6 +22,7 @@ class BackStack(private var callback: BackStackCallback,
         goTo(initialView, selectedDate)
     }
 
+    /********** public */
     /**
      * Either finds the existing instance of the requested viewClass and uses it, or it adds a new instance if it does not yet exist.
      */
@@ -31,7 +30,7 @@ class BackStack(private var callback: BackStackCallback,
         val item: BackStackItem
         val viewIndex = indexOf(viewClass)
         if(viewIndex == -1) {
-            item = BackStackItem(viewClass, selectedDate, backstack, resolver, preferences, layoutContext)
+            item = BackStackItem(viewClass, selectedDate, backstack, model, layout)
             stack.add(item)
         } else {
             reset(viewIndex)
@@ -53,10 +52,12 @@ class BackStack(private var callback: BackStackCallback,
         return success
     }
 
-    override fun getCurrentView(): LifeCycleView {
-        return getRecent().view
+    override fun getRecentViewClass(): Class<out LifeCycleView> {
+        return getRecent().view::class.java
     }
 
+
+    /********** private */
     private fun getRecent(): BackStackItem {
         return stack[stack.size - 1]
     }
@@ -88,14 +89,13 @@ class BackStack(private var callback: BackStackCallback,
     private class BackStackItem(val klass: Class<out LifeCycleView>,
                                 var date: Date,
                                 backstack: BackStackInterface,
-                                resolver: ContentResolverInterface,
-                                preferences: GetSharedPreferencesInterface,
-                                layoutContext: LayoutContextInterface) {
+                                model: ModelInterface,
+                                layout: LayoutContextInterface) {
 
         val view: LifeCycleView
 
         init {
-            view = instantiateView(date, backstack, resolver, preferences, layoutContext)
+            view = instantiateView(date, backstack, model, layout)
         }
 
         /**
@@ -105,15 +105,8 @@ class BackStack(private var callback: BackStackCallback,
          *
          * Each LifeCycleView has an optional Bundle for any input arguments.
          */
-        private fun instantiateView(date: Date,
-                            backstack: BackStackInterface,
-                            resolver: ContentResolverInterface,
-                            preferences: GetSharedPreferencesInterface,
-                            layoutContext: LayoutContextInterface): LifeCycleView {
-            return klass.getConstructor(BackStackInterface::class.java,
-                    ContentResolverInterface::class.java,
-                    GetSharedPreferencesInterface::class.java,
-                    LayoutContextInterface::class.java, Date::class.java).newInstance(backstack, resolver, preferences, layoutContext, date)
+        private fun instantiateView(date: Date, backstack: BackStackInterface, model: ModelInterface, layout: LayoutContextInterface): LifeCycleView {
+            return klass.getConstructor(BackStackInterface::class.java, ModelInterface::class.java, LayoutContextInterface::class.java, Date::class.java).newInstance(backstack, model, layout, date)
         }
     }
 }
