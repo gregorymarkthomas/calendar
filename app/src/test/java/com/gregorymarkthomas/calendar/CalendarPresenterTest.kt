@@ -29,8 +29,6 @@ class CalendarPresenterTest {
     @Mock
     private lateinit var view: CalendarViewInterface
     @Mock
-    private var args: Bundle = Bundle()
-    @Mock
     private lateinit var model: Model
 
     @Before
