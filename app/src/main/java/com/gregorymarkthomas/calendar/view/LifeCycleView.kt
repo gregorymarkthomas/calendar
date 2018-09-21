@@ -11,6 +11,10 @@ import java.lang.NullPointerException
 abstract class LifeCycleView {
 
     /********** public */
+    var view: ConstraintLayout? = null
+        get() {
+            return field ?: throw NullPointerException("'view' object has not yet been drawn. Use initialise() on the LifeCycleView.")
+        }
 
     /**
      * TODO() - edit this description as function has changed since written
@@ -26,10 +30,6 @@ abstract class LifeCycleView {
     }
 
     /********** protected */
-    var view: ConstraintLayout? = null
-        get() {
-            return field ?: throw NullPointerException("'view' object has not yet been drawn. Use initialise() on the LifeCycleView.")
-        }
     protected abstract fun getTag(): String
     protected abstract fun getLayout(): Int
     protected abstract fun onInitialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface)
