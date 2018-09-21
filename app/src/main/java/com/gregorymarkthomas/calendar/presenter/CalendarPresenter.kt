@@ -7,7 +7,6 @@ import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
 
-
 /**
  * There should be NO Android stuff in the Presenter.
  * TODO() - How do we deal with timezones of Events?
@@ -41,7 +40,7 @@ class CalendarPresenter(view: CalendarViewInterface,
     }
 
     override fun onTodayButtonPress() {
-        backstack.goTo(MonthView::class.java, Date())
+        backstack.goTo(MonthView(Date()))
     }
 
     override fun onEventPress(hours: Int, minutes: Int) {

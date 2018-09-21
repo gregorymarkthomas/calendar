@@ -36,14 +36,14 @@ class MonthViewTest {
     @Before
     fun setUp() {
         var activity = Robolectric.setupActivity(MainActivity::class.java)
-        view = activity.getRecentViewClass() as MonthView
+        view = activity.getMostRecentView() as MonthView
     }
 
     @Test
     fun presenter_attached_to_view() {
-        assertNotNull(view)
-        assertNotNull(view.dateTextView)
-        assertNotEquals("", view.dateTextView.text)
+        assertNotNull(view.view)
+        assertNotNull(view.view!!.dateTextView)
+        assertNotEquals("", view.view!!.dateTextView.text)
     }
 
     @Test
@@ -60,6 +60,6 @@ class MonthViewTest {
 
         view.showDates(days)
 
-        assertEquals(30, view.calendarRecyclerView.adapter.itemCount)
+        assertEquals(30, view.view!!.calendarRecyclerView.adapter.itemCount)
     }
 }

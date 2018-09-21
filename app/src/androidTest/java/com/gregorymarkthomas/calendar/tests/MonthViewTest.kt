@@ -7,6 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.rules.MainActivityTestRule
+import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Rule
@@ -30,12 +31,11 @@ class MonthViewTest {
     @Test
     fun calendar_shows_day() {
         /** Get today's date **/
-        val calendar = Calendar.getInstance()
+        val calendar = CalendarHelper.getNewCalendar()
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
-        val monthStr = DateFormatSymbols().months[month-1]
+        val monthStr = CalendarHelper.getMonthString(month)
         val year = calendar.get(Calendar.YEAR)
-
         onView(withId(R.id.dateTextView)).check(matches(withText("$dayOfMonth $monthStr $year")))
     }
 }

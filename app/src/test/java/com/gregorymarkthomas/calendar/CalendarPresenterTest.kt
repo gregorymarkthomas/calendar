@@ -87,7 +87,7 @@ class CalendarPresenterTest {
     }
 
     /**
-     * TODO(): BackStackItem(MonthView::class.java)) here is a different instance to the real one, so test fails?
+     * TODO(): BackStackItem(MonthView::class.java)) here is a different instance to the real one, so test fails
      * TODO(): need to change MonthView to DayView
      */
     @Test
@@ -100,10 +100,11 @@ class CalendarPresenterTest {
         presenter.onTodayButtonPress()
 
         // then
-        then(backstack).should().goTo(MonthView::class.java, Date())
+        then(backstack).should().goTo(MonthView(Date()))
     }
 
     /**
+     * TODO(): BackStackItem(MonthView::class.java)) here is a different instance to the real one, so test fails
      * TODO(): need to change MonthView to DayView
      * This will fail
      */
@@ -117,6 +118,6 @@ class CalendarPresenterTest {
 
         // then
         val future = Date(253402300799000)
-        then(backstack).should().goTo(MonthView::class.java, future)
+        then(backstack).should().goTo(MonthView(future))
     }
 }

@@ -12,14 +12,14 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
-import com.gregorymarkthomas.calendar.util.interfaces.LayoutContextInterface
+import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.LifeCycleView
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
-        ContentResolverInterface, GetSharedPreferencesInterface, LayoutContextInterface {
+        ContentResolverInterface, GetSharedPreferencesInterface, AndroidContextInterface {
 
     private val TAG = "MainActivity"
     private lateinit var backstack: BackStack
@@ -31,8 +31,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        backstack = BackStack(this, getInitialView(), Date(), this,
-                Model(this, this), this)
+        backstack = BackStack(this, getInitialView())
     }
 
     override fun onDestroy() {
@@ -60,16 +59,16 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     }
 
     /********* BackStack - these can be called by Presenters via an interface */
-    override fun goTo(viewClass: Class<out LifeCycleView>, selectedDate: Date) {
-        backstack.goTo(viewClass, selectedDate)
+    override fun goTo(view: LifeCycleView) {
+        backstack.goTo(view)
     }
 
     override fun goBack(): Boolean {
         return backstack.goBack()
     }
 
-    override fun getRecentViewClass(): Class<out LifeCycleView> {
-        return backstack.getRecentViewClass()
+    override fun getMostRecentView(): LifeCycleView {
+        return backstack.getMostRecentView()
     }
 
     /**
@@ -77,14 +76,21 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
      */
     override fun onViewChanged(view: LifeCycleView) {
         main_content.removeAllViews()
-        main_content.addView(view)
+        main_content.addView(view.initialise(this, Model(this, this), this))
     }
 
     /********** private */
-    private fun getInitialView(): Class<out LifeCycleView> {
-        var initialViewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
-        if(initialViewClass == null)
-            initialViewClass = MonthView::class.java
-        return initialViewClass
+    /**
+     * TODO() - create DayView
+     * TODO() - create WeekView
+     */
+    private fun getInitialView(): LifeCycleView {
+        val viewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
+        val today = Date()
+        return when (viewClass) {
+//            DayView::class.java -> DayView(today)
+//            WeekView::class.java -> WeekView(today)
+            else -> MonthView(today)
+        }
     }
 }

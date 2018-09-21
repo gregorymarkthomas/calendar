@@ -4,8 +4,7 @@ import com.gregorymarkthomas.calendar.view.LifeCycleView
 import java.util.*
 
 interface BackStackInterface {
-    /** TODO() - change 'selectedDate' for generic Bundle **/
-    fun goTo(viewClass: Class<out LifeCycleView>, selectedDate: Date)
+    fun goTo(view: LifeCycleView)
     fun goBack(): Boolean
-    fun getRecentViewClass(): Class<out LifeCycleView>
+    fun getMostRecentView(): LifeCycleView
 }
