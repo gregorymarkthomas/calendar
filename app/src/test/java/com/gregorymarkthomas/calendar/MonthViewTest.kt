@@ -1,14 +1,11 @@
 package com.gregorymarkthomas.calendar
 
-import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnit
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -17,21 +14,19 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 /**
- * TODO - Try to avoid Roboelectric. Seems a bit finicky.
+ * This is considered an INTEGRATION test suite - it utilises the Activity, therefore forcing the 'real' Model
+ * TODO() - Crash in Model
+ * We want to shy away from Instrumented tests, if possible.
+ * This is because we can effectively test each View/Presenter anyway.
+ * But the test below is an example that it works.
+ *
+ * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
 class MonthViewTest {
 
     lateinit var view: MonthView
-
-    /** Ensure all mocks will be properly initialized before each test */
-    @JvmField @Rule
-    var mockitoRule = MockitoJUnit.rule()
-
-    /** Objects that class we're testing relies on require mocking **/
-    /** TODO() - Do we need a '@Mock' here? **/
-    private lateinit var presenter: CalendarPresenter
 
     @Before
     fun setUp() {

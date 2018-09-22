@@ -1,7 +1,5 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.LifeCycleView
 import java.util.*
 
@@ -9,8 +7,7 @@ import java.util.*
  * Each view requires a few Android-related items, plus control of the backstack, hence the input arguments.
  * TODO() - make this singleton?
  */
-class BackStack(private var callback: BackStackCallback,
-                initialView: LifeCycleView): BackStackInterface {
+class BackStack(private var callback: BackStackCallback, initialView: LifeCycleView): BackStackInterface {
 
     private var stack: ArrayList<LifeCycleView> = ArrayList()
 

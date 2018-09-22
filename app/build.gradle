@@ -60,15 +60,14 @@ dependencies {
 
     apply plugin: 'kotlin-android-extensions'
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation("org.junit.platform:junit-platform-launcher:1.0.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.0.0")
+    testImplementation("org.junit.vintage:junit-vintage-engine:4.12.0")
+
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}"
     testImplementation "org.hamcrest:hamcrest-all:1.3"
 
-    testImplementation 'org.mockito:mockito-inline:2.8.9'
-    testImplementation('com.nhaarman:mockito-kotlin:1.5.0') {
-        exclude group: 'org.jetbrains.kotlin'
-        exclude group: 'org.mockito'
-    }
+    testImplementation "io.mockk:mockk:1.8.7"
 
     // Run Instrumented tests on JVM
     testImplementation "org.robolectric:robolectric:3.7"

@@ -1,25 +1,19 @@
 package com.gregorymarkthomas.calendar
 
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
+import io.mockk.clearMocks
+import io.mockk.mockk
 import org.junit.Before
-import org.junit.Rule
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnit
+import org.junit.jupiter.api.BeforeEach
 
 
 class VisibleCalendarsTest {
 
-    /** Ensure all mocks will be properly initialized before each test */
-    @JvmField @Rule
-    var mockitoRule = MockitoJUnit.rule()
+    val preferences: GetSharedPreferencesInterface = mockk()
 
-    /** The objects that this class we are testing relies on require mocking **/
-    @Mock
-    private lateinit var preferences: GetSharedPreferencesInterface
-
-    @Before
-    fun setUp() {
-        // Do nothing
+    @BeforeEach
+    fun init() {
+//        clearMocks(callback)
     }
 
     // TODO - edit from here onwards

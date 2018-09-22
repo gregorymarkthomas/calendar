@@ -11,6 +11,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * This is considered an INTEGRATION test suite - it utilises the Activity, therefore forcing the 'real' Model
+ * TODO() - Crash in Model
+ * We want to shy away from Instrumented tests, if possible.
+ * This is because we can effectively test each View/Presenter anyway.
+ * But the test below is an example that it works.
+ */
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
     val TAG = "MainActivityTest"

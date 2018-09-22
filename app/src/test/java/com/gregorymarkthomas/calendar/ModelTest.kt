@@ -1,8 +1,8 @@
 package com.gregorymarkthomas.calendar
 
+import io.mockk.clearMocks
 import org.junit.Before
-import org.junit.Rule
-import org.mockito.junit.MockitoJUnit
+import org.junit.jupiter.api.BeforeEach
 
 /**
  * TODO
@@ -10,15 +10,9 @@ import org.mockito.junit.MockitoJUnit
  */
 class ModelTest {
 
-    /** Ensure all mocks will be properly initialized before each test */
-    @JvmField @Rule
-    var mockitoRule = MockitoJUnit.rule()
-
-    /** The objects that this class we are testing relies on require mocking **/
-
-    @Before
-    fun setUp() {
-        // Do nothing
+    @BeforeEach
+    fun init() {
+//        clearMocks(callback)
     }
 
     // TODO - edit from here onwards
