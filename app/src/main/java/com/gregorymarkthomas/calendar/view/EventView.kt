@@ -1,53 +1,36 @@
 package com.gregorymarkthomas.calendar.view
 
-import android.content.Context
-import android.util.AttributeSet
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import com.gregorymarkthomas.calendar.R
-import com.gregorymarkthomas.calendar.model.AppEvent
+import android.view.View
+import com.gregorymarkthomas.calendar.model.AppDay
+import com.gregorymarkthomas.calendar.model.ModelInterface
+import com.gregorymarkthomas.calendar.util.CalendarAdapter
+import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
+import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import java.util.*
 
-/**
- * View to represent a single AppEvent.
- * Its colourResource depends on the AppCalendar the AppEvent is under.
- */
-class EventView: LinearLayout {
-    constructor(context: Context): super(context) {
-        inflate()
+class EventView(): LifeCycleView(), CalendarViewInterface, View.OnClickListener {
+    override fun getTag(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        inflate()
+    override fun getLayout(): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
-        inflate()
+    override fun onInitialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int): super(context, attrs, defStyleAttr, defStyleRes) {
-        inflate()
+    override fun setDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun inflate() {
-        inflate(context, R.layout.event_view, this)
-
-        /** Expand 'this' LinearLayout to use all of the usable space. **/
-        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    override fun showDates(days: List<AppDay>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    /**
-     * Set colourResource, height, event name, etc
-     */
-    fun set(event: AppEvent, dpPerMinute: Int) {
-        setBackgroundResource(event.calendar.colourResource)
-        minimumHeight = calculateHeight(event.startDate, event.endDate, dpPerMinute)
-    }
-
-    private fun calculateHeight(startDate: Date, endDate: Date, dpPerMinute: Int): Int {
-        val eventDurationMs = endDate.time - startDate.time
-        val eventDurationMins: Int = ((eventDurationMs / 1000) * 60).toInt()
-        return eventDurationMins * dpPerMinute
+    override fun onClick(v: View?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

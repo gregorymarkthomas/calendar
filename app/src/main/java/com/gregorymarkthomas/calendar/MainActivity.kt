@@ -71,6 +71,10 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         return backstack.getMostRecentView()
     }
 
+    override fun getCurrentViewClasses(): List<String> {
+        return backstack.getCurrentViewClasses()
+    }
+
     /**
      * Callback from BackStack - when the view has changed, this Activity sets the view.
      */

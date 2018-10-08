@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.model.AppDay
-import com.gregorymarkthomas.calendar.view.EventView
+import com.gregorymarkthomas.calendar.view.EventBlockView
 
 /**
  * This is the space where Events are shown. It represents 00:00 to 23:59.
@@ -48,7 +48,7 @@ class TimelineView: LinearLayout {
         val dpPerMinute = calculateDensityPixelsPerMinute()
 
         for(event in day.events) {
-            val eventView = EventView(context)
+            val eventView = EventBlockView(context)
             eventView.set(event, dpPerMinute)
             addView(eventView)
         }

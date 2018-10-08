@@ -44,6 +44,13 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
         return stack[stack.size - 1]
     }
 
+    override fun getCurrentViewClasses(): List<String> {
+        val classNames = ArrayList<String>(stack.size)
+        for (view in stack) {
+            classNames.add(view::class.simpleName!!)
+        }
+        return classNames
+    }
 
     /********** private */
     /**
