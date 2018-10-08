@@ -23,11 +23,6 @@ class Model(resolver: ContentResolverInterface, preferences: GetSharedPreference
         repository.getCalendars(callback)
     }
 
-    override fun getDaysInMonth(month: Int, year: Int): Int {
-        // TODO - Perhaps create individual Month objects that have noOfDays field.
-        return 30
-    }
-
     override fun getVisibleCalendars(): IntArray {
         return calendarVisibiltyOption.get()
     }

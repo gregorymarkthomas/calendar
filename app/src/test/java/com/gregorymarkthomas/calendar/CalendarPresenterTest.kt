@@ -20,9 +20,16 @@ import java.util.*
 
 class CalendarPresenterTest {
 
-    val backstack: BackStackInterface = mockk()
-    val view: CalendarViewInterface = mockk()
-    val model: Model = mockk()
+    /**
+     * 'relaxUnitFun = true' will stop 'io.mockk.MockKException: no answer found for...' error for our simple use of a mocked View
+     */
+    private val view: CalendarViewInterface = mockk(relaxUnitFun=true)
+
+    /**
+     * 'relaxUnitFun = true' will stop 'io.mockk.MockKException: no answer found for...' error for our simple use of a mocked Model
+     */
+    private val model: Model = mockk(relaxUnitFun=true)
+    private val backstack: BackStackInterface = mockk()
 
     @BeforeEach
     fun init() {

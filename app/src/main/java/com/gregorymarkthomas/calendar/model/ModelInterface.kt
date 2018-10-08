@@ -6,7 +6,6 @@ interface ModelInterface {
     fun getTodayDate(): Date
     fun getEvents(dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray = IntArray(0))
     fun getCalendars(callback: Callback.GetCalendarsCallback)
-    fun getDaysInMonth(month: Int, year: Int): Int
     fun getVisibleCalendars(): IntArray
     fun setVisibleCalendars(calendarsToShow: IntArray)
 }

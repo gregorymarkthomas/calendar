@@ -18,5 +18,13 @@ object CalendarHelper {
      * - March = 2
      * ...
      */
-    fun getMonthString(month: Int) = DateFormatSymbols().months[month]
+    fun getMonthString(month: Int): String = DateFormatSymbols().months[month]
+
+    /**
+     * TODO() - complete
+     */
+    fun getDaysInMonth(month: Int, year: Int): Int {
+        // TODO - Perhaps create individual Month objects that have noOfDays field.
+        return 30
+    }
 }

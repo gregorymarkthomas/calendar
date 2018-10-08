@@ -55,6 +55,6 @@ class MonthViewTest {
 
         view.showDates(days)
 
-        assertEquals(30, view.view!!.calendarRecyclerView.adapter.itemCount)
+        assertEquals(30, view.view!!.calendarRecyclerView.adapter!!.itemCount)
     }
 }
