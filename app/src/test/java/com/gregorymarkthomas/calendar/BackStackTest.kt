@@ -22,7 +22,10 @@ import kotlin.test.assertNotNull
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BackStackTest {
 
-    val callback: BackStackCallback = mockk()
+    /**
+     * 'relaxUnitFun = true' will stop 'io.mockk.MockKException: no answer found for...' error for our simple use of a mocked BackStackCallback
+     */
+    private val callback: BackStackCallback = mockk(relaxUnitFun = true)
 
     @BeforeEach
     fun init() {
