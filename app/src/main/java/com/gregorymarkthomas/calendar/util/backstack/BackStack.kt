@@ -5,7 +5,7 @@ import java.util.*
 
 /**
  * Each view requires a few Android-related items, plus control of the backstack, hence the input arguments.
- * TODO() - make this singleton?
+ * This is not a singleton in case the app has multiple Activities - there will be one BackStack per Activity.
  */
 class BackStack(private var callback: BackStackCallback, initialView: LifeCycleView): BackStackInterface {
 
@@ -70,6 +70,9 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
         return stack.subList(0, newViewIndex + 1)
     }
 
+    /**
+     * Retrieves the index for the last item in the stack.
+     */
     private fun getMostRecentViewIndex(): Int {
         return stack.size - 1
     }
