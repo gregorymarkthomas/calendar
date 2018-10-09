@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.model.AppEvent
+import kotlinx.android.synthetic.main.event_block_view.view.*
 import java.util.*
 
 /**
@@ -29,19 +30,22 @@ class EventBlockView: LinearLayout {
         inflate()
     }
 
-    private fun inflate() {
-        inflate(context, R.layout.event_view, this)
-
-        /** Expand 'this' LinearLayout to use all of the usable space. **/
-        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-    }
-
+    /********** public */
     /**
      * Set colourResource, height, event name, etc
      */
     fun set(event: AppEvent, dpPerMinute: Int) {
         setBackgroundResource(event.calendar.colourResource)
         minimumHeight = calculateHeight(event.startDate, event.endDate, dpPerMinute)
+        setName(event.title)
+    }
+
+    /********** private */
+    private fun inflate() {
+        inflate(context, R.layout.event_block_view, this)
+
+        /** Expand 'this' LinearLayout to use all of the usable space. **/
+        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
     private fun calculateHeight(startDate: Date, endDate: Date, dpPerMinute: Int): Int {
@@ -50,4 +54,7 @@ class EventBlockView: LinearLayout {
         return eventDurationMins * dpPerMinute
     }
 
+    private fun setName(name: String) {
+        eventTitle.text = name
+    }
 }

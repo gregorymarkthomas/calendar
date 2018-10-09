@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin">16dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
     <dimen name="text_small">10sp</dimen>
     <dimen name="hour_padding">100dp</dimen>
     <dimen name="calendar_day_hour_divider_height">1dp</dimen>

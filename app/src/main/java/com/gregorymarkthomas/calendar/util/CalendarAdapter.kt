@@ -38,15 +38,13 @@ class CalendarAdapter(private val context: Context,
         /** 'with' keeps 'itemView' as the context, meaning we do not have to keep calling itemView **/
         fun bind(day: AppDay) = with(itemView) {
             tag = day.dayOfMonth
-
             dayNumberView.text = "${day.dayOfMonth}"
-
             setEventsViews(day)
         }
 
         private fun setEventsViews(day: AppDay) {
-            var timelineView: TimelineView = itemView.findViewById(R.id.timelineView)
-            timelineView.setEvents(day)
+            val eventContainerView: EventContainerView = itemView.findViewById(R.id.eventContainerView)
+            eventContainerView.setEvents(day)
         }
     }
     

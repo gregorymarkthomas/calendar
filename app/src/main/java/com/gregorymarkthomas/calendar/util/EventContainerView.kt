@@ -13,7 +13,7 @@ import com.gregorymarkthomas.calendar.view.EventBlockView
  * Using the height of this inflated view, we need to calculate how many density pixels represent 1 minute of time.
  * This is so we can draw the AppEvent view and ensure it expands in height to the correct number of minutes.
  */
-class TimelineView: LinearLayout {
+class EventContainerView: LinearLayout {
     constructor(context: Context): super(context) {
         inflate()
     }
@@ -31,10 +31,8 @@ class TimelineView: LinearLayout {
     }
 
     private fun inflate() {
-        inflate(context, R.layout.timeline_view, this)
-
-        /** Expand 'this' LinearLayout to use all of the usable space. **/
-        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        inflate(context, R.layout.event_container, this)
+        orientation = VERTICAL
     }
 
     /**

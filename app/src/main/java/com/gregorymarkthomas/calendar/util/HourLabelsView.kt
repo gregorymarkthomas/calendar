@@ -1,15 +1,12 @@
 package com.gregorymarkthomas.calendar.util
 
 import android.content.Context
-import android.graphics.Canvas
-import android.support.constraint.ConstraintLayout
+import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
 
-class TwentyFourHoursView: LinearLayout {
+class HourLabelsView: LinearLayout {
     constructor(context: Context): super(context) {
         inflate()
     }
@@ -27,10 +24,8 @@ class TwentyFourHoursView: LinearLayout {
     }
 
     private fun inflate() {
-        inflate(context, R.layout.twentyfour_hours_view, this)
-
-        /** Expand 'this' LinearLayout to use all of the usable space. **/
-        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        inflate(context, R.layout.hour_labels, this)
+        orientation = VERTICAL
     }
 
 }
