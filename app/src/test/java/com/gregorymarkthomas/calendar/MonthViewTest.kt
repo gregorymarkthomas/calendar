@@ -15,7 +15,6 @@ import kotlin.test.assertNotNull
 
 /**
  * This is considered an INTEGRATION test suite - it utilises the Activity, therefore forcing the 'real' Model
- * TODO() - Roboelectric does not support API level 28.
  * TODO() - Crash in Model
  * We want to shy away from Instrumented tests, if possible.
  * This is because we can effectively test each View/Presenter anyway.
