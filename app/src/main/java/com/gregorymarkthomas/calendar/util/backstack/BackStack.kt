@@ -9,7 +9,7 @@ import java.util.*
  */
 class BackStack(private var callback: BackStackCallback, initialView: LifeCycleView): BackStackInterface {
 
-    private var stack: ArrayList<LifeCycleView> = ArrayList()
+    private var stack: MutableList<LifeCycleView> = mutableListOf()
 
     init {
         goTo(initialView)
@@ -24,16 +24,19 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
         if(viewIndex == -1) {
             stack.add(view)
         } else {
-            reset(viewIndex)
+            stack = reset(stack, viewIndex)
         }
         callback.onViewChanged(view)
     }
 
     override fun goBack(): Boolean {
         val success = try {
-            stack.removeAt(stack.size - 1)
-            true
-        } catch (e: IndexOutOfBoundsException) {
+            if(getMostRecentViewIndex() != 0) {
+                stack.removeAt(getMostRecentViewIndex())
+                true
+            } else
+                false
+        } catch (e: ArrayIndexOutOfBoundsException) {
             false
         }
         callback.onViewChanged(getMostRecentView())
@@ -41,7 +44,7 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
     }
 
     override fun getMostRecentView(): LifeCycleView {
-        return stack[stack.size - 1]
+        return stack[getMostRecentViewIndex()]
     }
 
     override fun getCurrentViewClasses(): List<String> {
@@ -63,5 +66,11 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
     /**
      * This removes views from the top of the stack to make the requested view the most recent view
      */
-    private fun reset(newViewIndex: Int) = stack.subList(0, newViewIndex)
+    private fun reset(stack: MutableList<LifeCycleView>, newViewIndex: Int): MutableList<LifeCycleView> {
+        return stack.subList(0, newViewIndex + 1)
+    }
+
+    private fun getMostRecentViewIndex(): Int {
+        return stack.size - 1
+    }
 }
