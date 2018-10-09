@@ -39,7 +39,7 @@ class CalendarAdapter(private val context: Context,
         fun bind(day: AppDay) = with(itemView) {
             tag = day.dayOfMonth
 
-            dayNumberView.text = "$(day.dayOfMonth)"
+            dayNumberView.text = "${day.dayOfMonth}"
 
             setEventsViews(day)
         }

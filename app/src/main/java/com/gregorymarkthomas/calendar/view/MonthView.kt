@@ -35,7 +35,7 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
     }
 
     override fun setSelectedDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
-        view!!.dateTextView.text = "$dayOfMonth $monthOfYear $year"
+        view!!.dateTextView.text = "$monthOfYear $year"
     }
 
     override fun onClick(v: View?) {
