@@ -34,8 +34,7 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
         adapter.notifyDataSetChanged()
     }
 
-    /** TODO() - rename to setSelectedDateView() **/
-    override fun setDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
+    override fun setSelectedDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
         view!!.dateTextView.text = "$dayOfMonth $monthOfYear $year"
     }
 

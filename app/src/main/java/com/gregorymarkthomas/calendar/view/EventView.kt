@@ -21,7 +21,7 @@ class EventView(): LifeCycleView(), CalendarViewInterface, View.OnClickListener 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun setDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
+    override fun setSelectedDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

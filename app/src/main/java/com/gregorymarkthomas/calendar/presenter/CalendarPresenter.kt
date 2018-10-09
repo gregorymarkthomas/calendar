@@ -25,7 +25,7 @@ class CalendarPresenter(view: CalendarViewInterface,
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
 
-        view.setDateView(dayOfMonth, CalendarHelper.getMonthString(month), year)
+        view.setSelectedDateView(dayOfMonth, CalendarHelper.getMonthString(month), year)
 
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
         model.getEvents(1, month, year, CalendarHelper.getDaysInMonth(month, year), object: Callback.GetEventsCallback {

@@ -7,10 +7,7 @@ import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.DayView
-import com.gregorymarkthomas.calendar.view.LifeCycleView
-import com.gregorymarkthomas.calendar.view.MonthView
 import io.mockk.clearMocks
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
@@ -47,7 +44,7 @@ class CalendarPresenterTest {
         calendar.time = now
 
         // then
-        verify { view.setDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR)) }
+        verify { view.setSelectedDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR)) }
     }
 
     /**
@@ -64,7 +61,7 @@ class CalendarPresenterTest {
         calendar.time = future
 
         // then
-        verify { view.setDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR)) }
+        verify { view.setSelectedDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR)) }
     }
 
     /**
@@ -81,7 +78,7 @@ class CalendarPresenterTest {
         calendar.time = past
 
         // then
-        verify { view.setDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR)) }
+        verify { view.setSelectedDateView(calendar.get(Calendar.DAY_OF_MONTH), CalendarHelper.getMonthString(calendar.get(Calendar.MONTH)), calendar.get(Calendar.YEAR)) }
     }
 
     /**
