@@ -2,6 +2,7 @@ package com.gregorymarkthomas.calendar.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
@@ -13,34 +14,27 @@ import com.gregorymarkthomas.calendar.view.EventBlockView
  * Using the height of this inflated view, we need to calculate how many density pixels represent 1 minute of time.
  * This is so we can draw the AppEvent view and ensure it expands in height to the correct number of minutes.
  */
-class EventContainerView: LinearLayout {
-    constructor(context: Context): super(context) {
-        inflate()
-    }
+class EventContainerView: ViewGroup {
+    constructor(context: Context): super(context)
 
-    constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        inflate()
-    }
+    constructor(context: Context, attrs: AttributeSet): super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
-        inflate()
-    }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int): super(context, attrs, defStyleAttr, defStyleRes) {
-        inflate()
-    }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int): super(context, attrs, defStyleAttr, defStyleRes)
 
-    private fun inflate() {
-        inflate(context, R.layout.event_container, this)
-        orientation = VERTICAL
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        /** Do nothing **/
     }
 
     /**
-     * Calculates how many pixels there are in a minute.
-     * There are 1440 minutes in a 24 hour period.
-     * Our view represents 1439 minutes (00:00 to 23:59)
+     * We use visibility INVISIBLE. This is so we can still see Events.
      */
-    private fun calculateDensityPixelsPerMinute() = height / 1439
+    fun initialise(root: ViewGroup, height: Int, visible: Boolean) {
+        inflate(context, R.layout.event_container, root)
+        layoutParams.height = height
+        visibility = if(visible) View.VISIBLE else View.INVISIBLE
+    }
 
     fun setEvents(day: AppDay) {
         val dpPerMinute = calculateDensityPixelsPerMinute()
@@ -52,4 +46,11 @@ class EventContainerView: LinearLayout {
         }
     }
 
+
+    /**
+     * Calculates how many pixels there are in a minute.
+     * There are 1440 minutes in a 24 hour period.
+     * Our view represents 1439 minutes (00:00 to 23:59)
+     */
+    private fun calculateDensityPixelsPerMinute() = height / 1439
 }

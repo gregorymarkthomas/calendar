@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.row_day.view.*
 
 /** 'days' is empty by default **/
 class CalendarAdapter(var callback: CalendarAdapterInterface,
-                      private var availableHeightDP: Int,
-                      private var showHourLabels: Boolean = true,
+                      private var dayViewHeightDP: Int,
+                      private var showLabels: Boolean = true,
                       private var days: List<AppDay> = listOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     private val TAG = "CalendarAdapter"
@@ -37,9 +37,8 @@ class CalendarAdapter(var callback: CalendarAdapterInterface,
         fun bind(day: AppDay) = with(itemView) {
             tag = day.dayOfMonth
             dayNumberView.text = "${day.dayOfMonth}"
-
-            hourLabelsView.visibility = if (showHourLabels) View.VISIBLE else View.GONE
-
+            eventContainerView.initialise(dayLayout, dayViewHeightDP, showLabels)
+            hourLabelsView.initialise(dayLayout, dayViewHeightDP, showLabels)
             setEventsViews(day)
         }
 
