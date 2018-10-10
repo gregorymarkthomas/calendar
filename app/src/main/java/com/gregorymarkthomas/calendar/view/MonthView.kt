@@ -7,7 +7,6 @@ import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
-import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import kotlinx.android.synthetic.main.month_view.view.*
@@ -52,9 +51,12 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
         view!!.viewTodayButton.setOnClickListener(this)
     }
 
+    /**
+     * We want to show 7 days per row, so we need 7 columns for the adapter.
+     */
     private fun setupAdapter(context: AndroidContextInterface) {
-        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 1)
-        adapter = CalendarAdapter(context.getContext(), this, view!!.calendarRecyclerView.height)
+        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
+        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.height, false)
         view!!.calendarRecyclerView.adapter = adapter
     }
 }

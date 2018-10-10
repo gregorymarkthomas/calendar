@@ -14,13 +14,18 @@
     </style>
 
     <style name="HourDivider">
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:height">@dimen/calendar_day_hour_divider_height</item>
         <item name="android:background">@color/dark_grey</item>
     </style>
 
     <style name="EventText">
         <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="MonthDate">
+        <item name="android:paddingTop">@dimen/margin_half</item>
+        <item name="android:paddingBottom">@dimen/margin_half</item>
     </style>
 
 </resources>

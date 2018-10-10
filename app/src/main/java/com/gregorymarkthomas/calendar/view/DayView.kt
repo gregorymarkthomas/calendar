@@ -3,7 +3,6 @@ package com.gregorymarkthomas.calendar.view
 import android.view.View
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.util.CalendarAdapter
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import java.util.*

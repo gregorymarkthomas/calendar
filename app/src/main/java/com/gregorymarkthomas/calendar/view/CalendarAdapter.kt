@@ -1,6 +1,5 @@
-package com.gregorymarkthomas.calendar.util
+package com.gregorymarkthomas.calendar.view
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,9 @@ import com.gregorymarkthomas.calendar.model.AppDay
 import kotlinx.android.synthetic.main.row_day.view.*
 
 /** 'days' is empty by default **/
-class CalendarAdapter(private val context: Context,
-                      var callback: CalendarAdapterInterface,
-                      private var availableSpaceDP: Int,
+class CalendarAdapter(var callback: CalendarAdapterInterface,
+                      private var availableHeightDP: Int,
+                      private var showHourLabels: Boolean = true,
                       private var days: List<AppDay> = listOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     private val TAG = "CalendarAdapter"
@@ -34,11 +33,13 @@ class CalendarAdapter(private val context: Context,
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
         /** 'with' keeps 'itemView' as the context, meaning we do not have to keep calling itemView **/
         fun bind(day: AppDay) = with(itemView) {
             tag = day.dayOfMonth
             dayNumberView.text = "${day.dayOfMonth}"
+
+            hourLabelsView.visibility = if (showHourLabels) View.VISIBLE else View.GONE
+
             setEventsViews(day)
         }
 

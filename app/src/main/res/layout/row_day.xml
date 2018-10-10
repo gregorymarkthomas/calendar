@@ -7,23 +7,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <com.gregorymarkthomas.calendar.util.HourLabelsView
+    <com.gregorymarkthomas.calendar.view.HourLabelsView
         android:id="@+id/hourLabelsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:background="@color/red"
         />
 
-    <com.gregorymarkthomas.calendar.util.EventContainerView
+    <com.gregorymarkthomas.calendar.view.EventContainerView
         android:id="@+id/eventContainerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@id/hourLabelsView"
-        android:background="@color/green"
         />
 
     <TextView
@@ -35,6 +33,5 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         tools:text="30"
-        android:background="@color/blue"
         />
 </RelativeLayout>

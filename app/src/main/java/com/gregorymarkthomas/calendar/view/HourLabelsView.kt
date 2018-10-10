@@ -1,4 +1,4 @@
-package com.gregorymarkthomas.calendar.util
+package com.gregorymarkthomas.calendar.view
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
