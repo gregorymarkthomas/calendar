@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.model.AppDay
-import com.gregorymarkthomas.calendar.view.EventBlockView
+import com.gregorymarkthomas.calendar.util.UnitConversion
 
 /**
  * This is the space where Events are shown. It represents 00:00 to 23:59.
@@ -30,10 +29,12 @@ class EventContainerView: ViewGroup {
     /**
      * We use visibility INVISIBLE. This is so we can still see Events.
      */
-    fun initialise(root: ViewGroup, height: Int, visible: Boolean) {
+    fun initialise(root: ViewGroup, heightDP: Int, visible: Boolean) {
         inflate(context, R.layout.event_container, root)
-        layoutParams.height = height
+        layoutParams.height = heightDP
         visibility = if(visible) View.VISIBLE else View.INVISIBLE
+
+        createDividers(heightDP, context)
     }
 
     fun setEvents(day: AppDay) {
@@ -46,6 +47,22 @@ class EventContainerView: ViewGroup {
         }
     }
 
+    /**
+     * We want dividers at each of the 24 equal sections of the view.
+     * Setting margins programmatically is done in px and not DP. This is why we convert from DP to px.
+     */
+    private fun createDividers(heightDP: Int, context: Context) {
+        val spacingPx = UnitConversion.dpToPX(heightDP, context) / 24
+
+        for(i in 0..24) {
+            val divider = inflate(context, R.layout.divider, null)
+
+            val params = MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 0, 0, spacingPx)
+            divider.layoutParams = params
+            addView(divider)
+        }
+    }
 
     /**
      * Calculates how many pixels there are in a minute.

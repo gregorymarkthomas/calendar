@@ -18,15 +18,26 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
 
     override fun onInitialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
         setupTodayButton()
-        setupAdapter(context)
 
         /** This must be called last. **/
-        this.presenter = CalendarPresenter(this, model, backstack, date)
+        this.presenter = CalendarPresenter(this, model, backstack, context, date)
     }
 
     override fun getTag(): String = "MonthView"
 
     override fun getLayout(): Int = R.layout.month_view
+
+    /**
+     * This is called by the Presenter.
+     * We used to do this in onInitialise(), but the view wasn't yet drawn when we were retrieving the height of the RecyclerView to determine the size of each Day view.
+     * So, Presenter now controls when it is created.
+     * We want to show 7 days per row, so we need 7 columns for the adapter.
+     */
+    override fun setupAdapter(context: AndroidContextInterface) {
+        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
+        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.height, false)
+        view!!.calendarRecyclerView.adapter = adapter
+    }
 
     override fun showDates(days: List<AppDay>) {
         adapter.addAll(days)
@@ -51,12 +62,5 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
         view!!.viewTodayButton.setOnClickListener(this)
     }
 
-    /**
-     * We want to show 7 days per row, so we need 7 columns for the adapter.
-     */
-    private fun setupAdapter(context: AndroidContextInterface) {
-        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
-        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.height, false)
-        view!!.calendarRecyclerView.adapter = adapter
-    }
+
 }

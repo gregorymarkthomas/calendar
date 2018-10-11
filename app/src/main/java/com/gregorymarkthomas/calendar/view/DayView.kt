@@ -20,6 +20,10 @@ class DayView(private val date: Date): LifeCycleView(), CalendarViewInterface, C
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun setupAdapter(context: AndroidContextInterface) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun setSelectedDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

@@ -3,6 +3,7 @@ package com.gregorymarkthomas.calendar.presenter
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
+import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
@@ -14,6 +15,7 @@ import java.util.*
 class CalendarPresenter(view: CalendarViewInterface,
                         private val model: ModelInterface,
                         private val backstack: BackStackInterface,
+                        private val context: AndroidContextInterface,
                         date: Date): CalendarPresenterInterface {
 
     /** Get the day of month, month and year that has been specified.
@@ -30,6 +32,7 @@ class CalendarPresenter(view: CalendarViewInterface,
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
         model.getEvents(1, month, year, CalendarHelper.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
             override fun onGetEvents(days: List<AppDay>) {
+                view.setupAdapter(context)
                 view.showDates(days)
             }
         })
