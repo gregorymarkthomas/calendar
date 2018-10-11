@@ -13,8 +13,10 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
+import com.gregorymarkthomas.calendar.view.DayView
 import com.gregorymarkthomas.calendar.view.LifeCycleView
 import com.gregorymarkthomas.calendar.view.MonthView
+import com.gregorymarkthomas.calendar.view.WeekView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -92,8 +94,8 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val viewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
         val today = Date()
         return when (viewClass) {
-//            DayView::class.java -> DayView(today)
-//            WeekView::class.java -> WeekView(today)
+            DayView::class.java -> DayView(today)
+            WeekView::class.java -> WeekView(today)
             else -> MonthView(today)
         }
     }
