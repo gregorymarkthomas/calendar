@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.view.ViewTreeObserver
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
@@ -33,7 +35,10 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        backstack = BackStack(this, getInitialView())
+
+        main_content.viewTreeObserver.addOnGlobalLayoutListener {
+            backstack = BackStack(this, getInitialView())
+        }
     }
 
     override fun onDestroy() {
@@ -79,11 +84,25 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
 
     /**
      * Callback from BackStack - when the view has changed, this Activity sets the view.
+     * TODO() - do we need 'main_content.removeOnAttachStateChangeListener()' here?
      */
     override fun onViewChanged(view: LifeCycleView) {
+
         main_content.removeAllViews()
         main_content.addView(view.initialise(this))
-        view.onInitialised(this, Model(this, this), this)
+        main_content.addOnAttachStateChangeListener(object: View.OnAttachStateChangeListener {
+            override fun onViewDetachedFromWindow(v: View?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            /**
+             * 'this@MainActivity' is used to get items from the outer scope (in this case, the MainActivity's interface function definitions).
+             */
+            override fun onViewAttachedToWindow(v: View?) {
+                view.onInitialised(this@MainActivity, Model(this@MainActivity, this@MainActivity), this@MainActivity)
+            }
+
+        })
     }
 
     /********** private */
