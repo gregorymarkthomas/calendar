@@ -9,10 +9,11 @@ import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
 
 /**
- * There should be NO Android stuff in the Presenter.
+ * The View that creates the Presenter will already be initialised/viewable before Presenter initialisation.
+ * There should be NO Android stuff in the PresenterInterface.
  * TODO() - How do we deal with timezones of Events?
  */
-class CalendarPresenter(view: CalendarViewInterface,
+class CalendarPresenter(private val view: CalendarViewInterface,
                         private val model: ModelInterface,
                         private val backstack: BackStackInterface,
                         private val context: AndroidContextInterface,
@@ -32,7 +33,6 @@ class CalendarPresenter(view: CalendarViewInterface,
         /** MonthView is always the default, so get CURRENT MONTH'S events **/
         model.getEvents(1, month, year, CalendarHelper.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
             override fun onGetEvents(days: List<AppDay>) {
-                view.setupAdapter(context)
                 view.showDates(days)
             }
         })

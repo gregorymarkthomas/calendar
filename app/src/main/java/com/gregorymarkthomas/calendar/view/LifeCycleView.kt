@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
-import java.lang.NullPointerException
 
 
 abstract class LifeCycleView {
@@ -23,16 +22,22 @@ abstract class LifeCycleView {
      *      If month_view.xml also has a ConstraintLayout as the root, then there will be too many ViewGroups.
      *      We now use <merge> to use the higher level ViewGroup.
      */
-    fun initialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface): ConstraintLayout {
-        this.view = createLayout(context)
-        onInitialise(backstack, model, context)
-        return this.view!!
+    fun initialise(context: AndroidContextInterface): ConstraintLayout {
+        view = createLayout(context)
+        return view!!
+    }
+
+    /**
+     * Manually called by the Activity in onViewChanged()
+     */
+    fun onInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+        onViewInitialised(backstack, model, context)
     }
 
     /********** protected */
     protected abstract fun getTag(): String
     protected abstract fun getLayout(): Int
-    protected abstract fun onInitialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface)
+    protected abstract fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface)
 
     /********** private */
     private fun createLayout(context: AndroidContextInterface): ConstraintLayout {

@@ -82,14 +82,11 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
      */
     override fun onViewChanged(view: LifeCycleView) {
         main_content.removeAllViews()
-        main_content.addView(view.initialise(this, Model(this, this), this))
+        main_content.addView(view.initialise(this))
+        view.onInitialised(this, Model(this, this), this)
     }
 
     /********** private */
-    /**
-     * TODO() - create DayView
-     * TODO() - create WeekView
-     */
     private fun getInitialView(): LifeCycleView {
         val viewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
         val today = Date()

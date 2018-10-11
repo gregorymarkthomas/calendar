@@ -16,11 +16,7 @@ class DayView(private val date: Date): LifeCycleView(), CalendarViewInterface, C
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onInitialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setupAdapter(context: AndroidContextInterface) {
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

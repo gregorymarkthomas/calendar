@@ -20,7 +20,7 @@ import java.util.*
  * This is considered an INTEGRATION test suite - it utilises the Activity, therefore forcing the 'real' Model
  * TODO() - Crash in Model
  * We want to shy away from Instrumented tests, if possible.
- * This is because we can effectively test each View/Presenter anyway.
+ * This is because we can effectively test each View/PresenterInterface anyway.
  * But the test below is an example that it works.
  */
 @RunWith(AndroidJUnit4::class)

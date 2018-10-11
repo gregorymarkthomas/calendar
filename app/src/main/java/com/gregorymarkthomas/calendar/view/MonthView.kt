@@ -16,27 +16,23 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
     private lateinit var presenter: CalendarPresenterInterface
     private lateinit var adapter: CalendarAdapter
 
-    override fun onInitialise(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
-        setupTodayButton()
-
-        /** This must be called last. **/
-        this.presenter = CalendarPresenter(this, model, backstack, context, date)
-    }
-
+    /********** public */
     override fun getTag(): String = "MonthView"
 
     override fun getLayout(): Int = R.layout.month_view
 
     /**
-     * This is called by the Presenter.
-     * We used to do this in onInitialise(), but the view wasn't yet drawn when we were retrieving the height of the RecyclerView to determine the size of each Day view.
-     * So, Presenter now controls when it is created.
+     * This is called by the PresenterInterface.
+     * We used to do this in initialisePresenter(), but the view wasn't yet drawn when we were retrieving the height of the RecyclerView to determine the size of each Day view.
+     * So, PresenterInterface now controls when it is created.
      * We want to show 7 days per row, so we need 7 columns for the adapter.
      */
-    override fun setupAdapter(context: AndroidContextInterface) {
-        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
-        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.height, false)
-        view!!.calendarRecyclerView.adapter = adapter
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+        setupTodayButton()
+        setupAdapter(context)
+
+        /** This should be last. **/
+        this.presenter = CalendarPresenter(this, model, backstack, context, date)
     }
 
     override fun showDates(days: List<AppDay>) {
@@ -58,9 +54,16 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
         presenter.onDayPress(day, hour)
     }
 
+
+    /********** private */
     private fun setupTodayButton() {
         view!!.viewTodayButton.setOnClickListener(this)
     }
 
+    private fun setupAdapter(context: AndroidContextInterface) {
+        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
+        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.height, false)
+        view!!.calendarRecyclerView.adapter = adapter
+    }
 
 }
