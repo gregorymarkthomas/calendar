@@ -37,6 +37,9 @@
         app:layout_constraintBottom_toTopOf="@+id/viewTodayButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+
+        android:background="@color/red"
+        />
 
 </android.support.constraint.ConstraintLayout>

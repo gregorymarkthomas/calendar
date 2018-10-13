@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
@@ -90,13 +92,24 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     override fun onViewChanged(view: LifeCycleView) {
         main_content.removeAllViews()
         main_content.addView(view.initialise(this), main_content.width, main_content.height)
-        view.onInitialised(
-                this@MainActivity,
-                Model(this@MainActivity, this@MainActivity),
-                this@MainActivity,
-                main_content.width,
-                main_content.height
-        )
+
+        /** TODO() - this does not work. Back to the drawing board? **/
+        view.view!!.addOnAttachStateChangeListener(object: View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View?) {
+                view.onInitialised(
+                        this@MainActivity,
+                        Model(this@MainActivity, this@MainActivity),
+                        this@MainActivity,
+                        main_content.width,
+                        main_content.height
+                )
+            }
+
+            override fun onViewDetachedFromWindow(v: View?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+        })
     }
 
     /********** private */

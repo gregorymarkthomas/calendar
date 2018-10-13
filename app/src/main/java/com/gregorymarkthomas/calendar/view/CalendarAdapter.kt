@@ -16,9 +16,11 @@ class CalendarAdapter(var callback: CalendarAdapterInterface,
                       private var days: List<AppDay> = listOf()): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     private val TAG = "CalendarAdapter"
-    
+    private var dayViewHeight: Int = 0
+
     var addAll: (List<AppDay>) -> Unit = {
         days = it
+        dayViewHeight = getDayViewHeight(availableHeightDP, columnCount, days.size)
     }
 
     override fun getItemCount(): Int {
@@ -28,7 +30,7 @@ class CalendarAdapter(var callback: CalendarAdapterInterface,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.day_grid_item, parent, false),
-                getDayViewHeight(availableHeightDP, columnCount, days.size),
+                dayViewHeight,
                 showLabels
         )
     }
@@ -59,7 +61,7 @@ class CalendarAdapter(var callback: CalendarAdapterInterface,
 
 
     private fun getDayViewHeight(availableHeightDP: Int, columnCount: Int, dayCount: Int): Int {
-        val rowCount = Math.ceil((dayCount / columnCount).toDouble())
-        return Math.ceil(availableHeightDP / rowCount).toInt()
+        val rowCount: Double = Math.ceil(dayCount.toDouble() / columnCount.toDouble())
+        return (availableHeightDP / rowCount).toInt()
     }
 }

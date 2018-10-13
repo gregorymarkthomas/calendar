@@ -62,7 +62,13 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
 
     private fun setupAdapter(context: AndroidContextInterface, availableHeight: Int) {
         view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
-        adapter = CalendarAdapter(this, availableHeight, 7,false)
+
+        // TODO() - debug
+        val measuredHeight = view!!.calendarRecyclerView.measuredHeight
+        val height = view!!.calendarRecyclerView.height
+        val minHeight = view!!.calendarRecyclerView.minimumHeight
+
+        adapter = CalendarAdapter(this, height, 7,false)
         view!!.calendarRecyclerView.adapter = adapter
 
         // TODO() - do we need this?
