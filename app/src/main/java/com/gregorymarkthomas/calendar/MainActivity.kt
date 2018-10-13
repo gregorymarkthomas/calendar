@@ -37,7 +37,8 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         setContentView(R.layout.activity_main)
 
         main_content.viewTreeObserver.addOnGlobalLayoutListener {
-            backstack = BackStack(this, getInitialView())
+            if(!::backstack.isInitialized)
+                backstack = BackStack(this@MainActivity, getInitialView())
         }
     }
 
@@ -87,22 +88,15 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
      * TODO() - do we need 'main_content.removeOnAttachStateChangeListener()' here?
      */
     override fun onViewChanged(view: LifeCycleView) {
-
         main_content.removeAllViews()
-        main_content.addView(view.initialise(this))
-        main_content.addOnAttachStateChangeListener(object: View.OnAttachStateChangeListener {
-            override fun onViewDetachedFromWindow(v: View?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            /**
-             * 'this@MainActivity' is used to get items from the outer scope (in this case, the MainActivity's interface function definitions).
-             */
-            override fun onViewAttachedToWindow(v: View?) {
-                view.onInitialised(this@MainActivity, Model(this@MainActivity, this@MainActivity), this@MainActivity)
-            }
-
-        })
+        main_content.addView(view.initialise(this), main_content.width, main_content.height)
+        view.onInitialised(
+                this@MainActivity,
+                Model(this@MainActivity, this@MainActivity),
+                this@MainActivity,
+                main_content.width,
+                main_content.height
+        )
     }
 
     /********** private */

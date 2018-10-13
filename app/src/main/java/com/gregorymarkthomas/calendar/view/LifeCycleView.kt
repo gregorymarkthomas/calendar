@@ -30,14 +30,14 @@ abstract class LifeCycleView {
     /**
      * Manually called by the Activity in onViewChanged()
      */
-    fun onInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
-        onViewInitialised(backstack, model, context)
+    fun onInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
+        onViewInitialised(backstack, model, context, availableWidth, availableHeight)
     }
 
     /********** protected */
     protected abstract fun getTag(): String
     protected abstract fun getLayout(): Int
-    protected abstract fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface)
+    protected abstract fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int)
 
     /********** private */
     private fun createLayout(context: AndroidContextInterface): ConstraintLayout {

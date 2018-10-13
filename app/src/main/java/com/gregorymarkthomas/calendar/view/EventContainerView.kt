@@ -29,12 +29,12 @@ class EventContainerView: ViewGroup {
     /**
      * We use visibility INVISIBLE. This is so we can still see Events.
      */
-    fun initialise(root: ViewGroup, heightDP: Int, visible: Boolean) {
+    fun initialise(root: ViewGroup, definedHeight: Int, visible: Boolean) {
         inflate(context, R.layout.event_container, root)
-        layoutParams.height = heightDP
+        layoutParams.height = definedHeight
         visibility = if(visible) View.VISIBLE else View.INVISIBLE
 
-        createDividers(heightDP, context)
+        createDividers(definedHeight, context)
     }
 
     fun setEvents(day: AppDay) {

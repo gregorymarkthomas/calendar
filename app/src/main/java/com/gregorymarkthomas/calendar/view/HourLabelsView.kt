@@ -24,12 +24,12 @@ class HourLabelsView: ViewGroup {
     /**
      * We use visibility GONE. The EventContainerView will still have the height.
      */
-    fun initialise(root: ViewGroup, heightDP: Int, visible: Boolean) {
+    fun initialise(root: ViewGroup, definedHeight: Int, visible: Boolean) {
         inflate(context, R.layout.hour_label, root)
-        layoutParams.height = heightDP
+        layoutParams.height = definedHeight
         visibility = if(visible) View.VISIBLE else View.GONE
 
-        createLabels(heightDP, context)
+        createLabels(definedHeight, context)
     }
 
 

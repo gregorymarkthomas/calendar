@@ -16,7 +16,7 @@ class WeekView(private val date: Date): LifeCycleView(), CalendarViewInterface, 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

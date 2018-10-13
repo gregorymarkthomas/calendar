@@ -27,9 +27,9 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
      * So, PresenterInterface now controls when it is created.
      * We want to show 7 days per row, so we need 7 columns for the adapter.
      */
-    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
         setupTodayButton()
-        setupAdapter(context)
+        setupAdapter(context, availableHeight)
 
         /** This should be last. **/
         this.presenter = CalendarPresenter(this, model, backstack, context, date)
@@ -60,10 +60,13 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
         view!!.viewTodayButton.setOnClickListener(this)
     }
 
-    private fun setupAdapter(context: AndroidContextInterface) {
+    private fun setupAdapter(context: AndroidContextInterface, availableHeight: Int) {
         view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
-        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.height, false)
+        adapter = CalendarAdapter(this, availableHeight, 7,false)
         view!!.calendarRecyclerView.adapter = adapter
+
+        // TODO() - do we need this?
+        view!!.calendarRecyclerView.setHasFixedSize(true)
     }
 
 }
