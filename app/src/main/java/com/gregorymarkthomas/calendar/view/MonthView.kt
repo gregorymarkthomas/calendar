@@ -12,7 +12,7 @@ import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
 
-class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+class MonthView(private val date: Date): BackStackView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private lateinit var presenter: CalendarPresenterInterface
     private lateinit var adapter: CalendarAdapter
 
@@ -27,9 +27,9 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
      * So, PresenterInterface now controls when it is created.
      * We want to show 7 days per row, so we need 7 columns for the adapter.
      */
-    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
         setupTodayButton()
-        setupAdapter(context, availableHeight)
+        setupAdapter(context)
 
         /** This should be last. **/
         this.presenter = CalendarPresenter(this, model, backstack, context, date)
@@ -60,17 +60,11 @@ class MonthView(private val date: Date): LifeCycleView(), CalendarViewInterface,
         view!!.viewTodayButton.setOnClickListener(this)
     }
 
-    private fun setupAdapter(context: AndroidContextInterface, availableHeight: Int) {
-        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), 7)
-
-        // TODO() - debug
-        val measuredHeight = view!!.calendarRecyclerView.measuredHeight
-        val height = view!!.calendarRecyclerView.height
-        val minHeight = view!!.calendarRecyclerView.minimumHeight
-
-        adapter = CalendarAdapter(this, height, 7,false)
+    private fun setupAdapter(context: AndroidContextInterface) {
+        val columnCount = 7
+        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), columnCount)
+        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.measuredHeight, columnCount,false)
         view!!.calendarRecyclerView.adapter = adapter
-
         // TODO() - do we need this?
         view!!.calendarRecyclerView.setHasFixedSize(true)
     }

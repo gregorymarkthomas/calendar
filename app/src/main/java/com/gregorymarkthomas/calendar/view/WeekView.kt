@@ -7,7 +7,7 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import java.util.*
 
-class WeekView(private val date: Date): LifeCycleView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+class WeekView(private val date: Date): BackStackView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     override fun getTag(): String {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -16,7 +16,7 @@ class WeekView(private val date: Date): LifeCycleView(), CalendarViewInterface, 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

@@ -82,7 +82,7 @@ class CalendarPresenterTest {
     }
 
     /**
-     * TODO(): verify is vague (i.e. does not include the specific date). This is because we would need to instantiate a new LifeCycleView in the call to goTo().
+     * TODO(): verify is vague (i.e. does not include the specific date). This is because we would need to instantiate a new BackStackView in the call to goTo().
      */
     @Test
     fun `today button shows day view of today`() {
@@ -98,7 +98,7 @@ class CalendarPresenterTest {
     }
 
     /**
-     * TODO(): verify is vague (i.e. does not include the specific date). This is because we would need to instantiate a new LifeCycleView in the call to goTo().
+     * TODO(): verify is vague (i.e. does not include the specific date). This is because we would need to instantiate a new BackStackView in the call to goTo().
      * This will fail
      */
     @Test

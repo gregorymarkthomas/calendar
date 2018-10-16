@@ -6,7 +6,7 @@ import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 
-class EventView(): LifeCycleView(), CalendarViewInterface, View.OnClickListener {
+class EventView(): BackStackView(), CalendarViewInterface, View.OnClickListener {
     override fun getTag(): String {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -15,7 +15,7 @@ class EventView(): LifeCycleView(), CalendarViewInterface, View.OnClickListener 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
+    override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

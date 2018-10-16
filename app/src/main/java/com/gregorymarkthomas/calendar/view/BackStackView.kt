@@ -7,18 +7,18 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 
 
-abstract class LifeCycleView {
+abstract class BackStackView {
 
     /********** public */
     var view: ConstraintLayout? = null
         get() {
-            return field ?: throw NullPointerException("'view' object has not yet been drawn. Use initialise() on the LifeCycleView.")
+            return field ?: throw NullPointerException("'view' object has not yet been drawn. Use initialise() on the BackStackView.")
         }
 
     /**
      * TODO() - edit this description as function has changed since written
-     * The <merge> tag has been used in each view that uses the LifeCycleView.
-     * This is because LifeCycleView already subclasses ConstraintLayout.
+     * The <merge> tag has been used in each view that uses the BackStackView.
+     * This is because BackStackView already subclasses ConstraintLayout.
      *      If month_view.xml also has a ConstraintLayout as the root, then there will be too many ViewGroups.
      *      We now use <merge> to use the higher level ViewGroup.
      */
@@ -30,14 +30,14 @@ abstract class LifeCycleView {
     /**
      * Manually called by the Activity in onViewChanged()
      */
-    fun onInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int) {
-        onViewInitialised(backstack, model, context, availableWidth, availableHeight)
+    fun onInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+        onViewInitialised(backstack, model, context)
     }
 
     /********** protected */
     protected abstract fun getTag(): String
     protected abstract fun getLayout(): Int
-    protected abstract fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface, availableWidth: Int, availableHeight: Int)
+    protected abstract fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface)
 
     /********** private */
     private fun createLayout(context: AndroidContextInterface): ConstraintLayout {

@@ -6,13 +6,13 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.util.Log
 import com.gregorymarkthomas.calendar.MainActivity
-import com.gregorymarkthomas.calendar.view.LifeCycleView
+import com.gregorymarkthomas.calendar.view.BackStackView
 
-class MainActivityTestRule(var viewClass: Class<out LifeCycleView>?): ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
+class MainActivityTestRule(var viewClass: Class<out BackStackView>?): ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
     val TAG = "MainActivityTestRule"
 
     var context: Context = InstrumentationRegistry.getInstrumentation().targetContext
-    internal lateinit var view: LifeCycleView
+    internal lateinit var view: BackStackView
 
     override fun beforeActivityLaunched() {
         super.beforeActivityLaunched()

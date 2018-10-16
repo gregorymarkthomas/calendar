@@ -1,7 +1,7 @@
 package com.gregorymarkthomas.calendar
 
 import com.gregorymarkthomas.calendar.util.CalendarHelper
-import com.gregorymarkthomas.calendar.view.LifeCycleView
+import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Before
@@ -33,7 +33,7 @@ class BackStackViewTest {
     /**
      * 'relaxUnitFun = true' will stop 'io.mockk.MockKException: no answer found for...' error for our simple use of a mocked BackStackCallback
      */
-    lateinit var view: LifeCycleView
+    lateinit var view: BackStackView
     lateinit var activity: MainActivity
 
     @Before

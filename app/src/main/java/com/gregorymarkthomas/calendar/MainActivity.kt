@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
@@ -18,7 +16,7 @@ import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.DayView
-import com.gregorymarkthomas.calendar.view.LifeCycleView
+import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
 import com.gregorymarkthomas.calendar.view.WeekView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,14 +32,19 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val INITIAL_VIEW_EXTRA = "initial_view_extra"
     }
 
+    /**
+     * When the MainActivity view is ready, we will attach the first BackStackView.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main_content.viewTreeObserver.addOnGlobalLayoutListener {
-            if(!::backstack.isInitialized)
+        main_content.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                main_content.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 backstack = BackStack(this@MainActivity, getInitialView())
-        }
+            }
+        })
     }
 
     override fun onDestroy() {
@@ -69,7 +72,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     }
 
     /********* BackStack - these can be called by Presenters via an interface */
-    override fun goTo(view: LifeCycleView) {
+    override fun goTo(view: BackStackView) {
         backstack.goTo(view)
     }
 
@@ -77,7 +80,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         return backstack.goBack()
     }
 
-    override fun getMostRecentView(): LifeCycleView {
+    override fun getMostRecentView(): BackStackView {
         return backstack.getMostRecentView()
     }
 
@@ -86,35 +89,26 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     }
 
     /**
-     * Callback from BackStack - when the view has changed, this Activity sets the view.
-     * TODO() - do we need 'main_content.removeOnAttachStateChangeListener()' here?
+     * When the BackStackView has been added to MainActivity, we can say it has been initialised.
      */
-    override fun onViewChanged(view: LifeCycleView) {
+    override fun onViewChanged(backstackView: BackStackView) {
         main_content.removeAllViews()
-        main_content.addView(view.initialise(this), main_content.width, main_content.height)
+        val view = backstackView.initialise(this)
 
-        /** TODO() - this does not work. Back to the drawing board? **/
-        view.view!!.addOnAttachStateChangeListener(object: View.OnAttachStateChangeListener {
-            override fun onViewAttachedToWindow(v: View?) {
-                view.onInitialised(
-                        this@MainActivity,
-                        Model(this@MainActivity, this@MainActivity),
-                        this@MainActivity,
-                        main_content.width,
-                        main_content.height
-                )
+        val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                backstackView.onInitialised(this@MainActivity, Model(this@MainActivity, this@MainActivity),this@MainActivity)
             }
+        }
 
-            override fun onViewDetachedFromWindow(v: View?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-        })
+        view.viewTreeObserver.addOnGlobalLayoutListener(listener)
+        main_content.addView(view, main_content.width, main_content.height)
     }
 
     /********** private */
-    private fun getInitialView(): LifeCycleView {
-        val viewClass: Class<out LifeCycleView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out LifeCycleView>?
+    private fun getInitialView(): BackStackView {
+        val viewClass: Class<out BackStackView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out BackStackView>?
         val today = Date()
         return when (viewClass) {
             DayView::class.java -> DayView(today)

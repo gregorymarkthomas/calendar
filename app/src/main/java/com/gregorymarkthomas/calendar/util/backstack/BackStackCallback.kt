@@ -1,7 +1,7 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.view.LifeCycleView
+import com.gregorymarkthomas.calendar.view.BackStackView
 
 interface BackStackCallback {
-    fun onViewChanged(view: LifeCycleView)
+    fun onViewChanged(backstackView: BackStackView)
 }

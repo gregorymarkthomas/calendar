@@ -1,15 +1,15 @@
 package com.gregorymarkthomas.calendar.util.backstack
 
-import com.gregorymarkthomas.calendar.view.LifeCycleView
+import com.gregorymarkthomas.calendar.view.BackStackView
 import java.util.*
 
 /**
  * Each view requires a few Android-related items, plus control of the backstack, hence the input arguments.
  * This is not a singleton in case the app has multiple Activities - there will be one BackStack per Activity.
  */
-class BackStack(private var callback: BackStackCallback, initialView: LifeCycleView): BackStackInterface {
+class BackStack(private var callback: BackStackCallback, initialView: BackStackView): BackStackInterface {
 
-    private var stack: MutableList<LifeCycleView> = mutableListOf()
+    private var stack: MutableList<BackStackView> = mutableListOf()
 
     init {
         goTo(initialView)
@@ -19,7 +19,7 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
     /**
      * Either finds the existing instance of the requested viewClass and uses it, or it adds a new instance if it does not yet exist.
      */
-    override fun goTo(view: LifeCycleView) {
+    override fun goTo(view: BackStackView) {
         val viewIndex = indexOf(view)
         if(viewIndex == -1) {
             stack.add(view)
@@ -43,7 +43,7 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
         return success
     }
 
-    override fun getMostRecentView(): LifeCycleView {
+    override fun getMostRecentView(): BackStackView {
         return stack[getMostRecentViewIndex()]
     }
 
@@ -59,14 +59,14 @@ class BackStack(private var callback: BackStackCallback, initialView: LifeCycleV
     /**
      * Looks in the backstack for the given View
      */
-    private fun indexOf(view: LifeCycleView): Int {
+    private fun indexOf(view: BackStackView): Int {
         return stack.indexOfLast { it::class.java == view::class.java }
     }
 
     /**
      * This removes views from the top of the stack to make the requested view the most recent view
      */
-    private fun reset(stack: MutableList<LifeCycleView>, newViewIndex: Int): MutableList<LifeCycleView> {
+    private fun reset(stack: MutableList<BackStackView>, newViewIndex: Int): MutableList<BackStackView> {
         return stack.subList(0, newViewIndex + 1)
     }
 
