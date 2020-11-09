@@ -12,7 +12,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -30,11 +30,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // RxJava 2
     implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
@@ -47,9 +47,9 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0"
 
     // RxJava support for Room
-    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    implementation 'androidx.room:room-rxjava2:2.0.0'
     // RxJava support for Room Testing support
-    androidTestImplementation "android.arch.core:core-testing:1.1.1"
+    androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
 
     // Retrofit - easy HTTP communication
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -71,7 +71,7 @@ dependencies {
     // Run Instrumented tests on JVM
     testImplementation "org.robolectric:robolectric:3.7"
 
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }

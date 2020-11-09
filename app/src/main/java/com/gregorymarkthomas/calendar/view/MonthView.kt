@@ -1,6 +1,6 @@
 package com.gregorymarkthomas.calendar.view
 
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.model.AppDay

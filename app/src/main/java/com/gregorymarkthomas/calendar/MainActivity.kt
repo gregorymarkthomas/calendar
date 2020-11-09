@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewTreeObserver
 import com.gregorymarkthomas.calendar.model.Model
@@ -51,7 +51,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         super.onDestroy()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
     }
 

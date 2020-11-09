@@ -2,8 +2,8 @@ package com.gregorymarkthomas.calendar.rules
 
 import android.content.Context
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.rule.ActivityTestRule
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
 import android.util.Log
 import com.gregorymarkthomas.calendar.MainActivity
 import com.gregorymarkthomas.calendar.view.BackStackView
