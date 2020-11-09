@@ -16,7 +16,6 @@ import java.util.*
 class CalendarPresenter(private val view: CalendarViewInterface,
                         private val model: ModelInterface,
                         private val backstack: BackStackInterface,
-                        private val context: AndroidContextInterface,
                         date: Date): CalendarPresenterInterface {
 
     /** Get the day of month, month and year that has been specified.
