@@ -32,7 +32,7 @@ class MonthView(private val date: Date): BackStackView(), CalendarViewInterface,
         setupAdapter(context)
 
         /** This should be last. **/
-        this.presenter = CalendarPresenter(this, model, backstack, context, date)
+        this.presenter = CalendarPresenter(this, model, backstack, date)
     }
 
     override fun showDates(days: List<AppDay>) {
