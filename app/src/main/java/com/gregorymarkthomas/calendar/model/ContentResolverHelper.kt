@@ -33,7 +33,7 @@ abstract class ContentResolverHelper(private val resolver: ContentResolverInterf
     /**
      * This must be called by child classes
      */
-    protected fun get(whereClauses: String?): Cursor {
+    protected fun get(whereClauses: String?): Cursor? {
         var finalWhereClause = getDefaultWhereClause()
 
         if(whereClauses != null) {

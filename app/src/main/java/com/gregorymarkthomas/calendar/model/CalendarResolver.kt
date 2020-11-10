@@ -10,9 +10,12 @@ class CalendarResolver(resolver: ContentResolverInterface): ContentResolverHelpe
 
     /************* public *****/
     fun get(): List<AppCalendar> {
-        val cursor: Cursor = get(null)
-        val calendars = createCalendars(cursor)
-        cursor.close()
+        val cursor = get(null)
+        var calendars: List<AppCalendar> = listOf()
+        if(cursor != null) {
+            calendars = createCalendars(cursor)
+            cursor.close()
+        }
         return calendars
     }
 

@@ -3,10 +3,15 @@ package com.gregorymarkthomas.calendar.model
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Events
+import android.util.Log
 import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
 class EventResolver(resolver: ContentResolverInterface): ContentResolverHelper(resolver) {
+
+    companion object {
+        private const val tag = "EventResolver"
+    }
 
     /************* public *****/
     /**
@@ -19,10 +24,14 @@ class EventResolver(resolver: ContentResolverInterface): ContentResolverHelper(r
         val days = mutableListOf<AppDay>()
         for(i in fromDayInMonth..fromDayInMonth + specifiedNoOfDays) {
             val clause = getWhereClause(i, month, year, 1, calendarsToShow)
-            val cursor: Cursor = get(clause)
-            val events = getEvents(cursor)
-            cursor.close()
-            days.add(AppDay(i, month, year, events))
+            val cursor = get(clause)
+            if(cursor != null) {
+                val events = getEvents(cursor)
+                cursor.close()
+                days.add(AppDay(i, month, year, events))
+            } else {
+                Log.e(tag, "Cursor is null")
+            }
         }
         return days
     }
