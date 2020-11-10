@@ -17,10 +17,10 @@ class VisibleCalendarsOption(preferences: GetSharedPreferencesInterface) {
      */
     fun get(): IntArray {
         val commaSeparatedString = option.getData()
-        return if(commaSeparatedString == "")
-            parseCommaSeparatedStringToIntArray(commaSeparatedString)
-        else
+        return if(commaSeparatedString.isNullOrBlank())
             IntArray(0)
+        else
+            parseCommaSeparatedStringToIntArray(commaSeparatedString)
     }
 
     fun set(visibleCalendars: IntArray) {
