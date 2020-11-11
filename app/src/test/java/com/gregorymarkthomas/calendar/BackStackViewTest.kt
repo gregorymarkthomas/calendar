@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar
 
+import android.os.Build
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
@@ -27,6 +28,7 @@ import kotlin.test.assertEquals
  * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(maxSdk = Build.VERSION_CODES.P, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
 class BackStackViewTest {
 
     /**

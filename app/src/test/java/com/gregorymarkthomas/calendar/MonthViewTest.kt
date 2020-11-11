@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar
 
+import android.os.Build
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.view.MonthView
 import kotlinx.android.synthetic.main.month_view.view.*
@@ -23,6 +24,7 @@ import kotlin.test.assertNotNull
  * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(maxSdk = Build.VERSION_CODES.P, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
 class MonthViewTest {
 
     lateinit var view: MonthView
