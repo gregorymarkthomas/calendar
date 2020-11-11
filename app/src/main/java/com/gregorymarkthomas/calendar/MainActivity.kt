@@ -1,8 +1,11 @@
 package com.gregorymarkthomas.calendar
 
+import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +23,7 @@ import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
 import com.gregorymarkthomas.calendar.view.WeekView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.security.Permission
 import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
@@ -39,12 +43,14 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main_content.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+        main_content.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 main_content.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 backstack = BackStack(this@MainActivity, getInitialView())
             }
         })
+
+
     }
 
     override fun onDestroy() {

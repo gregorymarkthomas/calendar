@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.model
 
+import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
@@ -29,6 +30,7 @@ abstract class ContentResolverHelper(private val resolver: ContentResolverInterf
     protected abstract fun getUri(): Uri
     protected abstract fun getFields(): Array<String>
     protected abstract fun getSortOrder(): String?
+    protected abstract fun getRequiredPermissions(): Array<Manifest.permission>
 
     /**
      * This must be called by child classes
@@ -40,13 +42,22 @@ abstract class ContentResolverHelper(private val resolver: ContentResolverInterf
             finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
         }
 
-        return this.resolver.getResolver().query(
-                getUri(),
-                getFields(),
-                finalWhereClause,
-                null,
-                getSortOrder()
-        )
+        var allPermissionsGranted = true
+        if(!this.resolver.isPermissionGranted(permission)) {
+            allPermissionsGranted = false
+            this.resolver.showPermissionDialog(permission)
+        }
+
+        return if(allPermissionsGranted) {
+            this.resolver.getResolver().query(
+                    getUri(),
+                    getFields(),
+                    finalWhereClause,
+                    null,
+                    getSortOrder()
+            )
+        } else
+            null
     }
 
     /**

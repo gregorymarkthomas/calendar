@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.model
 
+import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Calendars
@@ -39,6 +40,10 @@ class CalendarResolver(resolver: ContentResolverInterface): ContentResolverHelpe
      */
     override fun getSortOrder(): String? {
         return null
+    }
+
+    override fun getRequiredPermissions(): Array<Manifest.permission> {
+        TODO("Not yet implemented")
     }
 
 

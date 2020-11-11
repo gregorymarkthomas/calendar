@@ -4,4 +4,5 @@ import android.content.ContentResolver
 
 interface ContentResolverInterface {
     fun getResolver(): ContentResolver
+
 }
