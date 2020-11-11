@@ -23,7 +23,6 @@ import kotlin.test.assertNotNull
  * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class)
 class MonthViewTest {
 
     lateinit var view: MonthView

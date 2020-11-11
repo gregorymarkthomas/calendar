@@ -27,7 +27,6 @@ import kotlin.test.assertEquals
  * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class)
 class BackStackViewTest {
 
     /**
