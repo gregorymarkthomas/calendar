@@ -12,7 +12,7 @@ import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 class AndroidCalendarRepository(private val contentResolver: Resolver): CalendarRepository {
 
     override fun getCalendars(callback: Callback.GetCalendarsCallback) {
-        callback.onGetCalendars(AndroidCalendarRetriever(ResolverQuery(contentResolver)).get())
+        callback.onGetCalendars(AndroidCalendarRetriever(contentResolver).get())
     }
 
     /**
@@ -20,6 +20,6 @@ class AndroidCalendarRepository(private val contentResolver: Resolver): Calendar
      * This needs to take the CalendarProvider calendar data (via the cursor) and convert it into a list of the app's 'AppDay' objects
      */
     override fun getEvents(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
-        callback.onGetEvents(AndroidCalendarEventResolver(ResolverQuery(contentResolver)).get(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
+        callback.onGetEvents(AndroidCalendarEventResolver(contentResolver).get(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
     }
 }
