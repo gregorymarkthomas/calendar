@@ -12,7 +12,6 @@ import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.GREATER_
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THAN
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THAN_OR_EQUAL
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.OR
-import com.gregorymarkthomas.calendar.model.interfaces.AndroidRetriever
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 

@@ -12,20 +12,6 @@ import java.util.*
  */
 abstract class ResolverQuery(private val resolver: Resolver) {
 
-    private val ASCENDING = " ASC"
-    private val DESCENDING = " DESC"
-    private val AND = " AND "
-    private val OR = " OR "
-    private val GREATER_THAN = " > "
-    private val GREATER_THAN_OR_EQUAL = " >= "
-    private val LESS_THAN = " < "
-    private val LESS_THAN_OR_EQUAL = " <= "
-    private val EQUALS = " = "
-
-
-    /************* public *****/
-
-
     /************* protected *****/
     protected abstract fun getUri(): Uri
     protected abstract fun getFields(): Array<String>

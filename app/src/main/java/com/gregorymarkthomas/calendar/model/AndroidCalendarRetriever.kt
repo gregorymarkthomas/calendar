@@ -4,7 +4,6 @@ import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Calendars
-import com.gregorymarkthomas.calendar.model.interfaces.AndroidRetriever
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
