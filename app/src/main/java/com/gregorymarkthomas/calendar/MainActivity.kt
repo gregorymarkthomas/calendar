@@ -1,21 +1,18 @@
 package com.gregorymarkthomas.calendar
 
-import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.View
 import android.view.ViewTreeObserver
+import com.gregorymarkthomas.calendar.model.AndroidCalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
+import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.DayView
@@ -23,11 +20,10 @@ import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
 import com.gregorymarkthomas.calendar.view.WeekView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.security.Permission
 import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
-        ContentResolverInterface, GetSharedPreferencesInterface, AndroidContextInterface {
+        Resolver, GetSharedPreferencesInterface, AndroidContextInterface {
 
     private val TAG = "MainActivity"
     private lateinit var backstack: BackStack
@@ -69,7 +65,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         return PreferenceManager.getDefaultSharedPreferences(this)
     }
 
-    override fun getResolver(): ContentResolver {
+    override fun get(): ContentResolver {
         return contentResolver
     }
 
@@ -104,7 +100,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                backstackView.onInitialised(this@MainActivity, Model(this@MainActivity, this@MainActivity),this@MainActivity)
+                backstackView.onInitialised(this@MainActivity, Model(AndroidCalendarRepository(this@MainActivity), this@MainActivity),this@MainActivity)
             }
         }
 

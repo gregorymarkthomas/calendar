@@ -4,23 +4,23 @@ import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
+import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import java.util.*
 
 /**
  * Generic abstract class that handles the operations with the ContentResolver
  */
-abstract class ContentResolverHelper(private val resolver: ContentResolverInterface) {
+abstract class ResolverQuery(private val resolver: Resolver) {
 
-    protected val ASCENDING = " ASC"
-    protected val DESCENDING = " DESC"
-    protected val AND = " AND "
-    protected val OR = " OR "
-    protected val GREATER_THAN = " > "
-    protected val GREATER_THAN_OR_EQUAL = " >= "
-    protected val LESS_THAN = " < "
-    protected val LESS_THAN_OR_EQUAL = " <= "
-    protected val EQUALS = " = "
+    private val ASCENDING = " ASC"
+    private val DESCENDING = " DESC"
+    private val AND = " AND "
+    private val OR = " OR "
+    private val GREATER_THAN = " > "
+    private val GREATER_THAN_OR_EQUAL = " >= "
+    private val LESS_THAN = " < "
+    private val LESS_THAN_OR_EQUAL = " <= "
+    private val EQUALS = " = "
 
 
     /************* public *****/
@@ -35,7 +35,7 @@ abstract class ContentResolverHelper(private val resolver: ContentResolverInterf
     /**
      * This must be called by child classes
      */
-    protected fun get(whereClauses: String?): Cursor? {
+    fun query(whereClauses: String?): Cursor? {
         var finalWhereClause = getDefaultWhereClause()
 
         if(whereClauses != null) {
@@ -49,7 +49,7 @@ abstract class ContentResolverHelper(private val resolver: ContentResolverInterf
         }
 
         return if(allPermissionsGranted) {
-            this.resolver.getResolver().query(
+            this.resolver.get().query(
                     getUri(),
                     getFields(),
                     finalWhereClause,

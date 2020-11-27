@@ -4,10 +4,19 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Events
 import android.util.Log
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.AND
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.ASCENDING
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.EQUALS
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.GREATER_THAN
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.GREATER_THAN_OR_EQUAL
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THAN
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THAN_OR_EQUAL
+import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.OR
+import com.gregorymarkthomas.calendar.model.interfaces.AndroidRetriever
+import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class EventResolver(resolver: ContentResolverInterface): ContentResolverHelper(resolver) {
+class AndroidCalendarEventResolver(private val resolver: Resolver): ResolverQuery(resolver) {
 
     companion object {
         private const val tag = "EventResolver"
@@ -24,7 +33,7 @@ class EventResolver(resolver: ContentResolverInterface): ContentResolverHelper(r
         val days = mutableListOf<AppDay>()
         for(i in fromDayInMonth..fromDayInMonth + specifiedNoOfDays) {
             val clause = getWhereClause(i, month, year, 1, calendarsToShow)
-            val cursor = get(clause)
+            val cursor = query(clause)
             if(cursor != null) {
                 val events = getEvents(cursor)
                 cursor.close()

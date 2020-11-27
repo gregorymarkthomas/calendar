@@ -4,14 +4,15 @@ import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Calendars
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
+import com.gregorymarkthomas.calendar.model.interfaces.AndroidRetriever
+import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class CalendarResolver(resolver: ContentResolverInterface): ContentResolverHelper(resolver) {
+class AndroidCalendarRetriever(private val resolver: Resolver): ResolverQuery(resolver) {
 
     /************* public *****/
     fun get(): List<AppCalendar> {
-        val cursor = get(null)
+        val cursor = query(null)
         var calendars: List<AppCalendar> = listOf()
         if(cursor != null) {
             calendars = createCalendars(cursor)

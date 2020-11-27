@@ -1,13 +1,9 @@
 package com.gregorymarkthomas.calendar.model
 
-import com.gregorymarkthomas.calendar.util.interfaces.ContentResolverInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
-import java.text.DateFormatSymbols
 import java.util.*
 
-class Model(resolver: ContentResolverInterface, preferences: GetSharedPreferencesInterface): ModelInterface {
-
-    private val repository: CalendarRepository = AndroidCalendarProvider(resolver)
+class Model(private val repository: CalendarRepository, preferences: GetSharedPreferencesInterface): ModelInterface {
     private val calendarVisibiltyOption = VisibleCalendarsOption(preferences)
 
     override fun getTodayDate(): Date {
