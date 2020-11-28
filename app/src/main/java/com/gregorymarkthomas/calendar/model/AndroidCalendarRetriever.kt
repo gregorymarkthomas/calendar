@@ -1,13 +1,14 @@
 package com.gregorymarkthomas.calendar.model
 
-import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Calendars
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
+import com.gregorymarkthomas.calendar.presenter.CalendarPermission
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class AndroidCalendarRetriever(private val resolver: Resolver): ResolverQuery(resolver) {
+class AndroidCalendarRetriever(private val resolver: Resolver, private val permissionContract: AndroidPermissionContract): CalendarResolverQuery(resolver, permissionContract) {
 
     /************* public *****/
     fun get(): List<AppCalendar> {
@@ -42,8 +43,11 @@ class AndroidCalendarRetriever(private val resolver: Resolver): ResolverQuery(re
         return null
     }
 
-    override fun getRequiredPermissions(): Array<Manifest.permission> {
-        TODO("Not yet implemented")
+    override fun getRequiredPermissions(): MutableList<CalendarPermission> {
+        return mutableListOf(
+                CalendarPermission(android.Manifest.permission.READ_CALENDAR),
+                CalendarPermission(android.Manifest.permission.WRITE_CALENDAR)
+        )
     }
 
 

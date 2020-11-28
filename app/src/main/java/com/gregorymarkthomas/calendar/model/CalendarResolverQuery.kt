@@ -1,40 +1,42 @@
 package com.gregorymarkthomas.calendar.model
 
-import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
+import com.gregorymarkthomas.calendar.model.interfaces.NeedsPermission
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import java.util.*
 
 /**
  * Generic abstract class that handles the operations with the ContentResolver
  */
-abstract class ResolverQuery(private val resolver: Resolver) {
+abstract class CalendarResolverQuery(private val resolver: Resolver, private val permissionContract: AndroidPermissionContract): NeedsPermission {
 
     /************* protected *****/
     protected abstract fun getUri(): Uri
     protected abstract fun getFields(): Array<String>
     protected abstract fun getSortOrder(): String?
-    protected abstract fun getRequiredPermissions(): Array<Manifest.permission>
 
     /**
      * This must be called by child classes
      */
     fun query(whereClauses: String?): Cursor? {
-        var finalWhereClause = getDefaultWhereClause()
-
-        if(whereClauses != null) {
-            finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
+        val permissions = getRequiredPermissions()
+        var grantedPermissionCount = permissions.size
+        for(permission in permissions) {
+            if (this.permissionContract.isPermissionGranted(permission)) {
+                permissions.remove(permission)
+            }
         }
+        this.permissionContract.showPermissionDialog(permissions)
 
-        var allPermissionsGranted = true
-        if(!this.resolver.isPermissionGranted(permission)) {
-            allPermissionsGranted = false
-            this.resolver.showPermissionDialog(permission)
-        }
+        return if(permissions.size < grantedPermissionCount) {
+            var finalWhereClause = getDefaultWhereClause()
 
-        return if(allPermissionsGranted) {
+            if(whereClauses != null) {
+                finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
+            }
             this.resolver.get().query(
                     getUri(),
                     getFields(),

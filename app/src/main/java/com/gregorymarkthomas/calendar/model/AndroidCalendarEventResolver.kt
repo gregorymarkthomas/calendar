@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.model
 
+import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Events
@@ -13,9 +14,11 @@ import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THA
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THAN_OR_EQUAL
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.OR
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
+import com.gregorymarkthomas.calendar.presenter.CalendarPermission
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class AndroidCalendarEventResolver(private val resolver: Resolver): ResolverQuery(resolver) {
+class AndroidCalendarEventResolver(private val resolver: Resolver, private val permissionContract: AndroidPermissionContract): CalendarResolverQuery(resolver, permissionContract) {
 
     companion object {
         private const val tag = "EventResolver"
@@ -76,6 +79,12 @@ class AndroidCalendarEventResolver(private val resolver: Resolver): ResolverQuer
         return Events.DTSTART + ASCENDING
     }
 
+    override fun getRequiredPermissions(): MutableList<CalendarPermission> {
+        return mutableListOf(
+                CalendarPermission(Manifest.permission.READ_CALENDAR),
+                CalendarPermission(Manifest.permission.WRITE_CALENDAR)
+        )
+    }
 
     /************* private *****/
     /**

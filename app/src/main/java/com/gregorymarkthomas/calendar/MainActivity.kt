@@ -1,18 +1,25 @@
 package com.gregorymarkthomas.calendar
 
+import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.ViewTreeObserver
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.gregorymarkthomas.calendar.model.AndroidCalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
+import com.gregorymarkthomas.calendar.presenter.CalendarPermission
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.DayView
@@ -23,13 +30,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
-        Resolver, GetSharedPreferencesInterface, AndroidContextInterface {
+        Resolver, GetSharedPreferencesInterface, AndroidContextInterface, AndroidPermissionContract {
 
     private val TAG = "MainActivity"
     private lateinit var backstack: BackStack
 
     companion object {
-        val INITIAL_VIEW_EXTRA = "initial_view_extra"
+        const val INITIAL_VIEW_EXTRA = "initial_view_extra"
+        const val MULTIPLE_PERMISSIONS = 1
     }
 
     /**
@@ -100,13 +108,58 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                backstackView.onInitialised(this@MainActivity, Model(AndroidCalendarRepository(this@MainActivity), this@MainActivity),this@MainActivity)
+                backstackView.onInitialised(this@MainActivity, Model(AndroidCalendarRepository(this@MainActivity, this@MainActivity), this@MainActivity),this@MainActivity)
             }
         }
 
         view.viewTreeObserver.addOnGlobalLayoutListener(listener)
         main_content.addView(view, main_content.width, main_content.height)
     }
+
+    override fun isPermissionGranted(permission: CalendarPermission): Boolean {
+        val permissionStatus = ContextCompat.checkSelfPermission(this, permission.permission)
+        return permissionStatus == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun showPermissionDialog(permissions: List<CalendarPermission>) {
+        val p = mutableListOf<String>()
+        for(permission in permissions) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission.permission)) {
+                Toast.makeText(this, permission.permission + " is required for this app to run", Toast.LENGTH_SHORT).show();
+            }
+            p.add(permission.permission)
+        }
+
+        ActivityCompat.requestPermissions(this, p.toTypedArray(), MULTIPLE_PERMISSIONS)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            MULTIPLE_PERMISSIONS -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() &&
+                                grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission is granted. Continue the action or workflow
+                    // in your app.
+                } else {
+                    // Explain to the user that the feature is unavailable because
+                    // the features requires a permission that the user has denied.
+                    // At the same time, respect the user's decision. Don't link to
+                    // system settings in an effort to convince the user to change
+                    // their decision.
+                }
+                return
+            }
+
+            // Add other 'when' lines to check for other
+            // permissions this app might request.
+            else -> {
+                // Ignore all other requests.
+            }
+        }
+    }
+
 
     /********** private */
     private fun getInitialView(): BackStackView {
