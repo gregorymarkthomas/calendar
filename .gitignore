@@ -151,3 +151,6 @@ gradle-app.setting
 hs_err_pid*
 
 captures/
+
+# Android testing-related
+app/app.iml
