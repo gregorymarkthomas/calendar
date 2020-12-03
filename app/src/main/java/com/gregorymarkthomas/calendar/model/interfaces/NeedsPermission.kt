@@ -8,7 +8,7 @@ abstract class NeedsPermission(private val permissionContract: AndroidPermission
     fun requestPermissions(callback: OnAllGranted) {
         val deniedPermissions = mutableListOf<CalendarPermission>()
         for(permission in getRequiredPermissions()) {
-            if (this.permissionContract.isPermissionGranted(permission)) {
+            if (!this.permissionContract.isPermissionGranted(permission)) {
                 deniedPermissions.add(permission)
             }
         }
