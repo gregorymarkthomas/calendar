@@ -18,7 +18,7 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class AndroidCalendarEventResolver(private val resolver: Resolver, private val permissionContract: AndroidPermissionContract): CalendarResolverQuery(resolver, permissionContract) {
+class AndroidCalendarEventResolver(private val resolver: Resolver): CalendarResolverQuery(resolver) {
 
     companion object {
         private const val tag = "EventResolver"
@@ -79,12 +79,6 @@ class AndroidCalendarEventResolver(private val resolver: Resolver, private val p
         return Events.DTSTART + ASCENDING
     }
 
-    override fun getRequiredPermissions(): MutableList<CalendarPermission> {
-        return mutableListOf(
-                CalendarPermission(Manifest.permission.READ_CALENDAR),
-                CalendarPermission(Manifest.permission.WRITE_CALENDAR)
-        )
-    }
 
     /************* private *****/
     /**

@@ -125,7 +125,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val p = mutableListOf<String>()
         for(permission in permissions) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission.permission)) {
-                Toast.makeText(this, permission.permission + " is required for this app to run", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, permission.permission + " is required for this app to run", Toast.LENGTH_LONG).show();
             }
             p.add(permission.permission)
         }

@@ -11,7 +11,7 @@ import java.util.*
 /**
  * Generic abstract class that handles the operations with the ContentResolver
  */
-abstract class CalendarResolverQuery(private val resolver: Resolver, private val permissionContract: AndroidPermissionContract): NeedsPermission {
+abstract class CalendarResolverQuery(private val resolver: Resolver) {
 
     /************* protected *****/
     protected abstract fun getUri(): Uri
@@ -22,30 +22,17 @@ abstract class CalendarResolverQuery(private val resolver: Resolver, private val
      * This must be called by child classes
      */
     fun query(whereClauses: String?): Cursor? {
-        val permissions = getRequiredPermissions()
-        var grantedPermissionCount = permissions.size
-        for(permission in permissions) {
-            if (this.permissionContract.isPermissionGranted(permission)) {
-                permissions.remove(permission)
-            }
-        }
-        this.permissionContract.showPermissionDialog(permissions)
-
-        return if(permissions.size < grantedPermissionCount) {
-            var finalWhereClause = getDefaultWhereClause()
-
-            if(whereClauses != null) {
+        var finalWhereClause = getDefaultWhereClause()
+        if(whereClauses != null) {
                 finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
             }
-            this.resolver.get().query(
-                    getUri(),
-                    getFields(),
-                    finalWhereClause,
-                    null,
-                    getSortOrder()
-            )
-        } else
-            null
+        return this.resolver.get().query(
+            getUri(),
+            getFields(),
+            finalWhereClause,
+            null,
+            getSortOrder()
+        )
     }
 
     /**
