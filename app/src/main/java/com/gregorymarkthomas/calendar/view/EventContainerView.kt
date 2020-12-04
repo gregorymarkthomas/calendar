@@ -37,6 +37,9 @@ class EventContainerView: ViewGroup {
         createDividers(definedHeight, context)
     }
 
+    // TODO: dpPerMinute is 0
+    // TODO: day.events is empty
+    // TODO: is Float correct here?
     fun setEvents(day: AppDay) {
         val dpPerMinute = calculateDensityPixelsPerMinute()
 
@@ -65,9 +68,11 @@ class EventContainerView: ViewGroup {
     }
 
     /**
+     * TODO: is this layoutParams.height, or height? height is 0 because the view has not been inflated properly yet.
+     * // TODO: is Float correct here?
      * Calculates how many pixels there are in a minute.
      * There are 1440 minutes in a 24 hour period.
      * Our view represents 1439 minutes (00:00 to 23:59)
      */
-    private fun calculateDensityPixelsPerMinute() = height / 1439
+    private fun calculateDensityPixelsPerMinute(): Float = (layoutParams.height / 1439.0).toFloat()
 }

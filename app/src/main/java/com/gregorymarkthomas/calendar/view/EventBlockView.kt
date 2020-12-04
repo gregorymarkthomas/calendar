@@ -8,6 +8,7 @@ import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.model.AppEvent
 import kotlinx.android.synthetic.main.event_block_view.view.*
 import java.util.*
+import kotlin.math.roundToInt
 
 /**
  * View to represent a single AppEvent.
@@ -34,7 +35,8 @@ class EventBlockView: LinearLayout {
     /**
      * Set colourResource, height, event name, etc
      */
-    fun set(event: AppEvent, dpPerMinute: Int) {
+    // TODO: is Float correct here?
+    fun set(event: AppEvent, dpPerMinute: Float) {
         setBackgroundResource(event.calendar.colourResource)
         minimumHeight = calculateHeight(event.startDate, event.endDate, dpPerMinute)
         setName(event.title)
@@ -48,10 +50,11 @@ class EventBlockView: LinearLayout {
         layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    private fun calculateHeight(startDate: Date, endDate: Date, dpPerMinute: Int): Int {
+    // TODO: is Float correct here?
+    private fun calculateHeight(startDate: Date, endDate: Date, dpPerMinute: Float): Int {
         val eventDurationMs = endDate.time - startDate.time
         val eventDurationMins: Int = ((eventDurationMs / 1000) * 60).toInt()
-        return eventDurationMins * dpPerMinute
+        return (eventDurationMins * dpPerMinute).roundToInt()
     }
 
     private fun setName(name: String) {
