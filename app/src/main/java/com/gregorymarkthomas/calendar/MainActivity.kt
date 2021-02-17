@@ -108,7 +108,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 backstackView.onInitialised(this@MainActivity,
-                        Model(CalendarRepository(this@MainActivity, this@MainActivity), this@MainActivity),
+                        Model(CalendarRepository(this@MainActivity), this@MainActivity),
                         this@MainActivity
                 )
             }
@@ -144,12 +144,15 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
                                 grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission is granted. Continue the action or workflow
                     // in your app.
+                    // TODO: temporary
+                    recreate()
                 } else {
                     // Explain to the user that the feature is unavailable because
                     // the features requires a permission that the user has denied.
                     // At the same time, respect the user's decision. Don't link to
                     // system settings in an effort to convince the user to change
                     // their decision.
+                    // TODO: show empty page with message.
                 }
                 return
             }
@@ -170,7 +173,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         return when (viewClass) {
             DayView::class.java -> DayView(today)
             WeekView::class.java -> WeekView(today)
-            else -> MonthView(today)
+            else -> MonthView(today, this@MainActivity)
         }
     }
 }

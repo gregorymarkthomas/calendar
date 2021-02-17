@@ -1,9 +1,11 @@
 package com.gregorymarkthomas.calendar.presenter
 
+import android.Manifest
 import com.gregorymarkthomas.calendar.model.*
+import com.gregorymarkthomas.calendar.model.interfaces.NeedsPermission
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
@@ -16,10 +18,13 @@ import java.util.*
 class CalendarPresenter(private val view: CalendarViewInterface,
                         private val model: ModelInterface,
                         private val backstack: BackStackInterface,
-                        date: Date): CalendarPresenterInterface {
+                        private val permissionContract: AndroidPermissionContract,
+                        date: Date): CalendarPresenterInterface, NeedsPermission(permissionContract) {
 
     /** Get the day of month, month and year that has been specified.
-     * Show Today's date if no date was supplied. **/
+     * Show Today's date if no date was supplied.
+     * MonthView is always the default, so get CURRENT MONTH'S events.
+     * **/
     init {
         val calendar = CalendarHelper.getNewCalendar()
         calendar.time = date
@@ -29,10 +34,17 @@ class CalendarPresenter(private val view: CalendarViewInterface,
 
         view.setSelectedDateView(dayOfMonth, CalendarHelper.getMonthString(month), year)
 
-        /** MonthView is always the default, so get CURRENT MONTH'S events **/
-        model.getEvents(1, month, year, CalendarHelper.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
-            override fun onGetEvents(days: List<AppDay>) {
-                view.showDates(days)
+        checkPermissions(object: OnPermissionCheck {
+            override fun onAllGranted() {
+                model.getEvents(1, month, year, CalendarHelper.getDaysInMonth(month, year), object: Callback.GetEventsCallback {
+                    override fun onGetEvents(days: List<AppDay>) {
+                        view.showDates(days)
+                    }
+                })
+            }
+
+            override fun onFoundDenied(deniedPermissions: List<CalendarPermission>) {
+                permissionContract.showPermissionDialog(deniedPermissions)
             }
         })
     }
@@ -42,12 +54,17 @@ class CalendarPresenter(private val view: CalendarViewInterface,
     }
 
     override fun onTodayButtonPress() {
-        backstack.goTo(MonthView(Date()))
+        backstack.goTo(MonthView(Date(), permissionContract))
     }
 
     override fun onEventPress(hours: Int, minutes: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
+    override fun getRequiredPermissions(): List<CalendarPermission> {
+        return listOf(
+                CalendarPermission(Manifest.permission.READ_CALENDAR),
+                CalendarPermission(Manifest.permission.WRITE_CALENDAR)
+        )
+    }
 }

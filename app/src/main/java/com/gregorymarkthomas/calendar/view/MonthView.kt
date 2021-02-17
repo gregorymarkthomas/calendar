@@ -7,12 +7,14 @@ import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
 
-class MonthView(private val date: Date): BackStackView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
+class MonthView(private val date: Date,
+                private val permissionContract: AndroidPermissionContract): BackStackView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private lateinit var presenter: CalendarPresenterInterface
     private lateinit var adapter: CalendarAdapter
 
@@ -32,7 +34,7 @@ class MonthView(private val date: Date): BackStackView(), CalendarViewInterface,
         setupAdapter(context)
 
         /** This should be last. **/
-        this.presenter = CalendarPresenter(this, model, backstack, date)
+        this.presenter = CalendarPresenter(this, model, backstack, permissionContract, date)
     }
 
     override fun showDates(days: List<AppDay>) {

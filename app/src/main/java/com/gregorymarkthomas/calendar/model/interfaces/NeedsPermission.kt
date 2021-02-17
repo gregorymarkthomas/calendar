@@ -5,7 +5,7 @@ import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContr
 
 abstract class NeedsPermission(private val permissionContract: AndroidPermissionContract) {
 
-    fun requestPermissions(callback: OnAllGranted) {
+    fun checkPermissions(callback: OnPermissionCheck) {
         val deniedPermissions = mutableListOf<CalendarPermission>()
         for(permission in getRequiredPermissions()) {
             if (!this.permissionContract.isPermissionGranted(permission)) {
@@ -13,14 +13,15 @@ abstract class NeedsPermission(private val permissionContract: AndroidPermission
             }
         }
         if(deniedPermissions.isNotEmpty()) {
-            this.permissionContract.showPermissionDialog(deniedPermissions)
+            callback.onFoundDenied(deniedPermissions)
         } else
             callback.onAllGranted()
     }
 
     protected abstract fun getRequiredPermissions(): List<CalendarPermission>
 
-    interface OnAllGranted {
+    interface OnPermissionCheck {
         fun onAllGranted()
+        fun onFoundDenied(deniedPermissions: List<CalendarPermission>)
     }
 }
