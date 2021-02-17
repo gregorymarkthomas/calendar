@@ -18,9 +18,6 @@ abstract class CalendarResolverQuery(private val resolver: Resolver) {
     protected abstract fun getFields(): Array<String>
     protected abstract fun getSortOrder(): String?
 
-    /**
-     * This must be called by child classes
-     */
     fun query(whereClauses: String?): Cursor? {
         var finalWhereClause = getDefaultWhereClause()
         if(whereClauses != null) {
