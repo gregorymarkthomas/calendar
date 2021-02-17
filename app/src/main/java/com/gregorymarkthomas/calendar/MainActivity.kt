@@ -82,6 +82,10 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         backstack.goTo(view)
     }
 
+    override fun clearTo(view: BackStackView) {
+        backstack.clearTo(view)
+    }
+
     override fun goBack(): Boolean {
         return backstack.goBack()
     }
@@ -132,30 +136,21 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         ActivityCompat.requestPermissions(this, p.toTypedArray(), MULTIPLE_PERMISSIONS)
     }
 
+    /**
+     * If request is cancelled, the result arrays are empty.
+     */
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             MULTIPLE_PERMISSIONS -> {
-                // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() &&
                                 grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission is granted. Continue the action or workflow
-                    // in your app.
-                    // TODO: temporary
                     recreate()
                 } else {
-                    // Explain to the user that the feature is unavailable because
-                    // the features requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
-                    backstack.goTo(PermissionDeniedView())
+                    backstack.clearTo(PermissionDeniedView())
                 }
                 return
             }
-
-            // Add other 'when' lines to check for other
-            // permissions this app might request.
             else -> {
                 // Ignore all other requests.
             }

@@ -4,6 +4,7 @@ import com.gregorymarkthomas.calendar.view.BackStackView
 
 interface BackStackInterface {
     fun goTo(view: BackStackView)
+    fun clearTo(view: BackStackView)
     fun goBack(): Boolean
     fun getMostRecentView(): BackStackView
 

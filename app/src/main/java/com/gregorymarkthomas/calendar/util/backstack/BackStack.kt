@@ -24,8 +24,14 @@ class BackStack(private var callback: BackStackCallback, initialView: BackStackV
         if(viewIndex == -1) {
             stack.add(view)
         } else {
-            stack = reset(stack, viewIndex)
+            stack = trimToExisting(stack, viewIndex)
         }
+        callback.onViewChanged(view)
+    }
+
+    override fun clearTo(view: BackStackView) {
+        stack = mutableListOf()
+        stack.add(view)
         callback.onViewChanged(view)
     }
 
@@ -66,7 +72,7 @@ class BackStack(private var callback: BackStackCallback, initialView: BackStackV
     /**
      * This removes views from the top of the stack to make the requested view the most recent view
      */
-    private fun reset(stack: MutableList<BackStackView>, newViewIndex: Int): MutableList<BackStackView> {
+    private fun trimToExisting(stack: MutableList<BackStackView>, newViewIndex: Int): MutableList<BackStackView> {
         return stack.subList(0, newViewIndex + 1)
     }
 

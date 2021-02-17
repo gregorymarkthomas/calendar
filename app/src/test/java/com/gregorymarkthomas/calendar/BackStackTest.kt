@@ -186,4 +186,22 @@ class BackStackTest {
         assertEquals(1, stack.size)
         assertEquals("MonthView", stack[0])
     }
+
+    @Test
+    fun `all views apart from new are removed with clearTo()`() {
+        /** Instantiate with default view **/
+        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+
+        /** Add more views **/
+        backstack.goTo(DayView(Date()))
+        backstack.goTo(EventView())
+
+        /** Clear all views apart from new MonthView **/
+        backstack.clearTo(MonthView(Date(), permissionsContract))
+
+        /** Check stack has only MonthView **/
+        val stack = backstack.getCurrentViewClasses()
+        assertEquals(1, stack.size)
+        assertEquals("MonthView", stack[0])
+    }
 }
