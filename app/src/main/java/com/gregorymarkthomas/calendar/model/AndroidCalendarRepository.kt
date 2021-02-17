@@ -23,7 +23,7 @@ class AndroidCalendarRepository(private val contentResolver: Resolver, private v
     fun getEvents(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
         requestPermissions(object: OnAllGranted {
             override fun onAllGranted() {
-                callback.onGetEvents(AndroidCalendarEventResolver(contentResolver).get(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
+                callback.onGetEvents(AndroidCalendarEventRetriever(contentResolver).get(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
             }
         })
     }
