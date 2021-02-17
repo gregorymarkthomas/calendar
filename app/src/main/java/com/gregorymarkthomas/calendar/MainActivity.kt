@@ -108,7 +108,10 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                backstackView.onInitialised(this@MainActivity, Model(AndroidCalendarRepository(this@MainActivity, this@MainActivity), this@MainActivity),this@MainActivity)
+                backstackView.onInitialised(this@MainActivity,
+                        Model(AndroidCalendarRepository(this@MainActivity, this@MainActivity), this@MainActivity),
+                        this@MainActivity
+                )
             }
         }
 
