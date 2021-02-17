@@ -1,9 +1,11 @@
 package com.gregorymarkthomas.calendar
 
 import android.os.Build
+import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
+import io.mockk.mockk
 import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Before
 import org.junit.Test
@@ -36,6 +38,7 @@ class BackStackViewTest {
      */
     lateinit var view: BackStackView
     lateinit var activity: MainActivity
+    private val permissionsContract: AndroidPermissionContract = mockk(relaxUnitFun = true)
 
     @Before
     fun setUp() {
@@ -61,7 +64,7 @@ class BackStackViewTest {
         val new = Date(0)
 
         /** Re-use MonthView with a new date **/
-        activity.goTo(MonthView(new))
+        activity.goTo(MonthView(new, permissionsContract))
 
         /** Check view has the NEW date **/
         calendar.time = new
