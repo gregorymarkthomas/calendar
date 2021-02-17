@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Calendar</string>
-
     <string name="view_today">View Today</string>
+    <string name="permissions_denied">At least one permission was denied. This app requires these permissions to function.</string>
 </resources>

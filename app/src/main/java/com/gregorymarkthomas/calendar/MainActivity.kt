@@ -21,10 +21,7 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
-import com.gregorymarkthomas.calendar.view.DayView
-import com.gregorymarkthomas.calendar.view.BackStackView
-import com.gregorymarkthomas.calendar.view.MonthView
-import com.gregorymarkthomas.calendar.view.WeekView
+import com.gregorymarkthomas.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -152,7 +149,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
                     // At the same time, respect the user's decision. Don't link to
                     // system settings in an effort to convince the user to change
                     // their decision.
-                    // TODO: show empty page with message.
+                    backstack.goTo(PermissionDeniedView())
                 }
                 return
             }
