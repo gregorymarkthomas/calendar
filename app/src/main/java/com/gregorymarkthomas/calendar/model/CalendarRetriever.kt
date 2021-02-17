@@ -8,7 +8,7 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class AndroidCalendarRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
+class CalendarRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
 
     /************* public *****/
     fun get(): List<AppCalendar> {

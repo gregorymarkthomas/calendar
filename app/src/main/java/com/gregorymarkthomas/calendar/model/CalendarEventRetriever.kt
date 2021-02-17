@@ -18,7 +18,7 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class AndroidCalendarEventRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
+class CalendarEventRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
 
     companion object {
         private const val tag = "EventResolver"

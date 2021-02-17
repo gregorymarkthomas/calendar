@@ -3,7 +3,7 @@ package com.gregorymarkthomas.calendar.model
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import java.util.*
 
-class Model(private val repository: AndroidCalendarRepository, preferences: GetSharedPreferencesInterface): ModelInterface {
+class Model(private val repository: CalendarRepository, preferences: GetSharedPreferencesInterface): ModelInterface {
     private val calendarVisibiltyOption = VisibleCalendarsOption(preferences)
 
     override fun getTodayDate(): Date {

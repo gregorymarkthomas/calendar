@@ -1,6 +1,5 @@
 package com.gregorymarkthomas.calendar
 
-import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,7 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.gregorymarkthomas.calendar.model.AndroidCalendarRepository
+import com.gregorymarkthomas.calendar.model.CalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
@@ -109,7 +108,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 backstackView.onInitialised(this@MainActivity,
-                        Model(AndroidCalendarRepository(this@MainActivity, this@MainActivity), this@MainActivity),
+                        Model(CalendarRepository(this@MainActivity, this@MainActivity), this@MainActivity),
                         this@MainActivity
                 )
             }

@@ -6,12 +6,12 @@ import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 
-class AndroidCalendarRepository(private val contentResolver: Resolver, private val permissionContract: AndroidPermissionContract): NeedsPermission(permissionContract) {
+class CalendarRepository(private val contentResolver: Resolver, private val permissionContract: AndroidPermissionContract): NeedsPermission(permissionContract) {
 
     fun getCalendars(callback: Callback.GetCalendarsCallback) {
         requestPermissions(object: OnAllGranted {
             override fun onAllGranted() {
-                callback.onGetCalendars(AndroidCalendarRetriever(contentResolver).get())
+                callback.onGetCalendars(CalendarRetriever(contentResolver).get())
             }
         })
     }
@@ -23,7 +23,7 @@ class AndroidCalendarRepository(private val contentResolver: Resolver, private v
     fun getEvents(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
         requestPermissions(object: OnAllGranted {
             override fun onAllGranted() {
-                callback.onGetEvents(AndroidCalendarEventRetriever(contentResolver).get(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
+                callback.onGetEvents(CalendarEventRetriever(contentResolver).get(fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
             }
         })
     }
