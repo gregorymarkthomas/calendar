@@ -6,13 +6,6 @@ import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 
-/**
- * Here is the implementation to query the AppCalendar Provider for calendar data.
- * TODO - cache AppCalendar object?
- *
- * TODO() FRIDAY 14th Sept - read this to complete this. We want to pass in a contexted class that can receive a ContentResolver. This should originate from MainActivity and be required by Model (because Model might need some Androidy things).
- * https://stackoverflow.com/questions/39100105/need-context-in-model-in-mvp
- */
 class AndroidCalendarRepository(private val contentResolver: Resolver, private val permissionContract: AndroidPermissionContract): CalendarRepository, NeedsPermission(permissionContract) {
 
     override fun getCalendars(callback: Callback.GetCalendarsCallback) {
