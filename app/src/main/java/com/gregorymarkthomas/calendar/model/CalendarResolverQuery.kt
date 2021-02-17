@@ -21,8 +21,8 @@ abstract class CalendarResolverQuery(private val resolver: Resolver) {
     fun query(whereClauses: String?): Cursor? {
         var finalWhereClause = getDefaultWhereClause()
         if(whereClauses != null) {
-                finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
-            }
+            finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
+        }
         return this.resolver.get().query(
             getUri(),
             getFields(),
