@@ -1,6 +1,5 @@
 package com.gregorymarkthomas.calendar.model
 
-import android.Manifest
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Events
@@ -14,8 +13,6 @@ import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THA
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.LESS_THAN_OR_EQUAL
 import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.OR
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
-import com.gregorymarkthomas.calendar.presenter.CalendarPermission
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
 class CalendarEventRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {

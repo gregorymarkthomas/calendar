@@ -19,7 +19,7 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
+import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.view.*
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
-        Resolver, GetSharedPreferencesInterface, AndroidContextInterface, AndroidPermissionContract {
+        Resolver, GetSharedPreferencesInterface, AndroidContextInterface, ActivityInterface.PermissionChecker, ActivityInterface.DialogViewer {
 
     private val TAG = "MainActivity"
     private lateinit var backstack: BackStack
@@ -50,8 +50,6 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
                 backstack = BackStack(this@MainActivity, getInitialView())
             }
         })
-
-
     }
 
     override fun onDestroy() {
@@ -170,7 +168,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         return when (viewClass) {
             DayView::class.java -> DayView(today)
             WeekView::class.java -> WeekView(today)
-            else -> MonthView(today, this@MainActivity)
+            else -> MonthView(today, this@MainActivity, this@MainActivity)
         }
     }
 }

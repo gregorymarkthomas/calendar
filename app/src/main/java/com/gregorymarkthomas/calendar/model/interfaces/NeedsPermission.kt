@@ -1,14 +1,14 @@
 package com.gregorymarkthomas.calendar.model.interfaces
 
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
+import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 
-abstract class NeedsPermission(private val permissionContract: AndroidPermissionContract) {
+abstract class NeedsPermission(private val activity: ActivityInterface.PermissionChecker) {
 
     fun checkPermissions(callback: OnPermissionCheck) {
         val deniedPermissions = mutableListOf<CalendarPermission>()
         for(permission in getRequiredPermissions()) {
-            if (!this.permissionContract.isPermissionGranted(permission)) {
+            if (!this.activity.isPermissionGranted(permission)) {
                 deniedPermissions.add(permission)
             }
         }

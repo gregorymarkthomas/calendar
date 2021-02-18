@@ -3,7 +3,7 @@ package com.gregorymarkthomas.calendar.presenter
 import android.Manifest
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.model.interfaces.NeedsPermission
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
+import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -18,8 +18,9 @@ import java.util.*
 class CalendarPresenter(private val view: CalendarViewInterface,
                         private val model: ModelInterface,
                         private val backstack: BackStackInterface,
-                        private val permissionContract: AndroidPermissionContract,
-                        date: Date): CalendarPresenterInterface, NeedsPermission(permissionContract) {
+                        private val permissionChecker: ActivityInterface.PermissionChecker,
+                        private val dialogViewer: ActivityInterface.DialogViewer,
+                        date: Date): CalendarPresenterInterface, NeedsPermission(permissionChecker) {
 
     /** Get the day of month, month and year that has been specified.
      * Show Today's date if no date was supplied.
@@ -46,14 +47,14 @@ class CalendarPresenter(private val view: CalendarViewInterface,
                 } else {
                     model.getAvailableAccounts(object : Callback.GetAccountsCallback {
                         override fun onGetAccounts(accounts: List<AppAccount>) {
-                            permissionContract.showAccountsDialog(accounts)
+                            dialogViewer.showAccountsDialog(accounts)
                         }
                     })
                 }
             }
 
             override fun onFoundDenied(deniedPermissions: List<CalendarPermission>) {
-                permissionContract.showPermissionDialog(deniedPermissions)
+                dialogViewer.showPermissionDialog(deniedPermissions)
             }
         })
     }
@@ -63,7 +64,7 @@ class CalendarPresenter(private val view: CalendarViewInterface,
     }
 
     override fun onTodayButtonPress() {
-        backstack.goTo(MonthView(Date(), permissionContract))
+        backstack.goTo(MonthView(Date(), permissionChecker, dialogViewer))
     }
 
     override fun onEventPress(hours: Int, minutes: Int) {

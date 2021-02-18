@@ -4,7 +4,6 @@ import com.gregorymarkthomas.calendar.mock.MockGrantedPermissionContract
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface

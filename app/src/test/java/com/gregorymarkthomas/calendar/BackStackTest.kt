@@ -1,10 +1,9 @@
 package com.gregorymarkthomas.calendar
 
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
+import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.view.DayView
-import com.gregorymarkthomas.calendar.view.EventBlockView
 import com.gregorymarkthomas.calendar.view.EventView
 import com.gregorymarkthomas.calendar.view.MonthView
 import io.mockk.clearMocks
@@ -32,7 +31,7 @@ class BackStackTest {
      * 'relaxUnitFun = true' will stop 'io.mockk.MockKException: no answer found for...' error for our simple use of a mocked BackStackCallback
      */
     private val callback: BackStackCallback = mockk(relaxUnitFun = true)
-    private val permissionsContract: AndroidPermissionContract = mockk(relaxUnitFun = true)
+    private val permissionsContract: ActivityInterface = mockk(relaxUnitFun = true)
 
     @BeforeEach
     fun init() {

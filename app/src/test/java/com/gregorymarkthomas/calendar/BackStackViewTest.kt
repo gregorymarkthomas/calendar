@@ -1,7 +1,7 @@
 package com.gregorymarkthomas.calendar
 
 import android.os.Build
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
+import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
@@ -38,7 +38,7 @@ class BackStackViewTest {
      */
     lateinit var view: BackStackView
     lateinit var activity: MainActivity
-    private val permissionsContract: AndroidPermissionContract = mockk(relaxUnitFun = true)
+    private val permissionsContract: ActivityInterface = mockk(relaxUnitFun = true)
 
     @Before
     fun setUp() {
