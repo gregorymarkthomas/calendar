@@ -31,7 +31,8 @@ class BackStackTest {
      * 'relaxUnitFun = true' will stop 'io.mockk.MockKException: no answer found for...' error for our simple use of a mocked BackStackCallback
      */
     private val callback: BackStackCallback = mockk(relaxUnitFun = true)
-    private val permissionsContract: ActivityInterface = mockk(relaxUnitFun = true)
+    private val permissionsChecker: ActivityInterface.PermissionChecker = mockk(relaxUnitFun = true)
+    private val dialogViewer: ActivityInterface.DialogViewer = mockk(relaxUnitFun = true)
 
     @BeforeEach
     fun init() {
@@ -40,7 +41,7 @@ class BackStackTest {
 
     @Test
     fun `has default view`() {
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** then **/
         assertNotNull(backstack.getMostRecentView())
@@ -50,7 +51,7 @@ class BackStackTest {
     @Test
     fun `views are added to the stack`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Add more views **/
         backstack.goTo(DayView(Date()))
@@ -72,14 +73,14 @@ class BackStackTest {
     @Test
     fun `re-uses first stack item and clears rest of stack`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Add more views **/
         backstack.goTo(DayView(Date()))
         backstack.goTo(EventView())
 
         /** Re-use FIRST view **/
-        backstack.goTo(MonthView(Date(), permissionsContract))
+        backstack.goTo(MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Check stack has only the 1 view **/
         val stack = backstack.getCurrentViewClasses()
@@ -94,7 +95,7 @@ class BackStackTest {
     @Test
     fun `re-uses second stack item and clears rest of stack`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Add more views **/
         backstack.goTo(DayView(Date()))
@@ -117,7 +118,7 @@ class BackStackTest {
     @Test
     fun `re-uses last stack item and maintains stack`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Add more views **/
         backstack.goTo(DayView(Date()))
@@ -138,7 +139,7 @@ class BackStackTest {
     @Test
     fun `getMostRecentView() keeps working correctly after adding new views`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Check 'getMostRecentView()' works **/
         assertEquals(MonthView::class.java, backstack.getMostRecentView()::class.java)
@@ -160,7 +161,7 @@ class BackStackTest {
     @Test
     fun `using goBack() on a full stack removes items until one stack item left`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Add more views **/
         backstack.goTo(DayView(Date()))
@@ -189,14 +190,14 @@ class BackStackTest {
     @Test
     fun `all views apart from new are removed with clearTo()`() {
         /** Instantiate with default view **/
-        val backstack = BackStack(callback, MonthView(Date(), permissionsContract))
+        val backstack = BackStack(callback, MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Add more views **/
         backstack.goTo(DayView(Date()))
         backstack.goTo(EventView())
 
         /** Clear all views apart from new MonthView **/
-        backstack.clearTo(MonthView(Date(), permissionsContract))
+        backstack.clearTo(MonthView(Date(), permissionsChecker, dialogViewer))
 
         /** Check stack has only MonthView **/
         val stack = backstack.getCurrentViewClasses()

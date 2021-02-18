@@ -38,7 +38,8 @@ class BackStackViewTest {
      */
     lateinit var view: BackStackView
     lateinit var activity: MainActivity
-    private val permissionsContract: ActivityInterface = mockk(relaxUnitFun = true)
+    private val permissionsChecker: ActivityInterface.PermissionChecker = mockk(relaxUnitFun = true)
+    private val dialogViewer: ActivityInterface.DialogViewer = mockk(relaxUnitFun = true)
 
     @Before
     fun setUp() {
@@ -64,7 +65,7 @@ class BackStackViewTest {
         val new = Date(0)
 
         /** Re-use MonthView with a new date **/
-        activity.goTo(MonthView(new, permissionsContract))
+        activity.goTo(MonthView(new, permissionsChecker, dialogViewer))
 
         /** Check view has the NEW date **/
         calendar.time = new

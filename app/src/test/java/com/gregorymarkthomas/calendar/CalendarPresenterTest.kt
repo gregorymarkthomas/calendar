@@ -4,6 +4,7 @@ import com.gregorymarkthomas.calendar.mock.MockGrantedPermissionContract
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
+import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
@@ -25,6 +26,7 @@ class CalendarPresenterTest {
     private val model: Model = mockk(relaxUnitFun=true)
     private val backstack: BackStackInterface = mockk()
     private val permissionsContract: MockGrantedPermissionContract = MockGrantedPermissionContract()
+    private val dialogViewer: ActivityInterface.DialogViewer = mockk(relaxUnitFun = true)
 
     @BeforeEach
     fun init() {
@@ -36,7 +38,7 @@ class CalendarPresenterTest {
         val now = Date()
 
         // when
-        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, now)
+        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, dialogViewer, now)
 
         val calendar = Calendar.getInstance()
         calendar.time = now
@@ -53,7 +55,7 @@ class CalendarPresenterTest {
         val future = Date(253402300799000)
 
         // when
-        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, future)
+        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, dialogViewer, future)
 
         val calendar = Calendar.getInstance()
         calendar.time = future
@@ -70,7 +72,7 @@ class CalendarPresenterTest {
         val past = Date(0)
 
         // when
-        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, past)
+        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, dialogViewer, past)
 
         val calendar = Calendar.getInstance()
         calendar.time = past
@@ -86,7 +88,7 @@ class CalendarPresenterTest {
     fun `today button shows day view of today`() {
         val past = Date(0)
 
-        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, past)
+        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, dialogViewer, past)
 
         // when
         presenter.onTodayButtonPress()
@@ -102,7 +104,7 @@ class CalendarPresenterTest {
     @Test
     fun `day selection shows day view of chosen date`() {
         val now = Date()
-        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, now)
+        val presenter = CalendarPresenter(view, model, backstack, permissionsContract, dialogViewer, now)
 
         // when
         presenter.onDayPress(AppDay(31, 12, 9999), 23)
