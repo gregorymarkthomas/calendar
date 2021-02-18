@@ -11,8 +11,8 @@ import com.gregorymarkthomas.calendar.util.CursorExtractor
 class CalendarRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
 
     /************* public *****/
-    fun get(): List<AppCalendar> {
-        val cursor = query(null)
+    fun get(account: AppAccount): List<AppCalendar> {
+        val cursor = query(account, null)
         var calendars: List<AppCalendar> = listOf()
         if(cursor != null) {
             calendars = createCalendars(cursor)

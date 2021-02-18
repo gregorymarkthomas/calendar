@@ -1,3 +1,3 @@
 package com.gregorymarkthomas.calendar.model
 
-class AppAccount(val accountName: String, val ownerAccount: Int)
+class AppAccount(val name: String, val ownerAccount: Int, val type: String)

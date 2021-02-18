@@ -11,12 +11,20 @@ class Model(private val repository: CalendarRepository, preferences: GetSharedPr
         return Date()
     }
 
-    override fun getEvents(dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
-        repository.getEvents(dayInMonth, month, year, numberOfDays, callback, calendarsToShow)
+    override fun getEvents(account: AppAccount, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
+        repository.getEvents(account, dayInMonth, month, year, numberOfDays, callback, calendarsToShow)
     }
 
-    override fun getCalendars(callback: Callback.GetCalendarsCallback) {
-        repository.getCalendars(callback)
+    override fun getCalendars(account: AppAccount, callback: Callback.GetCalendarsCallback) {
+        repository.getCalendars(account, callback)
+    }
+
+    override fun getAvailableAccounts(callback: Callback.GetAccountsCallback) {
+        repository.getAccounts(callback)
+    }
+
+    override fun getSavedAccount(): AppAccount? {
+        TODO("Not yet implemented")
     }
 
     override fun getVisibleCalendars(): IntArray {

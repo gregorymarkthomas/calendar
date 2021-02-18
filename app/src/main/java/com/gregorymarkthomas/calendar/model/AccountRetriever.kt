@@ -10,7 +10,7 @@ class AccountRetriever(private val resolver: Resolver): CalendarResolverQuery(re
 
     /************* public *****/
     fun get(): List<AppAccount> {
-        val cursor = query(null)
+        val cursor = query(null, null)
         var accounts: List<AppAccount> = listOf()
         if(cursor != null) {
             accounts = createAccounts(cursor)
@@ -39,12 +39,14 @@ class AccountRetriever(private val resolver: Resolver): CalendarResolverQuery(re
 
 
     /************* private *****/
+    /** TODO: currently tied down to Google Calendar accounts **/
     private fun createAccounts(cursor: Cursor): List<AppAccount> {
         val accounts = mutableListOf<AppAccount>()
         while(cursor.moveToNext()) {
             accounts.add(AppAccount(
                     CursorExtractor.Calendar.getAccountName(cursor),
-                    CursorExtractor.Calendar.getOwnerAccount(cursor)
+                    CursorExtractor.Calendar.getOwnerAccount(cursor),
+                    "com.google"
             ))
         }
         return accounts

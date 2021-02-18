@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.gregorymarkthomas.calendar.model.AppAccount
 import com.gregorymarkthomas.calendar.model.CalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
@@ -134,6 +135,10 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         }
 
         ActivityCompat.requestPermissions(this, p.toTypedArray(), MULTIPLE_PERMISSIONS)
+    }
+
+    override fun showAccountsDialog(accounts: List<AppAccount>) {
+        TODO("Not yet implemented")
     }
 
     /**

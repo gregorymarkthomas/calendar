@@ -31,11 +31,11 @@ class CalendarEventRetriever(private val resolver: Resolver): CalendarResolverQu
      * We used to do it where we would get ALL events and then re-calculate which events go with which AppDay.
      * But this is much simpler.
      */
-    fun get(fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): List<AppDay> {
+    fun get(account: AppAccount, fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): List<AppDay> {
         val days = mutableListOf<AppDay>()
         for(i in fromDayInMonth..fromDayInMonth + specifiedNoOfDays) {
             val clause = getWhereClause(i, month, year, 1, calendarsToShow)
-            val cursor = query(clause)
+            val cursor = query(account, clause)
             if(cursor != null) {
                 val events = getEvents(cursor)
                 cursor.close()

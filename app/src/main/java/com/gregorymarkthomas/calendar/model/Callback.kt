@@ -7,4 +7,7 @@ class Callback {
     interface GetEventsCallback {
         fun onGetEvents(days: List<AppDay>)
     }
+    interface GetAccountsCallback {
+        fun onGetAccounts(accounts: List<AppAccount>)
+    }
 }

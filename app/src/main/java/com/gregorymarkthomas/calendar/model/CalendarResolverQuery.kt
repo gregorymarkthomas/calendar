@@ -3,9 +3,7 @@ package com.gregorymarkthomas.calendar.model
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
-import com.gregorymarkthomas.calendar.model.interfaces.NeedsPermission
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
-import com.gregorymarkthomas.calendar.presenter.contracts.AndroidPermissionContract
 import java.util.*
 
 /**
@@ -18,8 +16,11 @@ abstract class CalendarResolverQuery(private val resolver: Resolver) {
     protected abstract fun getFields(): Array<String>
     protected abstract fun getSortOrder(): String?
 
-    fun query(whereClauses: String?): Cursor? {
-        var finalWhereClause = getDefaultWhereClause()
+    fun query(account: AppAccount?, whereClauses: String?): Cursor? {
+        var finalWhereClause = ""
+        if(account != null) {
+            finalWhereClause = generateAccountWhereClause(account.name, account.type, account.ownerAccount)
+        }
         if(whereClauses != null) {
             finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
         }
@@ -45,12 +46,9 @@ abstract class CalendarResolverQuery(private val resolver: Resolver) {
 
 
     /************* private *****/
-    /**
-     * TODO - remove hardcoded account
-     */
-    private fun getDefaultWhereClause(): String {
-        val where = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = 'hello@hello.com') AND (" + CalendarContract.Calendars.ACCOUNT_TYPE + " = 'com.google') AND (" + CalendarContract.Calendars.OWNER_ACCOUNT + " = 'hello@hello.com'))"
-        return where
+    /** TODO: OWNER_ACCOUNT is stored as Int (CursorExtractor -> Calendar -> getOwnerAccount() returns Int) but query (currently) expects a string! **/
+    private fun generateAccountWhereClause(accountName: String, accountType: String, ownerAccount: Int): String {
+        return "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = '$accountName') AND (" + CalendarContract.Calendars.ACCOUNT_TYPE + " = '$accountType') AND (" + CalendarContract.Calendars.OWNER_ACCOUNT + " = '$ownerAccount'))"
     }
 
     private fun mergeWhereClause(where1: String, where2: String): String {
