@@ -8,6 +8,7 @@ interface ModelInterface {
     fun getCalendars(account: AppAccount, callback: Callback.GetCalendarsCallback)
     fun getAvailableAccounts(callback: Callback.GetAccountsCallback)
     fun getSavedAccount(): AppAccount?
+    fun setAccount(account: AppAccount)
     fun getVisibleCalendars(): IntArray
     fun setVisibleCalendars(calendarsToShow: IntArray)
 }

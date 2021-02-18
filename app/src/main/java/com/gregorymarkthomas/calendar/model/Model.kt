@@ -27,6 +27,10 @@ class Model(private val repository: CalendarRepository, preferences: GetSharedPr
         TODO("Not yet implemented")
     }
 
+    override fun setAccount(account: AppAccount) {
+        TODO("Not yet implemented")
+    }
+
     override fun getVisibleCalendars(): IntArray {
         return calendarVisibiltyOption.get()
     }
