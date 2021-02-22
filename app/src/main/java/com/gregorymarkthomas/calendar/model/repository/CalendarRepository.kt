@@ -1,5 +1,6 @@
-package com.gregorymarkthomas.calendar.model
+package com.gregorymarkthomas.calendar.model.repository
 
+import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 
 class CalendarRepository(private val contentResolver: Resolver) {

@@ -12,12 +12,14 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.gregorymarkthomas.calendar.model.AppAccount
-import com.gregorymarkthomas.calendar.model.CalendarRepository
+import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
+import com.gregorymarkthomas.calendar.model.repository.sharedpreferences.SharedPreferencesAccountRepository
+import com.gregorymarkthomas.calendar.model.repository.sharedpreferences.SharedPreferencesCalendarVisibilityRepository
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
@@ -107,10 +109,11 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                backstackView.onInitialised(this@MainActivity,
-                        Model(CalendarRepository(this@MainActivity), this@MainActivity),
-                        this@MainActivity
+                val model = Model(CalendarRepository(this@MainActivity),
+                        SharedPreferencesAccountRepository(this@MainActivity),
+                        SharedPreferencesCalendarVisibilityRepository(this@MainActivity)
                 )
+                backstackView.onInitialised(this@MainActivity, model, this@MainActivity)
             }
         }
 

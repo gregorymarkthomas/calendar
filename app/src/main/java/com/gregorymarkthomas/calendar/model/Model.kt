@@ -1,10 +1,13 @@
 package com.gregorymarkthomas.calendar.model
 
-import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
+import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
+import com.gregorymarkthomas.calendar.model.repository.AccountRepository
+import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import java.util.*
 
-class Model(private val calendarRepo: CalendarRepository, preferences: GetSharedPreferencesInterface): ModelInterface {
-    private val calendarVisibiltyOption = VisibleCalendarsOption(preferences)
+class Model(private val calendarRepo: CalendarRepository,
+            private val accountRepo: AccountRepository,
+            private val calendarVisibilityRepo: CalendarVisibilityRepository): ModelInterface {
 
     override fun getTodayDate(): Date {
         // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -24,18 +27,18 @@ class Model(private val calendarRepo: CalendarRepository, preferences: GetShared
     }
 
     override fun getSavedAccount(): AppAccount? {
-        TODO("Not yet implemented")
+        return accountRepo.getAccount()
     }
 
     override fun setAccount(account: AppAccount) {
-        TODO("Not yet implemented")
+        accountRepo.setAccount(account)
     }
 
     override fun getVisibleCalendars(): IntArray {
-        return calendarVisibiltyOption.get()
+        return calendarVisibilityRepo.getVisibleCalendars()
     }
 
     override fun setVisibleCalendars(calendarsToShow: IntArray) {
-        calendarVisibiltyOption.set(calendarsToShow)
+        calendarVisibilityRepo.setVisibleCalendars(calendarsToShow)
     }
 }
