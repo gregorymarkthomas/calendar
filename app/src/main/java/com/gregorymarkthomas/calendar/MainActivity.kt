@@ -18,8 +18,9 @@ import com.gregorymarkthomas.calendar.util.backstack.BackStack
 import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
+import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
+import com.gregorymarkthomas.calendar.model.repository.SharedPrefsBackendRepository
 import com.gregorymarkthomas.calendar.model.repository.sharedpreferences.SharedPreferencesAccountRepository
-import com.gregorymarkthomas.calendar.model.repository.sharedpreferences.SharedPreferencesCalendarVisibilityRepository
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
@@ -111,7 +112,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 val model = Model(CalendarRepository(this@MainActivity),
                         SharedPreferencesAccountRepository(this@MainActivity),
-                        SharedPreferencesCalendarVisibilityRepository(this@MainActivity)
+                        CalendarVisibilityRepository(SharedPrefsBackendRepository(this@MainActivity))
                 )
                 backstackView.onInitialised(this@MainActivity, model, this@MainActivity)
             }
