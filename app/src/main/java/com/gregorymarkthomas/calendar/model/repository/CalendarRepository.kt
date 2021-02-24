@@ -18,6 +18,10 @@ class CalendarRepository(private val contentResolver: Resolver) {
     }
 
     fun getAccounts(callback: Callback.GetAccountsCallback) {
-        callback.onGetAccounts(AccountRetriever(contentResolver).get())
+        callback.onGetAccounts(AccountRetriever(contentResolver).getAvailable())
+    }
+
+    fun getAccount(accountName: String, callback: Callback.GetAccountCallback) {
+        callback.onGetAccount(AccountRetriever(contentResolver).get(accountName))
     }
 }

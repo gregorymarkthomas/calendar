@@ -1,5 +1,7 @@
 package com.gregorymarkthomas.calendar.model.interfaces
 
+import com.gregorymarkthomas.calendar.model.AppAccount
+
 object Option {
 
     interface StringOption {

@@ -9,7 +9,7 @@ import com.gregorymarkthomas.calendar.util.CursorExtractor
 class AccountRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
 
     /************* public *****/
-    fun get(): List<AppAccount> {
+    fun getAvailable(): List<AppAccount> {
         val cursor = query(null, null)
         var accounts: List<AppAccount> = listOf()
         if(cursor != null) {
@@ -17,6 +17,10 @@ class AccountRetriever(private val resolver: Resolver): CalendarResolverQuery(re
             cursor.close()
         }
         return accounts
+    }
+
+    fun get(accountName: String): AppAccount {
+        // TODO
     }
 
     /************* protected *****/

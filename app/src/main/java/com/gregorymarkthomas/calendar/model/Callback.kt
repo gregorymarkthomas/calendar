@@ -10,4 +10,7 @@ class Callback {
     interface GetAccountsCallback {
         fun onGetAccounts(accounts: List<AppAccount>)
     }
+    interface GetAccountCallback {
+        fun onGetAccount(account: AppAccount?)
+    }
 }

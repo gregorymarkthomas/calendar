@@ -26,19 +26,27 @@ class Model(private val calendarRepo: CalendarRepository,
         calendarRepo.getAccounts(callback)
     }
 
-    override fun getSavedAccount(): AppAccount? {
-        return accountRepo.getAccount()
+    override fun getAccount(accountName: String, callback: Callback.GetAccountCallback) {
+        calendarRepo.getAccount(accountName, callback)
     }
 
-    override fun setAccount(account: AppAccount) {
-        accountRepo.setAccount(account)
+    override fun getSavedAccount(callback: Callback.GetAccountCallback) {
+        val accountName = accountRepo.getData()
+        if(accountName.isNullOrEmpty())
+            callback.onGetAccount(null)
+        else
+            calendarRepo.getAccount(accountName, callback)
+    }
+
+    override fun setAccount(accountName: String) {
+        accountRepo.setData(accountName)
     }
 
     override fun getVisibleCalendars(): IntArray {
-        return calendarVisibilityRepo.getVisibleCalendars()
+        return calendarVisibilityRepo.getData()
     }
 
     override fun setVisibleCalendars(calendarsToShow: IntArray) {
-        calendarVisibilityRepo.setVisibleCalendars(calendarsToShow)
+        calendarVisibilityRepo.setData(calendarsToShow)
     }
 }
