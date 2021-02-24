@@ -1,8 +1,9 @@
 package com.gregorymarkthomas.calendar.model.repository
 
 import com.gregorymarkthomas.calendar.model.AppCalendar
+import com.gregorymarkthomas.calendar.model.interfaces.Option
 
-class CalendarVisibilityRepository(private val backend: BackendRepository) {
+class CalendarVisibilityRepository(private val backend: BackendRepository): Option.IntArrayOption {
 
     private val key = "visible_calendars_key"
 
@@ -11,7 +12,7 @@ class CalendarVisibilityRepository(private val backend: BackendRepository) {
      * If not yet set, return an empty IntArray. The model will recognise this and ignore Calendar Ids as a query parameter (i.e. will return events for ALL available calendars)
      * This is converted into an IntArray.
      */
-    fun getVisibleCalendars(): IntArray {
+    override fun getData(): IntArray {
         val commaSeparatedString = backend.getData(key, "")
         return if(commaSeparatedString.isNullOrBlank())
             IntArray(0)
@@ -19,8 +20,8 @@ class CalendarVisibilityRepository(private val backend: BackendRepository) {
             parseCommaSeparatedStringToIntArray(commaSeparatedString)
     }
 
-    fun setVisibleCalendars(visibleCalendars: IntArray) {
-        backend.setData(key, parseIntArrayToCommaSeparatedString(visibleCalendars))
+    override fun setData(data: IntArray) {
+        backend.setData(key, parseIntArrayToCommaSeparatedString(data))
     }
 
     private fun extractCalendarIds(availableCalendars: List<AppCalendar>): String {
