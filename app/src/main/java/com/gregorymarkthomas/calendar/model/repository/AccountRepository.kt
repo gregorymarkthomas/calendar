@@ -1,6 +1,5 @@
 package com.gregorymarkthomas.calendar.model.repository
 
-import com.gregorymarkthomas.calendar.model.AppAccount
 import com.gregorymarkthomas.calendar.model.interfaces.Option
 
 class AccountRepository (private val backend: BackendRepository): Option.StringOption {
