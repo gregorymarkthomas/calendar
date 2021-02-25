@@ -4,8 +4,8 @@ import java.util.*
 
 interface ModelInterface {
     fun getTodayDate(): Date
-    fun getEvents(account: AppAccount, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray = IntArray(0))
-    fun getCalendars(account: AppAccount, callback: Callback.GetCalendarsCallback)
+    fun getEvents(accountName: String, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray = IntArray(0))
+    fun getCalendars(accountName: String, callback: Callback.GetCalendarsCallback)
     fun getAvailableAccounts(callback: Callback.GetAccountsCallback)
     fun getAccount(accountName: String, callback: Callback.GetAccountCallback)
     fun getSavedAccount(callback: Callback.GetAccountCallback)

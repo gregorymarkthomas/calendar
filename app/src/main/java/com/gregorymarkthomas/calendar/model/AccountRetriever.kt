@@ -19,8 +19,18 @@ class AccountRetriever(private val resolver: Resolver): CalendarResolverQuery(re
         return accounts
     }
 
-    fun get(accountName: String): AppAccount {
-        // TODO
+    fun get(accountName: String): AppAccount? {
+        val cursor = query(accountName, null)
+        var account: AppAccount? = null
+        if(cursor != null) {
+            account = AppAccount(
+                    CursorExtractor.Calendar.getAccountName(cursor),
+                    CursorExtractor.Calendar.getOwnerAccount(cursor),
+                    "com.google"
+            )
+            cursor.close()
+        }
+        return account
     }
 
     /************* protected *****/

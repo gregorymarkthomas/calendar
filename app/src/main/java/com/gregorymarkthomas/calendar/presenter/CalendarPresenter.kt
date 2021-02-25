@@ -37,20 +37,23 @@ class CalendarPresenter(private val view: CalendarViewInterface,
 
         checkPermissions(object: OnPermissionCheck {
             override fun onAllGranted() {
-                val account = model.getSavedAccount()
-                if(account != null) {
-                    model.getEvents(account, 1, month, year, CalendarHelper.getDaysInMonth(month, year), object : Callback.GetEventsCallback {
-                        override fun onGetEvents(days: List<AppDay>) {
-                            view.showDates(days)
+                model.getSavedAccount(object: Callback.GetAccountCallback {
+                    override fun onGetAccount(account: AppAccount?) {
+                        if(account != null) {
+                            model.getEvents(account.name, 1, month, year, CalendarHelper.getDaysInMonth(month, year), object : Callback.GetEventsCallback {
+                                override fun onGetEvents(days: List<AppDay>) {
+                                    view.showDates(days)
+                                }
+                            })
+                        } else {
+                            model.getAvailableAccounts(object : Callback.GetAccountsCallback {
+                                override fun onGetAccounts(accounts: List<AppAccount>) {
+                                    dialogViewer.showAccountsDialog(accounts)
+                                }
+                            })
                         }
-                    })
-                } else {
-                    model.getAvailableAccounts(object : Callback.GetAccountsCallback {
-                        override fun onGetAccounts(accounts: List<AppAccount>) {
-                            dialogViewer.showAccountsDialog(accounts)
-                        }
-                    })
-                }
+                    }
+                })
             }
 
             override fun onFoundDenied(deniedPermissions: List<CalendarPermission>) {

@@ -16,10 +16,10 @@ abstract class CalendarResolverQuery(private val resolver: Resolver) {
     protected abstract fun getFields(): Array<String>
     protected abstract fun getSortOrder(): String?
 
-    fun query(account: AppAccount?, whereClauses: String?): Cursor? {
+    fun query(accountName: String?, whereClauses: String?): Cursor? {
         var finalWhereClause = ""
-        if(account != null) {
-            finalWhereClause = generateAccountWhereClause(account.name, account.type, account.ownerAccount)
+        if(accountName != null) {
+            finalWhereClause = generateAccountWhereClause(accountName)
         }
         if(whereClauses != null) {
             finalWhereClause = mergeWhereClause(finalWhereClause, whereClauses)
@@ -46,9 +46,8 @@ abstract class CalendarResolverQuery(private val resolver: Resolver) {
 
 
     /************* private *****/
-    /** TODO: OWNER_ACCOUNT is stored as Int (CursorExtractor -> Calendar -> getOwnerAccount() returns Int) but query (currently) expects a string! **/
-    private fun generateAccountWhereClause(accountName: String, accountType: String, ownerAccount: Int): String {
-        return "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = '$accountName') AND (" + CalendarContract.Calendars.ACCOUNT_TYPE + " = '$accountType') AND (" + CalendarContract.Calendars.OWNER_ACCOUNT + " = '$ownerAccount'))"
+    private fun generateAccountWhereClause(accountName: String): String {
+        return CalendarContract.Calendars.ACCOUNT_NAME + " = '$accountName'"
     }
 
     private fun mergeWhereClause(where1: String, where2: String): String {

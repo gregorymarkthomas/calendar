@@ -14,12 +14,12 @@ class Model(private val calendarRepo: CalendarRepository,
         return Date()
     }
 
-    override fun getEvents(account: AppAccount, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
-        calendarRepo.getEvents(account, dayInMonth, month, year, numberOfDays, callback, calendarsToShow)
+    override fun getEvents(accountName: String, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
+        calendarRepo.getEvents(accountName, dayInMonth, month, year, numberOfDays, callback, calendarsToShow)
     }
 
-    override fun getCalendars(account: AppAccount, callback: Callback.GetCalendarsCallback) {
-        calendarRepo.getCalendars(account, callback)
+    override fun getCalendars(accountName: String, callback: Callback.GetCalendarsCallback) {
+        calendarRepo.getCalendars(accountName, callback)
     }
 
     override fun getAvailableAccounts(callback: Callback.GetAccountsCallback) {
