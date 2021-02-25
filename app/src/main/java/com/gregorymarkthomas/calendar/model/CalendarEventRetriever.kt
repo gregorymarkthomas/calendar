@@ -15,7 +15,7 @@ import com.gregorymarkthomas.calendar.model.ResolverOperators.Companion.OR
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class CalendarEventRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
+class CalendarEventRetriever(resolver: Resolver): CalendarResolverQuery(resolver) {
 
     companion object {
         private const val tag = "EventResolver"

@@ -6,7 +6,7 @@ import android.provider.CalendarContract.Calendars
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
-class AccountRetriever(private val resolver: Resolver): CalendarResolverQuery(resolver) {
+class AccountRetriever(resolver: Resolver): CalendarResolverQuery(resolver) {
 
     /************* public *****/
     fun getAvailable(): List<AppAccount> {
