@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.gregorymarkthomas.calendar.R
-import com.gregorymarkthomas.calendar.model.AppAccount
 
 class AccountsListDialog(private val activityContext: Context): DialogFragment() {
 
@@ -21,18 +23,54 @@ class AccountsListDialog(private val activityContext: Context): DialogFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         var accounts: ArrayList<String>? = null
         if (arguments != null) {
             accounts = arguments!!.getStringArrayList(accountsKey)
         }
 
         if(accounts != null) {
+            val title = view.findViewById<TextView>(R.id.title)
+            title.setText(R.string.choose_an_account)
 
+            val list = view.findViewById<ListView>(R.id.list_view)
+            list.adapter = AccountsListAdapter(activityContext, accounts)
+        } else {
+            throw NullPointerException()
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    class AccountsListAdapter(context: Context, private val accounts: ArrayList<String>): BaseAdapter() {
+
+        private val inflater: LayoutInflater = LayoutInflater.from(context)
+
+        override fun getCount(): Int {
+            return accounts.size
+        }
+
+        override fun getItem(position: Int): Any {
+            return accounts[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val view: View
+            if(convertView == null) {
+                view = inflater.inflate(R.layout.account_list_row, parent, false)
+            } else {
+                view = convertView
+            }
+            val accountNameView = view.findViewById<TextView>(R.id.account_name)
+            accountNameView.text = accounts[position]
+            return view
+        }
 
     }
 }

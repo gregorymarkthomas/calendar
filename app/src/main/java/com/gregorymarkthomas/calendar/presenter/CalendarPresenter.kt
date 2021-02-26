@@ -48,7 +48,10 @@ class CalendarPresenter(private val view: CalendarViewInterface,
                         } else {
                             model.getAvailableAccounts(object : Callback.GetAccountsCallback {
                                 override fun onGetAccounts(accounts: List<AppAccount>) {
-                                    dialogViewer.showAccountsDialog(toAccountNameArray(accounts))
+                                    if(accounts.isEmpty())
+                                        dialogViewer.showNoAccountsDialog()
+                                    else
+                                        dialogViewer.showAccountsDialog(toAccountNameArray(accounts))
                                 }
                             })
                         }

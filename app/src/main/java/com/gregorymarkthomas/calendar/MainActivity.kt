@@ -40,6 +40,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         const val INITIAL_VIEW_EXTRA = "initial_view_extra"
         const val MULTIPLE_PERMISSIONS = 1
         const val accountsListDialogTag = "accounts_list_dialog_tag"
+        const val noAccountsDialogTag = "no_accounts_dialog_tag"
     }
 
     /**
@@ -147,6 +148,11 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         args.putStringArrayList(AccountsListDialog.accountsKey, accounts)
         dialog.arguments = args
         dialog.show(supportFragmentManager, accountsListDialogTag)
+    }
+
+    override fun showNoAccountsDialog() {
+        val dialog = NoAccountsDialog()
+        dialog.show(supportFragmentManager, noAccountsDialogTag)
     }
 
     /**
