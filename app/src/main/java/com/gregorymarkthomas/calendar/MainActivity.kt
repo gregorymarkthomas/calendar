@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.gregorymarkthomas.calendar.model.AppAccount
 import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
@@ -38,6 +39,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     companion object {
         const val INITIAL_VIEW_EXTRA = "initial_view_extra"
         const val MULTIPLE_PERMISSIONS = 1
+        const val accountsListDialogTag = "accounts_list_dialog_tag"
     }
 
     /**
@@ -139,8 +141,12 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         ActivityCompat.requestPermissions(this, p.toTypedArray(), MULTIPLE_PERMISSIONS)
     }
 
-    override fun showAccountsDialog(accounts: List<AppAccount>) {
-        TODO("Not yet implemented")
+    override fun showAccountsDialog(accounts: ArrayList<String>) {
+        val dialog = AccountsListDialog(this)
+        val args = Bundle()
+        args.putStringArrayList(AccountsListDialog.accountsKey, accounts)
+        dialog.arguments = args
+        dialog.show(supportFragmentManager, accountsListDialogTag)
     }
 
     /**

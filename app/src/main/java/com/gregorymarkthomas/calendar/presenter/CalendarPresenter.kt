@@ -48,7 +48,7 @@ class CalendarPresenter(private val view: CalendarViewInterface,
                         } else {
                             model.getAvailableAccounts(object : Callback.GetAccountsCallback {
                                 override fun onGetAccounts(accounts: List<AppAccount>) {
-                                    dialogViewer.showAccountsDialog(accounts)
+                                    dialogViewer.showAccountsDialog(toAccountNameArray(accounts))
                                 }
                             })
                         }
@@ -79,5 +79,9 @@ class CalendarPresenter(private val view: CalendarViewInterface,
                 CalendarPermission(Manifest.permission.READ_CALENDAR),
                 CalendarPermission(Manifest.permission.WRITE_CALENDAR)
         )
+    }
+
+    private fun toAccountNameArray(accounts: List<AppAccount>): ArrayList<String> {
+        return accounts.map { it.name } as ArrayList<String>;
     }
 }

@@ -1,6 +1,5 @@
 package com.gregorymarkthomas.calendar.presenter.contracts
 
-import com.gregorymarkthomas.calendar.model.AppAccount
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 
 class ActivityInterface {
@@ -11,7 +10,7 @@ class ActivityInterface {
 
     interface DialogViewer {
         fun showPermissionDialog(permissions: List<CalendarPermission>)
-        fun showAccountsDialog(accounts: List<AppAccount>)
+        fun showAccountsDialog(accounts: ArrayList<String>)
     }
 }
 
