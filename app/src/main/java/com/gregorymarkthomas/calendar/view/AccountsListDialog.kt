@@ -8,27 +8,21 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import com.gregorymarkthomas.calendar.R
 
-class AccountsListDialog(private val activityContext: Context): DialogFragment() {
+class AccountsListDialog(private val activityContext: Context): AppCompatDialogFragment() {
+
+    private var accounts: ArrayList<String>? = null
 
     companion object {
         const val accountsKey = "accounts_key"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.accounts_list_dialog, container)
-    }
+        val view = inflater.inflate(R.layout.accounts_list_dialog, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        var accounts: ArrayList<String>? = null
         if (arguments != null) {
             accounts = arguments!!.getStringArrayList(accountsKey)
         }
@@ -38,10 +32,23 @@ class AccountsListDialog(private val activityContext: Context): DialogFragment()
             title.setText(R.string.choose_an_account)
 
             val list = view.findViewById<ListView>(R.id.list_view)
-            list.adapter = AccountsListAdapter(activityContext, accounts)
+            list.adapter = AccountsListAdapter(activityContext, accounts!!)
+
         } else {
             throw NullPointerException()
         }
+
+        return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
     class AccountsListAdapter(context: Context, private val accounts: ArrayList<String>): BaseAdapter() {
