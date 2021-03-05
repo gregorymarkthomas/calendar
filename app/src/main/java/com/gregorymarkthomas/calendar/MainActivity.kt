@@ -147,6 +147,12 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val args = Bundle()
         args.putStringArrayList(AccountsListDialog.accountsKey, accounts)
         dialog.arguments = args
+        val ft = supportFragmentManager.beginTransaction();
+
+//        ft.add(R.id.main_content, dialog)
+//        ft.commit();
+
+//        dialog.show(ft, accountsListDialogTag)
         dialog.show(supportFragmentManager, accountsListDialogTag)
     }
 

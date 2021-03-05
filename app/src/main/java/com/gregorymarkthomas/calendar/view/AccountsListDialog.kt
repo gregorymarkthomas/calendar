@@ -1,6 +1,9 @@
 package com.gregorymarkthomas.calendar.view
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +12,8 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.DialogFragment
 import com.gregorymarkthomas.calendar.R
+
 
 class AccountsListDialog(private val activityContext: Context): AppCompatDialogFragment() {
 
@@ -28,7 +31,7 @@ class AccountsListDialog(private val activityContext: Context): AppCompatDialogF
         }
 
         if(accounts != null) {
-            val title = view.findViewById<TextView>(R.id.title)
+            val title = view.findViewById<TextView>(R.id.dialog_title)
             title.setText(R.string.choose_an_account)
 
             val list = view.findViewById<ListView>(R.id.list_view)
@@ -41,15 +44,13 @@ class AccountsListDialog(private val activityContext: Context): AppCompatDialogF
         return view
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
+    /** TODO: This extends width-ways, like it should **/
+//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+//        val title = "test"
+//        return AlertDialog.Builder(activity)
+//                .setTitle(title)
+//                .create()
+//    }
 
     class AccountsListAdapter(context: Context, private val accounts: ArrayList<String>): BaseAdapter() {
 
