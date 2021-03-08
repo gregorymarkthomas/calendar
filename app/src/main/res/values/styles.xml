@@ -1,11 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/blue_purple</item>
+        <item name="colorPrimaryDark">@color/blue_purple_dark</item>
+        <item name="colorAccent">@color/pink_hot</item>
+        <item name="alertDialogStyle">@style/Dialog</item>
     </style>
 
     <style name="Hour">
@@ -24,6 +24,17 @@
     <style name="MonthDate">
         <item name="android:paddingTop">@dimen/margin_half</item>
         <item name="android:paddingBottom">@dimen/margin_half</item>
+    </style>
+
+    <style name="Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:background">?colorPrimary</item>
+    </style>
+    <style name="ButtonBar">
+        <item name="android:background">?colorPrimaryDark</item>
+        <item name="android:padding">@dimen/margin</item>
+    </style>
+    <style name="PrimaryButton" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:textColor">?colorAccent</item>
     </style>
 
 </resources>

@@ -2,20 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/dialog_buttons"
+    <include
+        android:id="@+id/dialog_buttons_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="TEST" />
-    </RelativeLayout>
+        android:layout_alignParentBottom="true"
+        layout="@layout/single_button_layout" />
 
     <include
         android:id="@+id/dialog_title_layout"
@@ -28,7 +22,7 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/dialog_buttons"
+        android:layout_above="@+id/dialog_buttons_layout"
         android:layout_below="@+id/dialog_title_layout" />
 
 </RelativeLayout>
