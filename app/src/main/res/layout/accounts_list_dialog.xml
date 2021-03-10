@@ -11,18 +11,10 @@
         android:layout_alignParentBottom="true"
         layout="@layout/single_button_layout" />
 
-    <include
-        android:id="@+id/dialog_title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        layout="@layout/dialog_title" />
-
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/dialog_buttons_layout"
-        android:layout_below="@+id/dialog_title_layout" />
+        android:layout_above="@+id/dialog_buttons_layout" />
 
 </RelativeLayout>

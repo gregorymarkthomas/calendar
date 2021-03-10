@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MaterialComponents.DayNight" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/blue_purple</item>
+        <item name="colorPrimaryDark">@color/blue_purple_dark</item>
+        <item name="colorAccent">@color/pink_hot</item>
+        <item name="android:textColorPrimary">@color/white_off</item>
+    </style>
+</resources>

@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.view
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,12 +29,8 @@ class AccountsListDialog(private val activityContext: Context): AppCompatDialogF
         }
 
         if(accounts != null) {
-            val title = view.findViewById<TextView>(R.id.dialog_title)
-            title.setText(R.string.choose_an_account)
-
             val list = view.findViewById<ListView>(R.id.list_view)
             list.adapter = AccountsListAdapter(activityContext, accounts!!)
-
         } else {
             throw NullPointerException()
         }
@@ -41,13 +38,11 @@ class AccountsListDialog(private val activityContext: Context): AppCompatDialogF
         return view
     }
 
-    /** TODO: This extends width-ways, like it should **/
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        val title = "test"
-//        return AlertDialog.Builder(activity)
-//                .setTitle(title)
-//                .create()
-//    }
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog: Dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setTitle(R.string.choose_an_account)
+        return dialog
+    }
 
     class AccountsListAdapter(context: Context, private val accounts: ArrayList<String>): BaseAdapter() {
 

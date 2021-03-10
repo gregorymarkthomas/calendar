@@ -1,11 +1,9 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/blue_purple</item>
-        <item name="colorPrimaryDark">@color/blue_purple_dark</item>
-        <item name="colorAccent">@color/pink_hot</item>
-        <item name="alertDialogStyle">@style/Dialog</item>
+    <style name="CalendarTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="alertDialogTheme">@style/Dialog</item>
+        <item name="android:alertDialogTheme">?alertDialogTheme</item>
+        <item name="dialogTheme">?alertDialogTheme</item>
+        <item name="android:dialogTheme">?alertDialogTheme</item>
     </style>
 
     <style name="Hour">
@@ -14,7 +12,7 @@
 
     <style name="HourDivider">
         <item name="android:height">@dimen/calendar_day_hour_divider_height</item>
-        <item name="android:background">@color/dark_grey</item>
+        <item name="android:background">@color/grey_dark</item>
     </style>
 
     <style name="EventText">
@@ -26,14 +24,23 @@
         <item name="android:paddingBottom">@dimen/margin_half</item>
     </style>
 
-    <style name="Dialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:background">?colorPrimary</item>
+    <style name="Dialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="android:windowTitleStyle">@style/DialogTitle</item>
+        <item name="android:buttonStyle">@style/PrimaryButton</item>
+        <!-- These both work and both do the same thing. -->
+<!--        <item name="android:windowBackground">?colorPrimary</item>-->
+<!--        <item name="android:background">?colorPrimary</item>-->
+    </style>
+    <style name="DialogTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="ButtonBar">
         <item name="android:background">?colorPrimaryDark</item>
         <item name="android:padding">@dimen/margin</item>
     </style>
-    <style name="PrimaryButton" parent="TextAppearance.AppCompat.Widget.Button">
+    <style name="PrimaryButton" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">?colorAccent</item>
     </style>
 
