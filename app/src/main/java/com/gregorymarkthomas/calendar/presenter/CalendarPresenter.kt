@@ -1,6 +1,7 @@
 package com.gregorymarkthomas.calendar.presenter
 
 import android.Manifest
+import com.gregorymarkthomas.calendar.ActivityCallback
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.model.interfaces.NeedsPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
@@ -37,21 +38,25 @@ class CalendarPresenter(private val view: CalendarViewInterface,
 
         checkPermissions(object: OnPermissionCheck {
             override fun onAllGranted() {
-                model.getSavedAccount(object: Callback.GetAccountCallback {
+                model.getSavedAccount(object: ModelCallback.GetAccountCallback {
                     override fun onGetAccount(account: AppAccount?) {
                         if(account != null) {
-                            model.getEvents(account.name, 1, month, year, CalendarHelper.getDaysInMonth(month, year), object : Callback.GetEventsCallback {
+                            model.getEvents(account.name, 1, month, year, CalendarHelper.getDaysInMonth(month, year), object : ModelCallback.GetEventsCallback {
                                 override fun onGetEvents(days: List<AppDay>) {
                                     view.showDates(days)
                                 }
                             })
                         } else {
-                            model.getAvailableAccounts(object : Callback.GetAccountsCallback {
+                            model.getAvailableAccounts(object : ModelCallback.GetAccountsCallback {
                                 override fun onGetAccounts(accounts: List<AppAccount>) {
                                     if(accounts.isEmpty())
                                         dialogViewer.showNoAccountsDialog()
                                     else
-                                        dialogViewer.showAccountsDialog(toArray(accounts))
+                                        dialogViewer.showAccountsDialog(toArray(accounts), object : ActivityCallback.GetChosenAccount {
+                                            override fun onGetAccount(accountName: String) {
+                                                model.setAccount(accountName)
+                                            }
+                                        })
                                 }
                             })
                         }

@@ -6,27 +6,28 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.view.ViewTreeObserver
+import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.gregorymarkthomas.calendar.model.AppAccount
-import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
-import com.gregorymarkthomas.calendar.util.backstack.BackStack
-import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
+import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
 import com.gregorymarkthomas.calendar.model.repository.SharedPrefsBackendRepository
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
-import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
+import com.gregorymarkthomas.calendar.util.backstack.BackStack
+import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
+import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
+import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
 import com.gregorymarkthomas.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -143,16 +144,17 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         ActivityCompat.requestPermissions(this, p.toTypedArray(), MULTIPLE_PERMISSIONS)
     }
 
-    override fun showAccountsDialog(accounts: Array<String>) {
+    override fun showAccountsDialog(accounts: Array<String>, callback: ActivityCallback.GetChosenAccount) {
         val checkedItem = 0
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.choose_an_account))
             .setPositiveButton(resources.getString(R.string.okay)) { dialog, which ->
-                // Respond to positive button press
+                val lw: ListView = (dialog as AlertDialog).listView
+                val checkedItem: String = lw.adapter.getItem(lw.checkedItemPosition) as String
+                callback.onGetAccount(checkedItem)
             }
-            // Single-choice items (initialized with checked item)
             .setSingleChoiceItems(accounts, checkedItem) { dialog, which ->
-                // Respond to item chosen
+                // Do nothing
             }
             .show()
     }

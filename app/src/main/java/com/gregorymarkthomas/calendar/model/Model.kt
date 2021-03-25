@@ -14,23 +14,23 @@ class Model(private val calendarRepo: CalendarRepository,
         return Date()
     }
 
-    override fun getEvents(accountName: String, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: Callback.GetEventsCallback, calendarsToShow: IntArray) {
+    override fun getEvents(accountName: String, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: ModelCallback.GetEventsCallback, calendarsToShow: IntArray) {
         calendarRepo.getEvents(accountName, dayInMonth, month, year, numberOfDays, callback, calendarsToShow)
     }
 
-    override fun getCalendars(accountName: String, callback: Callback.GetCalendarsCallback) {
+    override fun getCalendars(accountName: String, callback: ModelCallback.GetCalendarsCallback) {
         calendarRepo.getCalendars(accountName, callback)
     }
 
-    override fun getAvailableAccounts(callback: Callback.GetAccountsCallback) {
+    override fun getAvailableAccounts(callback: ModelCallback.GetAccountsCallback) {
         calendarRepo.getAccounts(callback)
     }
 
-    override fun getAccount(accountName: String, callback: Callback.GetAccountCallback) {
+    override fun getAccount(accountName: String, callback: ModelCallback.GetAccountCallback) {
         calendarRepo.getAccount(accountName, callback)
     }
 
-    override fun getSavedAccount(callback: Callback.GetAccountCallback) {
+    override fun getSavedAccount(callback: ModelCallback.GetAccountCallback) {
         val accountName = accountRepo.getData()
         if(accountName.isNullOrEmpty())
             callback.onGetAccount(null)

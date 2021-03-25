@@ -1,6 +1,6 @@
 package com.gregorymarkthomas.calendar.model
 
-class Callback {
+class ModelCallback {
     interface GetCalendarsCallback {
         fun onGetCalendars(calendars: List<AppCalendar>)
     }
