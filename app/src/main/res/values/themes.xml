@@ -4,8 +4,8 @@
         <!-- MaterialComponents -->
         <item name="colorPrimaryVariant">@color/blue_purple_dark</item>
         <item name="colorOnPrimary">@color/white_off</item>
-        <item name="colorSecondaryVariant">@color/green</item>
-        <item name="colorOnSecondary">@color/pink_hot</item>
+        <item name="colorSecondaryVariant">@color/maroon_x_11</item>
+        <item name="colorOnSecondary">@color/white_off</item>
         <item name="colorOnError">@color/white_off</item>
         <item name="colorSurface">@color/blue_purple</item>
         <item name="colorOnSurface">@color/white_off</item>
@@ -13,9 +13,9 @@
 
         <!-- AppCompat + MaterialComponents -->
         <item name="colorPrimary">@color/blue_purple</item>
-        <item name="colorSecondary">@color/red</item>
+        <item name="colorSecondary">@color/pink_irrestible</item>
         <!--        <item name="android:colorBackground">@color/green</item>-->
-        <item name="colorError">@color/deep_chestnut</item>
+        <item name="colorError">@color/red_deep_chestnut</item>
 
         <!-- Unused (?) -->
         <item name="colorPrimaryDark">@color/blue_purple_dark</item>
