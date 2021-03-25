@@ -36,7 +36,7 @@
         <item name="android:padding">@dimen/margin</item>
     </style>
     <style name="Widget.Calendar.Button" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">#f00</item>
+        <!-- empty -->
     </style>
 
     <style name="TextAppearance.Calendar.Button" parent="TextAppearance.MaterialComponents.Button">
