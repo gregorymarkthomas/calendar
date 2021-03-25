@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gregorymarkthomas.calendar.model.AppAccount
 import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.Model
@@ -142,18 +143,18 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         ActivityCompat.requestPermissions(this, p.toTypedArray(), MULTIPLE_PERMISSIONS)
     }
 
-    override fun showAccountsDialog(accounts: ArrayList<String>) {
-        val dialog = AccountsListDialog(this)
-        val args = Bundle()
-        args.putStringArrayList(AccountsListDialog.accountsKey, accounts)
-        dialog.arguments = args
-        val ft = supportFragmentManager.beginTransaction();
-
-//        ft.add(R.id.main_content, dialog)
-//        ft.commit();
-
-//        dialog.show(ft, accountsListDialogTag)
-        dialog.show(supportFragmentManager, accountsListDialogTag)
+    override fun showAccountsDialog(accounts: Array<String>) {
+        val checkedItem = 0
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.choose_an_account))
+            .setPositiveButton(resources.getString(R.string.okay)) { dialog, which ->
+                // Respond to positive button press
+            }
+            // Single-choice items (initialized with checked item)
+            .setSingleChoiceItems(accounts, checkedItem) { dialog, which ->
+                // Respond to item chosen
+            }
+            .show()
     }
 
     override fun showNoAccountsDialog() {

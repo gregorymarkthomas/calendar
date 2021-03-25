@@ -3,4 +3,6 @@
     <string name="view_today">View Today</string>
     <string name="permissions_denied">At least one permission was denied. This app requires these permissions to function.</string>
     <string name="choose_an_account">Choose an account</string>
+    <string name="cancel">Cancel</string>
+    <string name="okay">Okay</string>
 </resources>

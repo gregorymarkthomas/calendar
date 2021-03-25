@@ -10,7 +10,7 @@ class ActivityInterface {
 
     interface DialogViewer {
         fun showPermissionDialog(permissions: List<CalendarPermission>)
-        fun showAccountsDialog(accounts: ArrayList<String>)
+        fun showAccountsDialog(accounts: Array<String>)
         fun showNoAccountsDialog()
     }
 }

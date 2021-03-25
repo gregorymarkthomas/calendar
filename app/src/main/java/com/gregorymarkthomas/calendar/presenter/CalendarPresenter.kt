@@ -51,7 +51,7 @@ class CalendarPresenter(private val view: CalendarViewInterface,
                                     if(accounts.isEmpty())
                                         dialogViewer.showNoAccountsDialog()
                                     else
-                                        dialogViewer.showAccountsDialog(toAccountNameArray(accounts))
+                                        dialogViewer.showAccountsDialog(toArray(accounts))
                                 }
                             })
                         }
@@ -84,7 +84,8 @@ class CalendarPresenter(private val view: CalendarViewInterface,
         )
     }
 
-    private fun toAccountNameArray(accounts: List<AppAccount>): ArrayList<String> {
-        return accounts.map { it.name } as ArrayList<String>;
+    private fun toArray(accounts: List<AppAccount>): Array<String> {
+        return accounts.map { it.name }.toTypedArray()
     }
+
 }
