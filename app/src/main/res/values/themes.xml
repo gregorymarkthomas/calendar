@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.MaterialComponents.DayNight" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/blue_purple</item>
+    <style name="Theme.Calendar.DayNight" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- MaterialComponents -->
+        <item name="colorPrimary">@color/pink_hot</item>
+        <item name="colorPrimaryVariant">@color/pink_hot</item>
+        <item name="colorOnPrimary">@color/pink_hot</item>
+        <item name="colorSecondary">@color/pink_hot</item>
+        <item name="colorSecondaryVariant">@color/pink_hot</item>
+        <item name="colorOnSecondary">@color/pink_hot</item>
+        <item name="colorError">@color/pink_hot</item>
+        <item name="colorOnError">@color/pink_hot</item>
+        <item name="colorSurface">@color/pink_hot</item>
+        <item name="colorOnSurface">@color/pink_hot</item>
+        <item name="android:colorBackground">@color/green</item>
+        <item name="colorOnBackground">@color/pink_hot</item>
+
+        <!-- AppCompat -->
         <item name="colorPrimaryDark">@color/blue_purple_dark</item>
         <item name="colorAccent">@color/pink_hot</item>
         <item name="android:textColorPrimary">@color/grey_dark</item>
+        <item name="colorControlActivated">@color/blue_purple</item>
+        <item name="colorControlHighlight">@color/pink_hot</item>
+        <item name="colorButtonNormal">@color/white_off</item>
     </style>
 </resources>
