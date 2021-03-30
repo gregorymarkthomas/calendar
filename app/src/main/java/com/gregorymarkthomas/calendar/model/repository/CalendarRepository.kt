@@ -1,27 +1,15 @@
 package com.gregorymarkthomas.calendar.model.repository
 
 import com.gregorymarkthomas.calendar.model.*
-import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 
-class CalendarRepository(private val contentResolver: Resolver) {
-
-    fun getCalendars(accountName: String, callback: ModelCallback.GetCalendarsCallback) {
-        callback.onGetCalendars(CalendarRetriever(contentResolver).get(accountName))
-    }
+interface CalendarRepository {
+    fun getCalendars(accountName: String, callback: ModelCallback.GetCalendarsCallback)
 
     /**
      * This function retrieves the Days that (could) contain Events. The inputs are used to retrieve a span of days in a month and year.
      * This needs to take the CalendarProvider calendar data (via the cursor) and convert it into a list of the app's 'AppDay' objects
      */
-    fun getEvents(accountName: String, fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, callback: ModelCallback.GetEventsCallback, calendarsToShow: IntArray) {
-        callback.onGetEvents(CalendarEventRetriever(contentResolver).get(accountName, fromDayInMonth, month, year, specifiedNoOfDays, calendarsToShow))
-    }
-
-    fun getAccounts(callback: ModelCallback.GetAccountsCallback) {
-        callback.onGetAccounts(AccountRetriever(contentResolver).getAvailable())
-    }
-
-    fun getAccount(accountName: String, callback: ModelCallback.GetAccountCallback) {
-        callback.onGetAccount(AccountRetriever(contentResolver).get(accountName))
-    }
+    fun getEvents(properties: GetEventProperties, callback: ModelCallback.GetEventsCallback)
+    fun getAccounts(callback: ModelCallback.GetAccountsCallback)
+    fun getAccount(accountName: String, callback: ModelCallback.GetAccountCallback)
 }

@@ -1,26 +1,26 @@
 package com.gregorymarkthomas.calendar.model
 
+import com.gregorymarkthomas.calendar.mock.MockCalendarRepository
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
-import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
-import com.gregorymarkthomas.calendar.util.CalendarHelper
 import io.mockk.clearMocks
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
 import org.junit.jupiter.api.BeforeEach
-import java.util.*
 
 class ModelTest {
 
-    private val calendarRepo: CalendarRepository = mockk()
+    private val calendarRepo = MockCalendarRepository()
     private val accountRepo: AccountRepository = mockk()
     private val calendarVisibilityRepo: CalendarVisibilityRepository = mockk()
+    private val getEventsProperties: GetEventProperties = mockk()
+    private val getEventsCallback: ModelCallback.GetEventsCallback = mockk()
 
 
     @BeforeEach
     fun init() {
-        clearMocks(calendarRepo, accountRepo, calendarVisibilityRepo)
+        clearMocks(accountRepo, calendarVisibilityRepo, getEventsProperties, getEventsCallback)
     }
 
     @Test
@@ -28,9 +28,9 @@ class ModelTest {
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
 
         // when
-        model.getEvents()
+        model.getEvents(getEventsProperties, getEventsCallback)
 
         // then
-        verify { calendarRepo.getEvents() }
+        verify { calendarRepo.getEvents(getEventsProperties, getEventsCallback) }
     }
 }

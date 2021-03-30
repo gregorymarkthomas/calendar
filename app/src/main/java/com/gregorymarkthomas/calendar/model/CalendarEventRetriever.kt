@@ -28,15 +28,15 @@ class CalendarEventRetriever(resolver: Resolver): CalendarResolverQuery(resolver
      * We used to do it where we would get ALL events and then re-calculate which events go with which AppDay.
      * But this is much simpler.
      */
-    fun get(accountName: String, fromDayInMonth: Int, month: Int, year: Int, specifiedNoOfDays: Int, calendarsToShow: IntArray): List<AppDay> {
+    fun get(properties: GetEventProperties): List<AppDay> {
         val days = mutableListOf<AppDay>()
-        for(i in fromDayInMonth..fromDayInMonth + specifiedNoOfDays) {
-            val clause = getWhereClause(i, month, year, 1, calendarsToShow)
-            val cursor = query(accountName, clause)
+        for(i in properties.dayInMonth..(properties.dayInMonth + properties.numberOfDays)) {
+            val clause = getWhereClause(i, properties.month, properties.year, 1, properties.calendarsToShow)
+            val cursor = query(properties.accountName, clause)
             if(cursor != null) {
                 val events = getEvents(cursor)
                 cursor.close()
-                days.add(AppDay(i, month, year, events))
+                days.add(AppDay(i, properties.month, properties.year, events))
             } else {
                 Log.e(tag, "Cursor is null")
             }

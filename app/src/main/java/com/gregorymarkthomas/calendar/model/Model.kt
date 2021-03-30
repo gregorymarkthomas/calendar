@@ -1,8 +1,8 @@
 package com.gregorymarkthomas.calendar.model
 
-import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
+import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
 import java.util.*
 
 class Model(private val calendarRepo: CalendarRepository,
@@ -14,8 +14,8 @@ class Model(private val calendarRepo: CalendarRepository,
         return Date()
     }
 
-    override fun getEvents(accountName: String, dayInMonth: Int, month: Int, year: Int, numberOfDays: Int, callback: ModelCallback.GetEventsCallback, calendarsToShow: IntArray) {
-        calendarRepo.getEvents(accountName, dayInMonth, month, year, numberOfDays, callback, calendarsToShow)
+    override fun getEvents(properties: GetEventProperties, callback: ModelCallback.GetEventsCallback) {
+        calendarRepo.getEvents(properties, callback)
     }
 
     override fun getCalendars(accountName: String, callback: ModelCallback.GetCalendarsCallback) {

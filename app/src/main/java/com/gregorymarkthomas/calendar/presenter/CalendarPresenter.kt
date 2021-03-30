@@ -41,7 +41,8 @@ class CalendarPresenter(private val view: CalendarViewInterface,
                 model.getSavedAccount(object: ModelCallback.GetAccountCallback {
                     override fun onGetAccount(account: AppAccount?) {
                         if(account != null) {
-                            model.getEvents(account.name, 1, month, year, CalendarHelper.getDaysInMonth(month, year), object : ModelCallback.GetEventsCallback {
+                            val properties = GetEventProperties(account.name, 1, month, year, CalendarHelper.getDaysInMonth(month, year))
+                            model.getEvents(properties, object : ModelCallback.GetEventsCallback {
                                 override fun onGetEvents(days: List<AppDay>) {
                                     view.showDates(days)
                                 }

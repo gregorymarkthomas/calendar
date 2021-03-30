@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.ViewTreeObserver
 import android.widget.ListView
 import android.widget.Toast
@@ -18,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
-import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
+import com.gregorymarkthomas.calendar.model.repository.AndroidCalendarRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
 import com.gregorymarkthomas.calendar.model.repository.SharedPrefsBackendRepository
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
@@ -115,7 +114,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val model = Model(CalendarRepository(this@MainActivity),
+                val model = Model(AndroidCalendarRepository(this@MainActivity),
                         AccountRepository(SharedPrefsBackendRepository(this@MainActivity)),
                         CalendarVisibilityRepository(SharedPrefsBackendRepository(this@MainActivity))
                 )
