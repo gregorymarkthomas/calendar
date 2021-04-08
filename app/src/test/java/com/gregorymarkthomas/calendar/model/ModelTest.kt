@@ -37,4 +37,17 @@ class ModelTest {
         verify { calendarRepo.getEvents(getEventsProperties, getEventsCallback) }
     }
 
+    @Test
+    fun `get calendars from calendar repository`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+        val callback = mockk<ModelCallback.GetCalendarsCallback>()
+
+        // when
+        val accountName = "mock"
+        model.getCalendars(accountName, callback)
+
+        // then
+        verify { calendarRepo.getCalendars(accountName, callback) }
+    }
+
 }
