@@ -1,6 +1,7 @@
 package com.gregorymarkthomas.calendar.model
 
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
+import com.gregorymarkthomas.calendar.model.repository.BackendRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityRepository
 import io.mockk.clearMocks
@@ -23,17 +24,6 @@ class ModelTest {
     @BeforeEach
     fun init() {
         clearMocks(calendarRepo, accountRepo, calendarVisibilityRepo)
-    }
-
-    @Test
-    fun `get today's date from system`() {
-        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
-
-        // when
-        model.getTodayDate()
-
-        // then
-        verify { Date() }
     }
 
     @Test
@@ -62,4 +52,43 @@ class ModelTest {
         verify { calendarRepo.getCalendars(accountName, callback) }
     }
 
+    @Test
+    fun `get available accounts from calendar repository`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+        val callback = mockk<ModelCallback.GetAccountsCallback>()
+
+        // when
+        model.getAvailableAccounts(callback)
+
+        // then
+        verify { calendarRepo.getAccounts(callback) }
+    }
+
+    @Test
+    fun `get single account from calendar repository`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+        val callback = mockk<ModelCallback.GetAccountCallback>()
+
+        // when
+        val accountName = "mock"
+        model.getAccount(accountName, callback)
+
+        // then
+        verify { calendarRepo.getAccount(accountName, callback) }
+    }
+
+    @Test
+    fun `get saved account`() {
+        val accountName = "mock"
+        val accountRepo = AccountRepository(mockk<BackendRepository>())
+        accountRepo.setData(accountName)
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+        val callback = mockk<ModelCallback.GetAccountCallback>()
+
+        // when
+        model.getSavedAccount(callback)
+
+        // then
+        verify { calendarRepo.getAccount(accountName, callback) }
+    }
 }
