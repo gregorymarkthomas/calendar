@@ -91,4 +91,51 @@ class ModelTest {
         // then
         verify { calendarRepo.getAccount(accountName, callback) }
     }
+
+    @Test
+    fun `get null account`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+        val callback = mockk<ModelCallback.GetAccountCallback>()
+
+        // when
+        model.getSavedAccount(callback)
+
+        // then
+        verify { callback.onGetAccount(null) }
+    }
+
+    @Test
+    fun `set account to account repository`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+
+        // when
+        val accountName = "mock"
+        model.setAccount(accountName)
+
+        // then
+        verify { accountRepo.setData(accountName) }
+    }
+
+    @Test
+    fun `get visible calendars from calendar visibility repository`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+
+        // when
+        model.getVisibleCalendars()
+
+        // then
+        verify { calendarVisibilityRepo.getData() }
+    }
+
+    @Test
+    fun `set visible calendars to calendar visibility repository`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+
+        // when
+        val visibleCalendars = intArrayOf()
+        model.setVisibleCalendars(visibleCalendars)
+
+        // then
+        verify { calendarVisibilityRepo.setData(visibleCalendars) }
+    }
 }
