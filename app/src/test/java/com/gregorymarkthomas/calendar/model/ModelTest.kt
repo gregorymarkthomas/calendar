@@ -8,6 +8,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
 import org.junit.jupiter.api.BeforeEach
+import java.util.*
 
 class ModelTest {
 
@@ -22,6 +23,17 @@ class ModelTest {
     @BeforeEach
     fun init() {
         clearMocks(calendarRepo, accountRepo, calendarVisibilityRepo)
+    }
+
+    @Test
+    fun `get today's date from system`() {
+        val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+
+        // when
+        model.getTodayDate()
+
+        // then
+        verify { Date() }
     }
 
     @Test

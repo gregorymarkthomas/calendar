@@ -10,7 +10,6 @@ class Model(private val calendarRepo: CalendarRepository,
             private val calendarVisibilityRepo: CalendarVisibilityRepository): ModelInterface {
 
     override fun getTodayDate(): Date {
-        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         return Date()
     }
 
