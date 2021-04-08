@@ -18,23 +18,23 @@ class ModelTest {
     private val calendarRepo = mockk<CalendarRepository>(relaxUnitFun=true)
     private val accountRepo: AccountRepository = mockk()
     private val calendarVisibilityRepo: CalendarVisibilityRepository = mockk()
-    private val getEventsProperties = mockk<GetEventProperties>()
-    private val getEventsCallback = mockk<ModelCallback.GetEventsCallback>()
 
     @BeforeEach
     fun init() {
-        clearMocks(accountRepo, calendarVisibilityRepo, getEventsProperties)
+        clearMocks(calendarRepo, accountRepo, calendarVisibilityRepo)
     }
 
     @Test
     fun `get events from calendar repository`() {
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
+        val callback = mockk<ModelCallback.GetEventsCallback>()
+        val properties = mockk<GetEventProperties>()
 
         // when
-        model.getEvents(getEventsProperties, getEventsCallback)
+        model.getEvents(properties, callback)
 
         // then
-        verify { calendarRepo.getEvents(getEventsProperties, getEventsCallback) }
+        verify { calendarRepo.getEvents(properties, callback) }
     }
 
     @Test
