@@ -129,6 +129,7 @@ class ModelTest {
 
     @Test
     fun `set visible calendars to calendar visibility repository`() {
+        val calendarVisibilityRepo: CalendarVisibilityRepository = mockk(relaxUnitFun = true)
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
 
         // when
