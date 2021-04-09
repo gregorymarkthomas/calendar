@@ -106,6 +106,7 @@ class ModelTest {
 
     @Test
     fun `set account to account repository`() {
+        val accountRepo: AccountRepository = mockk(relaxUnitFun = true)
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
 
         // when
