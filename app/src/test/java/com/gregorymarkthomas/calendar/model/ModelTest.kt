@@ -1,5 +1,6 @@
 package com.gregorymarkthomas.calendar.model
 
+import com.gregorymarkthomas.calendar.mock.MockBackendRepository
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
 import com.gregorymarkthomas.calendar.model.repository.BackendRepository
 import com.gregorymarkthomas.calendar.model.repository.CalendarRepository
@@ -80,7 +81,8 @@ class ModelTest {
     @Test
     fun `get saved account`() {
         val accountName = "mock"
-        val accountRepo = AccountRepository(mockk<BackendRepository>())
+        val backendRepository = MockBackendRepository()
+        val accountRepo = AccountRepository(backendRepository)
         accountRepo.setData(accountName)
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
         val callback = mockk<ModelCallback.GetAccountCallback>()
@@ -94,8 +96,9 @@ class ModelTest {
 
     @Test
     fun `get null account`() {
+        val accountRepo = AccountRepository(MockBackendRepository())
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
-        val callback = mockk<ModelCallback.GetAccountCallback>()
+        val callback = mockk<ModelCallback.GetAccountCallback>(relaxUnitFun = true)
 
         // when
         model.getSavedAccount(callback)
@@ -117,8 +120,13 @@ class ModelTest {
         verify { accountRepo.setData(accountName) }
     }
 
+    /**
+    * TODO: CalendarVisibilityRepository.parseCommaSeparatedStringToIntArray() string-to-int array delimits one-too-many ints
+    * */
     @Test
     fun `get visible calendars from calendar visibility repository`() {
+        val calendarVisibilityRepo = CalendarVisibilityRepository(MockBackendRepository())
+        calendarVisibilityRepo.setData(intArrayOf(1,2,3))
         val model = Model(calendarRepo, accountRepo, calendarVisibilityRepo)
 
         // when

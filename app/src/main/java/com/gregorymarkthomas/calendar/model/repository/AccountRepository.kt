@@ -2,7 +2,7 @@ package com.gregorymarkthomas.calendar.model.repository
 
 import com.gregorymarkthomas.calendar.model.interfaces.Option
 
-class AccountRepository (private val backend: BackendRepository): Option.StringOption {
+class AccountRepository(private val backend: BackendRepository): Option.StringOption {
 
     private val key = "account_key"
 
