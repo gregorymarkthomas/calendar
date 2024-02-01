@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gregorymarkthomas.calendar.R
+import com.gregorymarkthomas.calendar.databinding.EventBlockViewBinding
 import com.gregorymarkthomas.calendar.model.AppEvent
-import kotlinx.android.synthetic.main.event_block_view.view.*
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -15,6 +15,8 @@ import kotlin.math.roundToInt
  * Its colourResource depends on the AppCalendar the AppEvent is under.
  */
 class EventBlockView: LinearLayout {
+    private lateinit var binding: EventBlockViewBinding
+
     constructor(context: Context): super(context) {
         inflate()
     }
@@ -45,9 +47,9 @@ class EventBlockView: LinearLayout {
     /********** private */
     private fun inflate() {
         inflate(context, R.layout.event_block_view, this)
-
         /** Expand 'this' LinearLayout to use all of the usable space. **/
         layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        binding = EventBlockViewBinding.bind(this)
     }
 
     // TODO: is Float correct here?
@@ -58,6 +60,6 @@ class EventBlockView: LinearLayout {
     }
 
     private fun setName(name: String) {
-        eventTitle.text = name
+        binding.eventTitle.text = name
     }
 }

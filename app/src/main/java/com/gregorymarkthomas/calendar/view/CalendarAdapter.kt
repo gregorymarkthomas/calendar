@@ -4,9 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.gregorymarkthomas.calendar.R
+import com.gregorymarkthomas.calendar.databinding.DayGridItemBinding
 import com.gregorymarkthomas.calendar.model.AppDay
-import kotlinx.android.synthetic.main.day_grid_item.view.*
 
 /** 'days' is empty by default **/
 class CalendarAdapter(var callback: CalendarAdapterInterface,
@@ -42,10 +43,11 @@ class CalendarAdapter(var callback: CalendarAdapterInterface,
     inner class ViewHolder(itemView: View, private val dayViewHeight: Int, private val showLabels: Boolean): RecyclerView.ViewHolder(itemView) {
         /** 'with' keeps 'itemView' as the context, meaning we do not have to keep calling itemView **/
         fun bind(day: AppDay) = with(itemView) {
+            val binding = DayGridItemBinding.bind(itemView)
             tag = day.dayOfMonth
-            dayNumberView.text = "${day.dayOfMonth}"
-            eventContainerView.initialise(dayLayout, dayViewHeight, showLabels)
-            hourLabelsView.initialise(dayLayout, dayViewHeight, showLabels)
+            binding.dayNumberView.text = "${day.dayOfMonth}"
+            binding.eventContainerView.initialise(binding.dayLayout, dayViewHeight, showLabels)
+            binding.hourLabelsView.initialise(binding.dayLayout, dayViewHeight, showLabels)
             setEventsViews(day)
         }
 

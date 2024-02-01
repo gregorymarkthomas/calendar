@@ -36,7 +36,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         Resolver, GetSharedPreferencesInterface, AndroidContextInterface, ActivityInterface.PermissionChecker, ActivityInterface.DialogViewer {
 
     private val TAG = "MainActivity"
-    private lateinit var main_content: CoordinatorLayout
+    private lateinit var mainContent: CoordinatorLayout
     private lateinit var backstack: BackStack
 
     companion object {
@@ -53,10 +53,10 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val binding = ActivityMainBinding.inflate(layoutInflater)
-        main_content = binding.root
-        main_content.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        mainContent = binding.root
+        mainContent.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                main_content.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                mainContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 backstack = BackStack(this@MainActivity, getInitialView())
             }
         })
@@ -112,7 +112,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
      * When the BackStackView has been added to MainActivity, we can say it has been initialised.
      */
     override fun onViewChanged(backstackView: BackStackView) {
-        main_content.removeAllViews()
+        mainContent.removeAllViews()
         val view = backstackView.initialise(this)
 
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
@@ -127,7 +127,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         }
 
         view.viewTreeObserver.addOnGlobalLayoutListener(listener)
-        main_content.addView(view, main_content.width, main_content.height)
+        mainContent.addView(view, mainContent.width, mainContent.height)
     }
 
     override fun isPermissionGranted(permission: CalendarPermission): Boolean {

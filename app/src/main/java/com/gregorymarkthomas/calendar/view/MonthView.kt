@@ -3,6 +3,7 @@ package com.gregorymarkthomas.calendar.view
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
 import com.gregorymarkthomas.calendar.R
+import com.gregorymarkthomas.calendar.databinding.MonthViewBinding
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.model.ModelInterface
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
@@ -10,7 +11,6 @@ import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
-import kotlinx.android.synthetic.main.month_view.view.*
 import java.util.*
 
 class MonthView(private val date: Date,
@@ -18,6 +18,7 @@ class MonthView(private val date: Date,
                 private val dialogViewer: ActivityInterface.DialogViewer): BackStackView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     private lateinit var presenter: CalendarPresenterInterface
     private lateinit var adapter: CalendarAdapter
+    private lateinit var binding: MonthViewBinding
 
     /********** public */
     override fun getTag(): String = "MonthView"
@@ -34,6 +35,8 @@ class MonthView(private val date: Date,
         setupTodayButton()
         setupAdapter(context)
 
+        binding = MonthViewBinding.bind(view!!.rootView)
+
         /** This should be last. **/
         this.presenter = CalendarPresenter(this, model, backstack, permissionChecker, dialogViewer, date)
     }
@@ -44,7 +47,7 @@ class MonthView(private val date: Date,
     }
 
     override fun setSelectedDateView(dayOfMonth: Int, monthOfYear: String, year: Int) {
-        view!!.dateTextView.text = "$monthOfYear $year"
+        binding.dateTextView.text = "$monthOfYear $year"
     }
 
     override fun onClick(v: View?) {
@@ -60,16 +63,16 @@ class MonthView(private val date: Date,
 
     /********** private */
     private fun setupTodayButton() {
-        view!!.viewTodayButton.setOnClickListener(this)
+        binding.viewTodayButton.setOnClickListener(this)
     }
 
     private fun setupAdapter(context: AndroidContextInterface) {
         val columnCount = 7
-        view!!.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), columnCount)
-        adapter = CalendarAdapter(this, view!!.calendarRecyclerView.measuredHeight, columnCount,false)
-        view!!.calendarRecyclerView.adapter = adapter
+        binding.calendarRecyclerView.layoutManager = GridLayoutManager(context.getContext(), columnCount)
+        adapter = CalendarAdapter(this, binding.calendarRecyclerView.measuredHeight, columnCount,false)
+        binding.calendarRecyclerView.adapter = adapter
         // TODO() - do we need this?
-        view!!.calendarRecyclerView.setHasFixedSize(true)
+        binding.calendarRecyclerView.setHasFixedSize(true)
     }
 
 }
