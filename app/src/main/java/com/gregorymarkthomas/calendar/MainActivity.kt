@@ -11,9 +11,11 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.gregorymarkthomas.calendar.databinding.ActivityMainBinding
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.model.repository.AccountRepository
@@ -34,6 +36,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         Resolver, GetSharedPreferencesInterface, AndroidContextInterface, ActivityInterface.PermissionChecker, ActivityInterface.DialogViewer {
 
     private val TAG = "MainActivity"
+    private lateinit var main_content: CoordinatorLayout
     private lateinit var backstack: BackStack
 
     companion object {
@@ -49,7 +52,8 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        main_content = binding.root
         main_content.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 main_content.viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -67,6 +71,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         backstack.goBack()
     }
 
@@ -167,6 +172,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
      */
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             MULTIPLE_PERMISSIONS -> {
                 if ((grantResults.isNotEmpty() &&
