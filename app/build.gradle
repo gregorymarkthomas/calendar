@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 34
+    compileSdk 34
     defaultConfig {
         applicationId "com.gregorymarkthomas.calendar"
         minSdkVersion 28
