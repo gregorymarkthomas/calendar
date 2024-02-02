@@ -1,9 +1,10 @@
 package com.gregorymarkthomas.calendar.view
 
+import com.gregorymarkthomas.backstack.interfaces.AndroidContextInterface
+import com.gregorymarkthomas.backstack.interfaces.BackStackInterface
+import com.gregorymarkthomas.backstack.interfaces.ModelInterface
+import com.gregorymarkthomas.backstack.view.BackStackView
 import com.gregorymarkthomas.calendar.R
-import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 
 class PermissionDeniedView(): BackStackView() {
 

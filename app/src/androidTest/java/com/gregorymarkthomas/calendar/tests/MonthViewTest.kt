@@ -9,11 +9,9 @@ import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.rules.MainActivityTestRule
 import com.gregorymarkthomas.calendar.util.CalendarHelper
 import com.gregorymarkthomas.calendar.view.MonthView
-import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.text.DateFormatSymbols
 import java.util.*
 
 /**

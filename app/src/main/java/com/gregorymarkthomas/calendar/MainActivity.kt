@@ -11,10 +11,14 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.gregorymarkthomas.backstack.BackStack
+import com.gregorymarkthomas.backstack.interfaces.AndroidContextInterface
+import com.gregorymarkthomas.backstack.interfaces.BackStackCallback
+import com.gregorymarkthomas.backstack.interfaces.BackStackInterface
+import com.gregorymarkthomas.backstack.view.BackStackView
 import com.gregorymarkthomas.calendar.databinding.ActivityMainBinding
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
@@ -24,19 +28,19 @@ import com.gregorymarkthomas.calendar.model.repository.CalendarVisibilityReposit
 import com.gregorymarkthomas.calendar.model.repository.SharedPrefsBackendRepository
 import com.gregorymarkthomas.calendar.presenter.CalendarPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
-import com.gregorymarkthomas.calendar.util.backstack.BackStack
-import com.gregorymarkthomas.calendar.util.backstack.BackStackCallback
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
 import com.gregorymarkthomas.calendar.util.interfaces.GetSharedPreferencesInterface
-import com.gregorymarkthomas.calendar.view.*
-import java.util.*
+import com.gregorymarkthomas.calendar.view.DayView
+import com.gregorymarkthomas.calendar.view.MonthView
+import com.gregorymarkthomas.calendar.view.NoAccountsDialog
+import com.gregorymarkthomas.calendar.view.PermissionDeniedView
+import com.gregorymarkthomas.calendar.view.WeekView
+import java.util.Date
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         Resolver, GetSharedPreferencesInterface, AndroidContextInterface, ActivityInterface.PermissionChecker, ActivityInterface.DialogViewer {
 
     private val TAG = "MainActivity"
-    private lateinit var mainContent: CoordinatorLayout
+    private lateinit var binding: ActivityMainBinding
     private lateinit var backstack: BackStack
 
     companion object {
@@ -52,14 +56,8 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        mainContent = binding.root
-        mainContent.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                mainContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                backstack = BackStack(this@MainActivity, getInitialView())
-            }
-        })
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        backstack = BackStack(this@MainActivity, getInitialView())
     }
 
     override fun onDestroy() {
@@ -112,7 +110,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
      * When the BackStackView has been added to MainActivity, we can say it has been initialised.
      */
     override fun onViewChanged(backstackView: BackStackView) {
-        mainContent.removeAllViews()
+        binding.mainContent.removeAllViews()
         val view = backstackView.initialise(this)
 
         val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
@@ -127,7 +125,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
         }
 
         view.viewTreeObserver.addOnGlobalLayoutListener(listener)
-        mainContent.addView(view, mainContent.width, mainContent.height)
+        binding.mainContent.addView(view, binding.mainContent.width, binding.mainContent.height)
     }
 
     override fun isPermissionGranted(permission: CalendarPermission): Boolean {

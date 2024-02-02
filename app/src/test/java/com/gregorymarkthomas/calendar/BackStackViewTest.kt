@@ -1,12 +1,12 @@
 package com.gregorymarkthomas.calendar
 
 import android.os.Build
+import com.gregorymarkthomas.backstack.view.BackStackView
+import com.gregorymarkthomas.calendar.databinding.MonthViewBinding
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.CalendarHelper
-import com.gregorymarkthomas.calendar.view.BackStackView
 import com.gregorymarkthomas.calendar.view.MonthView
 import io.mockk.mockk
-import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,6 +51,7 @@ class BackStackViewTest {
 
     @Test
     fun reused_view_with_new_input_data_has_new_data() {
+        val binding = MonthViewBinding.bind(view.view!!.rootView)
 
         /** Check view has today in its inner view - 'old' is the same default date for the View **/
         val old = Date()
@@ -59,7 +60,7 @@ class BackStackViewTest {
         val oldDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val oldMonthOfYear = CalendarHelper.getMonthString(calendar.get(Calendar.MONTH))
         val oldYear = calendar.get(Calendar.YEAR)
-        assertEquals((view as MonthView).view!!.dateTextView.text, "$oldDayOfMonth $oldMonthOfYear $oldYear")
+        assertEquals(binding.dateTextView.text, "$oldDayOfMonth $oldMonthOfYear $oldYear")
 
         /** Create old date **/
         val new = Date(0)
@@ -72,6 +73,6 @@ class BackStackViewTest {
         val newDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val newMonthOfYear = CalendarHelper.getMonthString(calendar.get(Calendar.MONTH))
         val newYear = calendar.get(Calendar.YEAR)
-        assertEquals((view as MonthView).view!!.dateTextView.text, "$newDayOfMonth $newMonthOfYear $newYear")
+        assertEquals(binding.dateTextView.text, "$newDayOfMonth $newMonthOfYear $newYear")
     }
 }

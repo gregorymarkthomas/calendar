@@ -7,7 +7,7 @@ import java.util.*
 
 class Model(private val calendarRepo: CalendarRepository,
             private val accountRepo: AccountRepository,
-            private val calendarVisibilityRepo: CalendarVisibilityRepository): ModelInterface {
+            private val calendarVisibilityRepo: CalendarVisibilityRepository): CalendarModelInterface {
 
     override fun getTodayDate(): Date {
         return Date()

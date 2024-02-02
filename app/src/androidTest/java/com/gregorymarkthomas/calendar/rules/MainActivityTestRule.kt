@@ -5,8 +5,8 @@ import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import android.util.Log
+import com.gregorymarkthomas.backstack.view.BackStackView
 import com.gregorymarkthomas.calendar.MainActivity
-import com.gregorymarkthomas.calendar.view.BackStackView
 
 class MainActivityTestRule(var viewClass: Class<out BackStackView>?): ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
     val TAG = "MainActivityTestRule"

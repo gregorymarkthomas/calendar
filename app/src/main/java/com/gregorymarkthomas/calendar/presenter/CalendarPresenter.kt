@@ -1,12 +1,12 @@
 package com.gregorymarkthomas.calendar.presenter
 
 import android.Manifest
+import com.gregorymarkthomas.backstack.interfaces.BackStackInterface
 import com.gregorymarkthomas.calendar.ActivityCallback
 import com.gregorymarkthomas.calendar.model.*
 import com.gregorymarkthomas.calendar.model.interfaces.NeedsPermission
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
 import com.gregorymarkthomas.calendar.util.CalendarHelper
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
 import com.gregorymarkthomas.calendar.view.CalendarViewInterface
 import com.gregorymarkthomas.calendar.view.MonthView
 import java.util.*
@@ -17,7 +17,7 @@ import java.util.*
  * TODO() - How do we deal with timezones of Events?
  */
 class CalendarPresenter(private val view: CalendarViewInterface,
-                        private val model: ModelInterface,
+                        private val model: CalendarModelInterface,
                         private val backstack: BackStackInterface,
                         private val permissionChecker: ActivityInterface.PermissionChecker,
                         private val dialogViewer: ActivityInterface.DialogViewer,

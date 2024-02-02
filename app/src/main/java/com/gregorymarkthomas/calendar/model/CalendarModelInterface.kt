@@ -1,8 +1,9 @@
 package com.gregorymarkthomas.calendar.model
 
+import com.gregorymarkthomas.backstack.interfaces.ModelInterface
 import java.util.*
 
-interface ModelInterface {
+interface CalendarModelInterface : ModelInterface {
     fun getTodayDate(): Date
     fun getEvents(properties: GetEventProperties, callback: ModelCallback.GetEventsCallback)
     fun getCalendars(accountName: String, callback: ModelCallback.GetCalendarsCallback)

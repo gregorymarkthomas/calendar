@@ -1,9 +1,9 @@
 package com.gregorymarkthomas.calendar
 
 import android.os.Build
+import com.gregorymarkthomas.calendar.databinding.MonthViewBinding
 import com.gregorymarkthomas.calendar.model.AppDay
 import com.gregorymarkthomas.calendar.view.MonthView
-import kotlinx.android.synthetic.main.month_view.view.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,20 +26,21 @@ import kotlin.test.assertNotNull
 @RunWith(RobolectricTestRunner::class)
 @Config(maxSdk = Build.VERSION_CODES.P, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
 class MonthViewTest {
-
-    lateinit var view: MonthView
+    private lateinit var view: MonthView
+    private lateinit var binding: MonthViewBinding
 
     @Before
     fun setUp() {
-        var activity = Robolectric.setupActivity(MainActivity::class.java)
+        val activity = Robolectric.setupActivity(MainActivity::class.java)
         view = activity.getMostRecentView() as MonthView
+        binding = MonthViewBinding.bind(view.view!!.rootView)
     }
 
     @Test
     fun presenter_attached_to_view() {
-        assertNotNull(view.view)
-        assertNotNull(view.view!!.dateTextView)
-        assertNotEquals("", view.view!!.dateTextView.text)
+        assertNotNull(binding)
+        assertNotNull(binding.dateTextView)
+        assertNotEquals("", binding.dateTextView.text)
     }
 
     @Test
@@ -56,6 +57,6 @@ class MonthViewTest {
 
         view.showDates(days)
 
-        assertEquals(30, view.view!!.calendarRecyclerView.adapter!!.itemCount)
+        assertEquals(30, binding.calendarRecyclerView.adapter!!.itemCount)
     }
 }

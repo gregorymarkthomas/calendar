@@ -1,11 +1,13 @@
 package com.gregorymarkthomas.calendar.view
 
 import android.view.View
+import com.gregorymarkthomas.backstack.interfaces.AndroidContextInterface
+import com.gregorymarkthomas.backstack.interfaces.BackStackInterface
+import com.gregorymarkthomas.backstack.interfaces.ModelInterface
+import com.gregorymarkthomas.backstack.view.BackStackView
 import com.gregorymarkthomas.calendar.model.AppDay
-import com.gregorymarkthomas.calendar.model.ModelInterface
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
-import java.util.*
+import com.gregorymarkthomas.calendar.model.CalendarModelInterface
+import java.util.Date
 
 class DayView(private val date: Date): BackStackView(), CalendarViewInterface, CalendarAdapter.CalendarAdapterInterface, View.OnClickListener {
     override fun getTag(): String {

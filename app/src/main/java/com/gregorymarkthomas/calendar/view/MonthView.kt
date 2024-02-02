@@ -1,17 +1,19 @@
 package com.gregorymarkthomas.calendar.view
 
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import com.gregorymarkthomas.backstack.interfaces.AndroidContextInterface
+import com.gregorymarkthomas.backstack.interfaces.BackStackInterface
+import com.gregorymarkthomas.backstack.interfaces.ModelInterface
+import com.gregorymarkthomas.backstack.view.BackStackView
 import com.gregorymarkthomas.calendar.R
 import com.gregorymarkthomas.calendar.databinding.MonthViewBinding
 import com.gregorymarkthomas.calendar.model.AppDay
-import com.gregorymarkthomas.calendar.model.ModelInterface
+import com.gregorymarkthomas.calendar.model.CalendarModelInterface
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenter
 import com.gregorymarkthomas.calendar.presenter.CalendarPresenterInterface
 import com.gregorymarkthomas.calendar.presenter.contracts.ActivityInterface
-import com.gregorymarkthomas.calendar.util.backstack.BackStackInterface
-import com.gregorymarkthomas.calendar.util.interfaces.AndroidContextInterface
-import java.util.*
+import java.util.Date
 
 class MonthView(private val date: Date,
                 private val permissionChecker: ActivityInterface.PermissionChecker,
@@ -38,7 +40,8 @@ class MonthView(private val date: Date,
         binding = MonthViewBinding.bind(view!!.rootView)
 
         /** This should be last. **/
-        this.presenter = CalendarPresenter(this, model, backstack, permissionChecker, dialogViewer, date)
+        this.presenter = CalendarPresenter(this,
+            model as CalendarModelInterface, backstack, permissionChecker, dialogViewer, date)
     }
 
     override fun showDates(days: List<AppDay>) {
