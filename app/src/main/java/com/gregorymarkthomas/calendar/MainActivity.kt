@@ -2,8 +2,10 @@ package com.gregorymarkthomas.calendar
 
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.ViewTreeObserver
@@ -34,6 +36,7 @@ import com.gregorymarkthomas.calendar.view.MonthView
 import com.gregorymarkthomas.calendar.view.NoAccountsDialog
 import com.gregorymarkthomas.calendar.view.PermissionDeniedView
 import com.gregorymarkthomas.calendar.view.WeekView
+import java.io.Serializable
 import java.util.Date
 
 class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
@@ -190,12 +193,22 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
 
     /********** private */
     private fun getInitialView(): BackStackView {
-        val viewClass: Class<out BackStackView>? = intent.getSerializableExtra(INITIAL_VIEW_EXTRA) as Class<out BackStackView>?
+        val viewClass: Class<BackStackView>? = intent.serializable(INITIAL_VIEW_EXTRA)
         val today = Date()
         return when (viewClass) {
             DayView::class.java -> DayView(today)
             WeekView::class.java -> WeekView(today)
             else -> MonthView(today, this@MainActivity, this@MainActivity)
         }
+    }
+
+    inline fun <reified T : Serializable> Bundle.serializable(key: String): T? = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializable(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getSerializable(key) as? T
+    }
+
+    inline fun <reified T : Serializable> Intent.serializable(key: String): T? = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
     }
 }
