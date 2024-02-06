@@ -35,6 +35,10 @@ android {
         jvmTarget = '17'
     }
     namespace 'com.gregorymarkthomas.calendar'
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {

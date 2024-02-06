@@ -34,11 +34,9 @@ class MonthView(private val date: Date,
      * We want to show 7 days per row, so we need 7 columns for the adapter.
      */
     override fun onViewInitialised(backstack: BackStackInterface, model: ModelInterface, context: AndroidContextInterface) {
+        binding = MonthViewBinding.bind(view!!)
         setupTodayButton()
         setupAdapter(context)
-
-        binding = MonthViewBinding.bind(view!!.rootView)
-
         /** This should be last. **/
         this.presenter = CalendarPresenter(this,
             model as CalendarModelInterface, backstack, permissionChecker, dialogViewer, date)

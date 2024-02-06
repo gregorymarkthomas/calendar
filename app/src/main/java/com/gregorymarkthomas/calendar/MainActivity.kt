@@ -1,26 +1,20 @@
 package com.gregorymarkthomas.calendar
 
 import android.content.ContentResolver
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.ViewTreeObserver
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.gregorymarkthomas.backstack.BackStack
-import com.gregorymarkthomas.backstack.interfaces.AndroidContextInterface
-import com.gregorymarkthomas.backstack.interfaces.BackStackCallback
-import com.gregorymarkthomas.backstack.interfaces.BackStackInterface
+import com.gregorymarkthomas.backstack.interfaces.ModelInterface
 import com.gregorymarkthomas.backstack.view.BackStackView
+import com.gregorymarkthomas.backstack.view.BackstackActivity
 import com.gregorymarkthomas.calendar.databinding.ActivityMainBinding
 import com.gregorymarkthomas.calendar.model.Model
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
@@ -36,44 +30,54 @@ import com.gregorymarkthomas.calendar.view.MonthView
 import com.gregorymarkthomas.calendar.view.NoAccountsDialog
 import com.gregorymarkthomas.calendar.view.PermissionDeniedView
 import com.gregorymarkthomas.calendar.view.WeekView
-import java.io.Serializable
 import java.util.Date
 
-class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
-        Resolver, GetSharedPreferencesInterface, AndroidContextInterface, ActivityInterface.PermissionChecker, ActivityInterface.DialogViewer {
+class MainActivity: BackstackActivity(), Resolver, GetSharedPreferencesInterface,
+    ActivityInterface.PermissionChecker, ActivityInterface.DialogViewer {
 
-    private val TAG = "MainActivity"
+    private val tag = "MainActivity"
+    private lateinit var model: ModelInterface
     private lateinit var binding: ActivityMainBinding
-    private lateinit var backstack: BackStack
 
     companion object {
-        const val INITIAL_VIEW_EXTRA = "initial_view_extra"
         const val MULTIPLE_PERMISSIONS = 1
         const val accountsListDialogTag = "accounts_list_dialog_tag"
         const val noAccountsDialogTag = "no_accounts_dialog_tag"
     }
 
     /**
-     * When the MainActivity view is ready, we will attach the first BackStackView.
+     * Call to super.onCreate() is supposed to be at end.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        backstack = BackStack(this@MainActivity, getInitialView())
+        setContentView(binding.root)
+        model = Model(AndroidCalendarRepository(this@MainActivity),
+            AccountRepository(SharedPrefsBackendRepository(this@MainActivity)),
+            CalendarVisibilityRepository(SharedPrefsBackendRepository(this@MainActivity))
+        )
+        super.onCreate(savedInstanceState)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun getInitialView(): BackStackView {
+        val viewClass: Class<BackStackView>? = intent.serializable(INITIAL_VIEW_EXTRA)
+        val today = Date()
+        return when (viewClass) {
+            DayView::class.java -> DayView(today)
+            WeekView::class.java -> WeekView(today)
+            else -> MonthView(today, this@MainActivity, this@MainActivity)
+        }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+    override fun addView(view: ConstraintLayout) {
+        binding.root.addView(view)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        backstack.goBack()
+    override fun removeAllViews() {
+        binding.root.removeAllViews()
+    }
+
+    override fun getModel(): ModelInterface {
+        return model
     }
 
     override fun getPreferences(): SharedPreferences {
@@ -82,53 +86,6 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
 
     override fun get(): ContentResolver {
         return contentResolver
-    }
-
-    override fun getContext(): Context {
-        return this
-    }
-
-    /********* BackStack - these can be called by Presenters via an interface */
-    override fun goTo(view: BackStackView) {
-        backstack.goTo(view)
-    }
-
-    override fun clearTo(view: BackStackView) {
-        backstack.clearTo(view)
-    }
-
-    override fun goBack(): Boolean {
-        return backstack.goBack()
-    }
-
-    override fun getMostRecentView(): BackStackView {
-        return backstack.getMostRecentView()
-    }
-
-    override fun getCurrentViewClasses(): List<String> {
-        return backstack.getCurrentViewClasses()
-    }
-
-    /**
-     * When the BackStackView has been added to MainActivity, we can say it has been initialised.
-     */
-    override fun onViewChanged(backstackView: BackStackView) {
-        binding.mainContent.removeAllViews()
-        val view = backstackView.initialise(this)
-
-        val listener = object: ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val model = Model(AndroidCalendarRepository(this@MainActivity),
-                        AccountRepository(SharedPrefsBackendRepository(this@MainActivity)),
-                        CalendarVisibilityRepository(SharedPrefsBackendRepository(this@MainActivity))
-                )
-                backstackView.onInitialised(this@MainActivity, model, this@MainActivity)
-            }
-        }
-
-        view.viewTreeObserver.addOnGlobalLayoutListener(listener)
-        binding.mainContent.addView(view, binding.mainContent.width, binding.mainContent.height)
     }
 
     override fun isPermissionGranted(permission: CalendarPermission): Boolean {
@@ -180,7 +137,7 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
                                 grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     recreate()
                 } else {
-                    backstack.clearTo(PermissionDeniedView())
+                    clearTo(PermissionDeniedView())
                 }
                 return
             }
@@ -188,27 +145,5 @@ class MainActivity: AppCompatActivity(), BackStackInterface, BackStackCallback,
                 // Ignore all other requests.
             }
         }
-    }
-
-
-    /********** private */
-    private fun getInitialView(): BackStackView {
-        val viewClass: Class<BackStackView>? = intent.serializable(INITIAL_VIEW_EXTRA)
-        val today = Date()
-        return when (viewClass) {
-            DayView::class.java -> DayView(today)
-            WeekView::class.java -> WeekView(today)
-            else -> MonthView(today, this@MainActivity, this@MainActivity)
-        }
-    }
-
-    inline fun <reified T : Serializable> Bundle.serializable(key: String): T? = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializable(key, T::class.java)
-        else -> @Suppress("DEPRECATION") getSerializable(key) as? T
-    }
-
-    inline fun <reified T : Serializable> Intent.serializable(key: String): T? = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(key, T::class.java)
-        else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
     }
 }

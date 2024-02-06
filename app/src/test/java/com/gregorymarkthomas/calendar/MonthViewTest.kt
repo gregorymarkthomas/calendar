@@ -16,7 +16,6 @@ import kotlin.test.assertNotNull
 
 /**
  * This is considered an INTEGRATION test suite - it utilises the Activity, therefore forcing the 'real' Model
- * TODO() - Crash in Model
  * We want to shy away from Instrumented tests, if possible.
  * This is because we can effectively test each View/PresenterInterface anyway.
  * But the test below is an example that it works.
@@ -24,7 +23,7 @@ import kotlin.test.assertNotNull
  * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(maxSdk = Build.VERSION_CODES.P, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
+@Config(maxSdk = Build.VERSION_CODES.UPSIDE_DOWN_CAKE, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
 class MonthViewTest {
     private lateinit var view: MonthView
     private lateinit var binding: MonthViewBinding

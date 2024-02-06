@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import android.util.Log
 import com.gregorymarkthomas.backstack.view.BackStackView
+import com.gregorymarkthomas.backstack.view.BackstackActivity
 import com.gregorymarkthomas.calendar.MainActivity
 
 class MainActivityTestRule(var viewClass: Class<out BackStackView>?): ActivityTestRule<MainActivity>(MainActivity::class.java, true, true) {
@@ -24,7 +25,7 @@ class MainActivityTestRule(var viewClass: Class<out BackStackView>?): ActivityTe
 
     override fun getActivityIntent(): Intent? {
         var customIntent = Intent(context, MainActivity::class.java)
-        customIntent.putExtra(MainActivity.INITIAL_VIEW_EXTRA, viewClass)
+        customIntent.putExtra(BackstackActivity.INITIAL_VIEW_EXTRA, viewClass)
         return customIntent
     }
 

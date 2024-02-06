@@ -30,7 +30,7 @@ import kotlin.test.assertEquals
  * Roboelectric allows us to mock the Android code for use in JUnit tests.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(maxSdk = Build.VERSION_CODES.P, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
+@Config(maxSdk = Build.VERSION_CODES.UPSIDE_DOWN_CAKE, minSdk = Build.VERSION_CODES.P) // Value of Build.VERSION_CODES.P is 28
 class BackStackViewTest {
 
     /**
