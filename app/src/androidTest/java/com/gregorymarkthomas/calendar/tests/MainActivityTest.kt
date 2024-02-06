@@ -1,10 +1,12 @@
 package com.gregorymarkthomas.calendar.tests
 
+import android.Manifest
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withTagValue
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import com.gregorymarkthomas.calendar.rules.MainActivityTestRule
 import org.hamcrest.Matchers
 import org.junit.Rule
@@ -24,6 +26,9 @@ class MainActivityTest {
 
     @get:Rule
     val rule = MainActivityTestRule(null)
+
+    @get:Rule
+    val permissionRule = GrantPermissionRule.grant(Manifest.permission.READ_CALENDAR)
 
     @Test
     fun month_view_is_default_view() {

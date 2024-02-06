@@ -3,10 +3,13 @@ package com.gregorymarkthomas.calendar.model
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract.Calendars
+import android.util.Log
 import com.gregorymarkthomas.calendar.model.interfaces.Resolver
 import com.gregorymarkthomas.calendar.util.CursorExtractor
 
 class AccountRetriever(resolver: Resolver): CalendarResolverQuery(resolver) {
+
+    private val tag = "AccountRetriever"
 
     /************* public *****/
     fun getAvailable(): List<AppAccount> {
@@ -23,12 +26,17 @@ class AccountRetriever(resolver: Resolver): CalendarResolverQuery(resolver) {
         val cursor = query(accountName, null)
         var account: AppAccount? = null
         if(cursor != null) {
-            account = AppAccount(
+            try {
+                account = AppAccount(
                     CursorExtractor.Calendar.getAccountName(cursor),
                     CursorExtractor.Calendar.getOwnerAccount(cursor),
                     "com.google"
-            )
-            cursor.close()
+                )
+            } catch (e: Exception) {
+                Log.e(tag, "get(): exception: $e")
+            } finally {
+                cursor.close()
+            }
         }
         return account
     }
